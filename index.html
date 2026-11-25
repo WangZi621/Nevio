@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nevio | Skin spot triage for clinics</title>
+<meta name="description" content="Nevio helps primary care clinics decide which skin spots need a dermatologist first. Runs in the browser; photos stay on the device. Free research pilots in Pennsylvania.">
+<meta property="og:title" content="Nevio | Skin spot triage for clinics">
+<meta property="og:description" content="AI triage that helps primary care clinics decide which skin spots need a dermatologist first. Photos stay on the device.">
+<meta name="theme-color" content="#1f1e52">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='7' fill='%231f1e52'/%3E%3Ccircle cx='15' cy='15' r='10' fill='none' stroke='%23f1dccf' stroke-width='3'/%3E%3Ccircle cx='17' cy='13.5' r='3.8' fill='%23f1dccf'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Schibsted+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: calm and clinical, written for a practice manager or medical director deciding whether to trust us.
+IDEA: the page behaves like a dermatoscope's view: a lit circle of skin, a reticle, one clear reading.
+PICTURE: a large lens with a drawn lesion, the AI's attention glow, the patient details going in and the triage slip coming out.
+COLOUR and TYPE: polarizer indigo field, skin tan, white; triage red / amber / teal used only for the three outcomes. Schibsted Grotesk headlines, Atkinson Hyperlegible body.
+LAYOUT: headline across the top of the indigo band, then inputs, lens, result in one row; sections below on white, each with one job.
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#121220);--ink:light-dark(#1b1a2b,#ecebf5);--soft:light-dark(#55536b,#b4b2c8);
+--line:light-dark(#e3e1ea,#2c2b40);--panel:light-dark(#f5f4f8,#1b1a2d);
+--indigo:#2b2a6b;--indigo2:#1f1e52;--skin:#f1dccf;--skin2:light-dark(#f8ece5,#2a2230);
+--urgent:#d9443a;--review:#c98a1b;--routine:#2f8f83;--focus:#7fb6ff}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Schibsted Grotesk",system-ui,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(28px,3.6vw,40px);font-weight:700;letter-spacing:-.015em}
+h3{font-size:20px;font-weight:700}
+p{margin:0 0 1em}a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto}
+.band{padding:clamp(48px,7vw,96px) max(5vw,18px)}
+.lead{font-size:clamp(18px,2vw,21px);max-width:62ch}
+.small{font-size:14px;color:var(--soft)}
+.skip{position:absolute;left:-999px;top:8px}.skip:focus{left:12px;z-index:99;background:#fff;color:#000;padding:8px 12px}
+/* nav */
+header.top{position:sticky;top:0;z-index:20;background:var(--indigo2);color:#fff;border-bottom:1px solid #ffffff1f}
+.navin{position:relative;display:flex;align-items:center;gap:20px;padding:10px max(5vw,18px);max-width:1280px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 22px "Schibsted Grotesk",sans-serif;letter-spacing:-.01em}
+.links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.links a{text-decoration:none;font-size:15px;padding:10px;border-radius:8px;color:#dcdcf5}
+.links a:hover{color:#fff;background:#ffffff14}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:999px;font:700 16px "Atkinson Hyperlegible",sans-serif;text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.primary{background:#fff;color:var(--indigo)}.btn.primary:hover{background:var(--skin)}
+.btn.ghost{color:#fff;border-color:#ffffff66}.btn.ghost:hover{border-color:#fff}
+.btn.solid{background:var(--indigo);color:#fff}.btn.solid:hover{background:var(--indigo2)}
+.navcta{min-height:40px;padding:0 16px;font-size:15px}
+.menubtn{display:none;margin-left:auto;background:none;border:2px solid #ffffff55;color:#fff;border-radius:10px;min-height:44px;min-width:44px;padding:0 12px;font:700 15px "Atkinson Hyperlegible",sans-serif;cursor:pointer;align-items:center;gap:8px}
+.menubtn svg{display:block}
+.links .mcta{display:none}
+@media(max-width:940px){.menubtn{display:inline-flex}.navcta{display:none}
+.links{display:none;position:absolute;left:0;right:0;top:100%;background:var(--indigo2);flex-direction:column;gap:0;padding:8px max(5vw,18px) 18px;border-bottom:1px solid #ffffff1f;box-shadow:0 20px 30px -20px #000}
+.links.open{display:flex}.links a{padding:14px 8px;font-size:17px;border-radius:0;border-bottom:1px solid #ffffff14}
+.links .mcta{display:flex;margin-top:12px;border:0;background:#fff;color:var(--indigo);justify-content:center;border-radius:999px;font-weight:700}}
+/* hero */
+.hero{background:radial-gradient(120% 90% at 50% 100%,#3a3990 0,var(--indigo) 45%,var(--indigo2) 100%);color:#fff;padding-bottom:clamp(40px,5vw,72px)}
+.hero h1{max-width:17ch}
+.hero .lead{color:#dedcf7;margin-top:18px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);gap:clamp(16px,3vw,40px);align-items:center;margin-top:clamp(36px,5vw,60px)}
+.card{background:#ffffff;color:#1b1a2b;border-radius:16px;padding:18px 20px;box-shadow:0 18px 40px -18px #0b0a2e}
+.card h3{font-size:15px;color:#55536b;font-family:"Atkinson Hyperlegible",sans-serif;font-weight:700;margin-bottom:10px}
+.inputs dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px}
+.inputs dt{color:#6b6983}.inputs dd{margin:0;font-weight:700;text-align:right}
+.lens{position:relative;aspect-ratio:1;max-width:420px;width:100%;justify-self:center}
+.lens svg{width:100%;height:100%;display:block}
+.slip .verdict{font:800 24px "Schibsted Grotesk",sans-serif;color:var(--review);margin:2px 0 12px}
+.scale{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+.scale span{font-size:12.5px;line-height:1.2;padding:8px 6px;border-radius:8px;background:#f1f0f5;color:#6b6983;text-align:center}
+.scale .on{background:var(--review);color:#fff;font-weight:700}
+.slip p{font-size:14px;color:#55536b;margin:0}
+.caption{grid-column:1/-1;text-align:center;font-size:14px;color:#c9c7ee;margin:4px 0 0}
+@media(max-width:860px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.lens{grid-column:1/-1;max-width:340px;order:-1}}
+@media(max-width:560px){.stage{grid-template-columns:minmax(0,1fr)}}
+.sweep{transform-origin:180px 180px;animation:sweep 2.6s ease-out .4s both}
+.heat{animation:heat 1.6s ease-out 1.6s both}
+@keyframes sweep{from{transform:rotate(-90deg);opacity:1}to{transform:rotate(270deg);opacity:0}}
+@keyframes heat{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.sweep{display:none}.heat{animation:none}}
+/* problem */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+@media(max-width:820px){.split{grid-template-columns:minmax(0,1fr)}}
+.bars{display:grid;gap:18px;margin:8px 0 6px}
+.bar .lab{display:flex;justify-content:space-between;gap:12px;font-size:15px;margin-bottom:6px}
+.bar .lab b{font:800 22px "Schibsted Grotesk",sans-serif;white-space:nowrap}
+.bar .track{height:16px;background:var(--panel);border-radius:999px;overflow:hidden}
+.bar .fill{height:100%;border-radius:999px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:28px}
+.fact{background:var(--skin2);border-radius:14px;padding:18px}
+.fact b{display:block;font:800 clamp(26px,3vw,34px)/1.1 "Schibsted Grotesk",sans-serif;margin-bottom:6px}
+.fact span{font-size:15px;color:var(--soft)}
+sup a{text-decoration:none;color:var(--soft);font-size:12px;padding:0 2px}
+/* steps */
+.alt{background:var(--panel)}
+.steps{list-style:none;padding:0;margin:36px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:s}
+@media(max-width:820px){.steps{grid-template-columns:minmax(0,1fr)}}
+.steps li{background:var(--bg);border-radius:16px;padding:24px;border:1px solid var(--line);counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;font:800 18px "Schibsted Grotesk",sans-serif;margin-bottom:14px}
+.steps h3{margin-bottom:8px}.steps p{margin:0;color:var(--soft);font-size:16px}
+.outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{font-size:14px;font-weight:700;padding:5px 12px;border-radius:999px;color:#fff;white-space:nowrap}
+.note{margin-top:26px;padding:16px 20px;border-radius:14px;border:2px solid var(--indigo);max-width:760px}
+:root[data-theme=dark] .note{border-color:#8d8be0}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .note{border-color:#8d8be0}}
+/* results */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:34px 0 22px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{border-top:4px solid var(--indigo);padding-top:14px}
+:root[data-theme=dark] .stat{border-color:#8d8be0}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .stat{border-color:#8d8be0}}
+.stat b{display:block;font:800 clamp(34px,4.4vw,52px)/1 "Schibsted Grotesk",sans-serif;letter-spacing:-.02em}
+.stat span{display:block;margin-top:8px;font-size:15px;color:var(--soft)}
+.fine{max-width:75ch;font-size:15.5px;color:var(--soft)}
+.fine li{margin-bottom:6px}
+/* privacy */
+.priv{background:var(--indigo);color:#fff}
+.priv .lead{color:#dedcf7}
+.plist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 32px;margin-top:8px;padding:0;list-style:none}
+@media(max-width:560px){.plist{grid-template-columns:minmax(0,1fr)}}
+.plist li{padding-left:34px;position:relative}
+.plist li::before{content:"";position:absolute;left:0;top:5px;width:18px;height:18px;border-radius:50%;border:3px solid var(--skin);box-shadow:inset 0 0 0 4px var(--indigo),inset 0 0 0 10px var(--skin)}
+.plist b{display:block;font-size:18px}
+.plist span{color:#cfcdf0;font-size:16px}
+.mb{font:800 clamp(64px,10vw,120px)/.9 "Schibsted Grotesk",sans-serif;letter-spacing:-.04em;color:var(--skin)}
+/* clinics */
+.offer{display:grid;gap:14px;margin:6px 0 0;padding:0;list-style:none}
+.offer li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.offer li::before{content:"";width:22px;height:22px;margin-top:3px;border-radius:6px;background:var(--routine) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+/* team */
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:30px}
+@media(max-width:900px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:440px){.team{grid-template-columns:minmax(0,1fr)}}
+.member{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:20px}
+.mono{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font:800 22px "Schibsted Grotesk",sans-serif;color:var(--indigo);background:var(--skin);margin-bottom:14px}
+.member h3{margin-bottom:4px}.member p{margin:0;color:var(--soft);font-size:15.5px}
+/* faq */
+.faq{max-width:820px;margin-top:24px}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:18px 40px 18px 0;font:700 18px "Atkinson Hyperlegible",sans-serif;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:6px;top:12px;font:400 28px/1 sans-serif;color:var(--soft)}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--soft);margin:-4px 0 18px;max-width:70ch}
+/* form */
+.formband{background:var(--skin2)}
+.formgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,64px);align-items:start}
+@media(max-width:860px){.formgrid{grid-template-columns:minmax(0,1fr)}}
+form{background:var(--bg);border-radius:18px;padding:clamp(20px,3vw,32px);border:1px solid var(--line)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 16px}
+@media(max-width:520px){.row{grid-template-columns:minmax(0,1fr)}}
+.field{margin-bottom:16px}
+label{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
+label .opt{font-weight:400;color:var(--soft)}
+input,select,textarea{width:100%;font:16px/1.4 "Atkinson Hyperlegible",sans-serif;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:11px 12px;min-height:48px}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px #7fb6ff40}
+.field.bad input,.field.bad select{border-color:var(--urgent)}
+.err{display:block;color:var(--urgent);font-size:14px;margin-top:4px;min-height:0}
+.hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
+.formfoot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:6px}
+.status{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:16px}
+.status.ok{background:#2f8f8320;border:2px solid var(--routine)}
+.status.warn{background:#c98a1b1c;border:2px solid var(--review)}
+.status textarea{margin-top:10px;font-size:14px;min-height:150px}
+[hidden]{display:none !important}
+@media(max-width:600px){.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7.5em}.stack td::before{content:attr(data-l);float:inline-start;width:7em;margin-inline-start:-7.5em;color:var(--soft);font-size:13px}}
+/* footer */
+footer{background:var(--indigo2);color:#cfcdf0;font-size:14.5px}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px}
+@media(max-width:760px){footer .wrap{grid-template-columns:minmax(0,1fr)}}
+footer ol{padding-left:20px;margin:6px 0 0}footer li{margin-bottom:6px}
+footer a{color:#fff}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <nav class="navin" aria-label="Main">
+    <a class="brand" href="#top" aria-label="Nevio home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12.5" fill="none" stroke="#f1dccf" stroke-width="3"/><circle cx="17.5" cy="13" r="4.6" fill="#f1dccf"/></svg>
+      Nevio
+    </a>
+    <button class="menubtn" type="button" id="menubtn" aria-expanded="false" aria-controls="navlinks"><svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2"/></svg>Menu</button>
+    <div class="links" id="navlinks">
+      <a href="#problem">Problem</a><a href="#how">How it works</a><a href="#results">Results</a><a href="#privacy">Privacy</a><a href="#clinics">For clinics</a><a href="#team">Team</a><a href="#faq">FAQ</a><a class="mcta" href="#pilot">Request a pilot</a>
+    </div>
+    <a class="btn primary navcta" href="#pilot">Request a pilot</a>
+  </nav>
+</header>
+
+<main id="main">
+<section class="band hero" id="top">
+  <div class="wrap">
+    <h1>Know which skin spots need a dermatologist first.</h1>
+    <p class="lead">Nevio gives primary care clinics a triage recommendation in about a second, from a dermoscopic photo and a few patient details. It runs in the browser, so photos never leave the clinic's device.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#pilot">Request a free research pilot</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+
+    <div class="stage">
+      <div class="card inputs" aria-label="Example patient details">
+        <h3>Patient details the clinician enters</h3>
+        <dl>
+          <dt>Age</dt><dd>58</dd>
+          <dt>Sex</dt><dd>Female</dd>
+          <dt>Body site</dt><dd>Upper back</dd>
+          <dt>Skin type</dt><dd>II</dd>
+          <dt>Size</dt><dd>6 mm</dd>
+          <dt>Looks like a mole</dt><dd>Yes</dd>
+        </dl>
+      </div>
+
+      <div class="lens" role="img" aria-label="Illustration of a skin spot seen through a dermatoscope, with a glow marking the area the AI focused on">
+        <svg viewBox="0 0 360 360">
+          <defs>
+            <radialGradient id="skinG" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#f6e3d6"/><stop offset=".7" stop-color="#e9c6b2"/><stop offset="1" stop-color="#cf9f88"/></radialGradient>
+            <radialGradient id="lesG" cx="48%" cy="46%" r="60%"><stop offset="0" stop-color="#4a2a1f"/><stop offset=".55" stop-color="#7a4a35"/><stop offset="1" stop-color="#a87158" stop-opacity=".2"/></radialGradient>
+            <radialGradient id="heatG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff6a3d" stop-opacity=".62"/><stop offset=".5" stop-color="#ffb23d" stop-opacity=".3"/><stop offset="1" stop-color="#ffd23d" stop-opacity="0"/></radialGradient>
+            <linearGradient id="sweepG" x1="0" x2="1"><stop offset="0" stop-color="#bfe3ff" stop-opacity="0"/><stop offset="1" stop-color="#bfe3ff" stop-opacity=".55"/></linearGradient>
+            <pattern id="net" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><path d="M0 4.5h9M4.5 0v9" stroke="#2c160f" stroke-width="1.3" opacity=".55"/></pattern>
+            <clipPath id="view"><circle cx="180" cy="180" r="150"/></clipPath>
+            <clipPath id="lesClip"><path id="lesPath" d="M152 118c22-14 58-10 76 6 20 18 30 34 26 58-3 22-12 30-6 50 5 18-14 34-36 32-20-2-30 12-52 6-24-7-40-26-44-48-4-20 8-30 4-50-3-24 10-40 32-54z"/></clipPath>
+          </defs>
+          <circle cx="180" cy="180" r="178" fill="#0e0d2b"/>
+          <circle cx="180" cy="180" r="166" fill="#17164a"/>
+          <g clip-path="url(#view)">
+            <rect width="360" height="360" fill="url(#skinG)"/>
+            <g opacity=".35" stroke="#c48d76" stroke-width="1" fill="none"><path d="M30 90c80 20 200 0 300 30M30 250c90-20 210 10 300-10M60 40c20 100 0 200 30 300M290 30c-30 110 10 200-10 320"/></g>
+            <use href="#lesPath" fill="url(#lesG)"/>
+            <rect width="360" height="360" fill="url(#net)" clip-path="url(#lesClip)" opacity=".7"/>
+            <g fill="#2a140d" opacity=".75"><circle cx="196" cy="160" r="5"/><circle cx="212" cy="176" r="3.5"/><circle cx="170" cy="200" r="4"/><circle cx="224" cy="214" r="3"/><circle cx="186" cy="232" r="2.6"/></g>
+            <path d="M210 196c12 6 22 20 18 34" stroke="#9fb1d6" stroke-width="7" opacity=".45" fill="none" stroke-linecap="round"/>
+            <ellipse class="heat" cx="206" cy="190" rx="70" ry="62" fill="url(#heatG)"/>
+            <path class="sweep" d="M180 180L330 180A150 150 0 0 0 286 74Z" fill="url(#sweepG)"/>
+          </g>
+          <g stroke="#f1dccf" stroke-width="2" opacity=".85">
+            <path d="M180 22v14M180 324v14M22 180h14M324 180h14"/>
+          </g>
+          <g stroke="#f1dccf" stroke-width="1.2" opacity=".5" id="ticks"></g>
+          <circle cx="180" cy="180" r="150" fill="none" stroke="#f1dccf" stroke-opacity=".5" stroke-width="1.5"/>
+          <g transform="translate(70 300)"><path d="M0 0h40" stroke="#1b1a2b" stroke-width="3"/><text x="0" y="-6" font-size="11" fill="#1b1a2b" font-family="Atkinson Hyperlegible, sans-serif">2 mm</text></g>
+        </svg>
+      </div>
+
+      <div class="card slip" aria-label="Example Nevio recommendation">
+        <h3>Nevio recommendation</h3>
+        <div class="verdict">Refer for review</div>
+        <div class="scale" aria-hidden="true"><span>Refer urgently</span><span class="on">Refer for review</span><span>Routine follow-up</span></div>
+        <p>A heat map shows where the AI looked. A printable referral note goes with the patient. The clinician makes the final call.</p>
+      </div>
+      <p class="caption">Illustration with example values. Not a real patient.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="problem" aria-labelledby="problem-h">
+  <div class="wrap split">
+    <div>
+      <h2 id="problem-h">With melanoma, timing decides most of the outcome.</h2>
+      <p class="lead" style="margin-top:18px">The first person to see a worrying spot is usually a family doctor, nurse or physician assistant with little dermoscopy training. They can refer almost everything, which floods the dermatology waitlist, or judge it alone and risk missing an early melanoma.</p>
+      <p>Nevio is built for that moment: a fast, private second look that helps sort the spots that need a dermatologist this week from the ones that can wait.</p>
+    </div>
+    <div>
+      <h3>Five-year melanoma survival</h3>
+      <div class="bars">
+        <div class="bar"><div class="lab"><span>Caught before it spreads</span><b>over 99%</b></div><div class="track"><div class="fill" style="width:99%;background:var(--routine)"></div></div></div>
+        <div class="bar"><div class="lab"><span>Spread to distant organs</span><b>about 36%</b></div><div class="track"><div class="fill" style="width:36%;background:var(--urgent)"></div></div></div>
+      </div>
+      <p class="small">American Cancer Society<sup><a href="#src1" aria-label="Source 1">[1]</a></sup></p>
+      <div class="facts">
+        <div class="fact"><b>36.5 days</b><span>average wait for a new dermatology appointment in major U.S. cities<sup><a href="#src3" aria-label="Source 3">[3]</a></sup></span></div>
+        <div class="fact"><b>0.09 vs 4.1</b><span>dermatologists per 100,000 people in rural vs metro areas (2013 data)<sup><a href="#src4" aria-label="Source 4">[4]</a></sup></span></div>
+        <div class="fact"><b>112,000</b><span>Americans expected to be diagnosed with invasive melanoma in 2026<sup><a href="#src2" aria-label="Source 2">[2]</a></sup></span></div>
+        <div class="fact"><b>8,510</b><span>expected melanoma deaths in the U.S. in 2026<sup><a href="#src2" aria-label="Source 2">[2]</a></sup></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <h2 id="how-h">How Nevio works</h2>
+    <p class="lead" style="margin-top:14px">A dermatologist looks at the spot and the patient together. Nevio does the same: one part of the model reads the photo, another reads the patient details, and a third combines them.</p>
+    <ol class="steps">
+      <li><h3>Take a dermoscopic photo</h3><p>The clinician photographs the spot through a clip-on polarized dermatoscope, on a computer or phone the clinic already has.</p></li>
+      <li><h3>Add a few patient details</h3><p>Age, sex, body site, skin type, size, and whether it looks like a mole. A 4 mm spot on a teenager's back means something different from the same spot on an 80-year-old's foot.</p></li>
+      <li><h3>Get one clear recommendation</h3><p>In about a second, with no internet needed:</p>
+        <div class="outcomes"><span class="pill" style="background:var(--urgent)">Refer urgently</span><span class="pill" style="background:var(--review)">Refer for review</span><span class="pill" style="background:var(--routine)">Routine follow-up</span></div></li>
+    </ol>
+    <p class="note"><b>The clinician always decides.</b> Nevio is a triage aid. It shows where on the spot it focused and prints a referral note, but it does not diagnose and it never replaces clinical judgment or a biopsy.</p>
+  </div>
+</section>
+
+<section class="band" id="results" aria-labelledby="results-h">
+  <div class="wrap">
+    <h2 id="results-h">Research results so far</h2>
+    <p class="lead" style="margin-top:14px">We tested Nevio on biopsy-confirmed images it never saw during training. These are research results, not a clinical trial, and not FDA review.</p>
+    <div class="stats">
+      <div class="stat"><b>90.0%</b><span>of melanomas flagged (sensitivity)</span></div>
+      <div class="stat"><b>81.5%</b><span>of non-melanoma spots correctly left unflagged (specificity)</span></div>
+      <div class="stat"><b>0.940</b><span>melanoma AUC (1.0 is perfect, 0.5 is a coin flip)</span></div>
+      <div class="stat"><b>9,080</b><span>unseen biopsy-confirmed test images</span></div>
+    </div>
+    <ul class="fine">
+      <li>Trained on 36,320 and tested on 9,080 biopsy-confirmed images from the International Skin Imaging Collaboration (ISIC) Archive, in one 80/20 split.<sup><a href="#src5" aria-label="Source 5">[5]</a></sup></li>
+      <li>Nevio is set to flag borderline spots rather than miss a cancer, so overall accuracy across all three classes was 78.6%.</li>
+      <li>The flagging threshold was set on the same test images, so a fully separate test set is our next step, followed by testing in real clinics.</li>
+      <li>We checked that the browser app gives the same answers as the research model: on 78 newer images, their scores matched within 0.011 on a 0 to 1 scale.</li>
+      <li>The research behind Nevio won first place in Computer Science at the 2026 Delaware Valley Science Fairs and was accepted to the IEEE HealthCom 2026 Young Researcher Symposium.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="band priv" id="privacy" aria-labelledby="privacy-h">
+  <div class="wrap split">
+    <div>
+      <div class="mb" aria-hidden="true">21 MB</div>
+      <h2 id="privacy-h" style="margin-top:18px">Small enough to run on the device. Photos stay in the clinic.</h2>
+      <p class="lead" style="margin-top:14px">Most medical AI runs in a data center. Nevio's whole model is about 21 MB, smaller than a few phone photos, so it runs right in the browser.</p>
+    </div>
+    <ul class="plist">
+      <li><b>Nothing uploaded</b><span>The photo and patient details are processed on the clinic's own computer or phone.</span></li>
+      <li><b>Works offline</b><span>No internet needed for a result, and a downloadable version is planned for computers kept offline.</span></li>
+      <li><b>Uses what clinics have</b><span>A browser on an existing device plus a clip-on polarized dermatoscope.</span></li>
+      <li><b>No per-scan cost</b><span>Scans don't touch our servers, so clinics are never rationed by the scan.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="band" id="clinics" aria-labelledby="clinics-h">
+  <div class="wrap split">
+    <div>
+      <h2 id="clinics-h">For clinics: a free research pilot</h2>
+      <p class="lead" style="margin-top:14px">Starting in 2027, we're running free research pilots with primary care practices and community health centers in southeastern Pennsylvania, near Reading and Chester County.</p>
+      <p>Nevio is not FDA-cleared and is not for sale. Pilots are research: we compare Nevio's recommendations with dermatologists' decisions and biopsy results, and add images of darker skin, where today's training data is thin.</p>
+      <a class="btn solid" href="#pilot">Request a pilot</a>
+    </div>
+    <div>
+      <h3 style="margin-bottom:14px">What a pilot clinic gets</h3>
+      <ul class="offer">
+        <li><span>Nevio at no cost for the length of the study</span></li>
+        <li><span>A polarized dermatoscope for the clinic to use during the pilot</span></li>
+        <li><span>In-person setup and staff training from our team</span></li>
+        <li><span>A summary of what Nevio flagged and how fast urgent patients reached a dermatologist</span></li>
+        <li><span>A direct line to the team building it, and a say in what we build next</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="team" aria-labelledby="team-h">
+  <div class="wrap">
+    <h2 id="team-h">The team</h2>
+    <p class="lead" style="margin-top:14px">We're four students who met at a summer program. Nevio started as Jason's research project, after his mom waited years, even with good insurance, to learn whether a growth on her leg was dangerous.</p>
+    <div class="team">
+      <div class="member"><div class="mono" aria-hidden="true">J</div><h3>Jason</h3><p>CEO and CTO. Trained Nevio's model and built the browser app it runs in</p></div>
+      <div class="member"><div class="mono" aria-hidden="true">J</div><h3>James</h3><p>CFO. Leads the pitch and problem research</p></div>
+      <div class="member"><div class="mono" aria-hidden="true">K</div><h3>Kenny</h3><p>COO. Leads market sizing and competitive analysis</p></div>
+      <div class="member"><div class="mono" aria-hidden="true">D</div><h3>Daisy</h3><p>CMO. Leads go-to-market and fundraising</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <h2 id="faq-h">Questions clinics ask</h2>
+    <div class="faq">
+      <details><summary>Is Nevio FDA-cleared?</summary><p>No. Nevio is an investigational research tool. It is not FDA-cleared or approved, and it is not for sale. We plan to pursue FDA review after clinical testing. Until then it is used only in research pilots, where clinicians make every decision.</p></details>
+      <details><summary>Does Nevio diagnose skin cancer?</summary><p>No. It gives a triage recommendation: refer urgently, refer for review, or routine follow-up. Diagnosis stays with clinicians and biopsy.</p></details>
+      <details><summary>Where do the photos go?</summary><p>Nowhere. The model runs in the browser on the clinic's device, so photos and patient details aren't uploaded to us.</p></details>
+      <details><summary>What equipment does a clinic need?</summary><p>A computer or phone with a modern browser and a clip-on polarized dermatoscope. Pilot clinics receive a dermatoscope to use during the study.</p></details>
+      <details><summary>Does it work on every skin tone?</summary><p>Not equally yet, and we want to be upfront about it. Public skin image collections have few images of darker skin, so ours does too. Adding those images through pilots is one of our main goals.</p></details>
+      <details><summary>What will it cost after the research phase?</summary><p>Pilots are free. We'll only charge after FDA clearance, with a flat monthly price per clinic site rather than per scan.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="band formband" id="pilot" aria-labelledby="pilot-h">
+  <div class="wrap formgrid">
+    <div>
+      <h2 id="pilot-h">Request a research pilot</h2>
+      <p class="lead" style="margin-top:14px">Tell us about your clinic and we'll set up a short call to show Nevio and answer questions.</p>
+      <p><b>Please don't include any patient information</b> in this form.</p>
+      <p class="small">We use your details only to reply about Nevio pilots.</p>
+    </div>
+    <form id="pilot-form" novalidate>
+      <div class="row">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required maxlength="120"><span class="err" id="e-name" aria-live="polite"></span></div>
+        <div class="field"><label for="f-role">Role</label>
+          <select id="f-role" name="role" required>
+            <option value="">Choose one</option><option>Physician</option><option>Nurse practitioner</option><option>Physician assistant</option><option>Nurse</option><option>Practice manager</option><option>Medical director</option><option>Researcher</option><option>Other</option>
+          </select><span class="err" id="e-role" aria-live="polite"></span></div>
+      </div>
+      <div class="field"><label for="f-org">Clinic or organization</label><input id="f-org" name="organization" autocomplete="organization" required maxlength="160"><span class="err" id="e-org" aria-live="polite"></span></div>
+      <div class="row">
+        <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160"><span class="err" id="e-email" aria-live="polite"></span></div>
+        <div class="field"><label for="f-phone">Phone <span class="opt">(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="f-loc">City and state</label><input id="f-loc" name="location" autocomplete="address-level2" required maxlength="120"><span class="err" id="e-loc" aria-live="polite"></span></div>
+        <div class="field"><label for="f-vol">Skin spots checked per month <span class="opt">(optional)</span></label>
+          <select id="f-vol" name="volume"><option value="">Not sure</option><option>Under 20</option><option>20 to 100</option><option>100 to 300</option><option>Over 300</option></select></div>
+      </div>
+      <div class="field"><label for="f-msg">Anything we should know? <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" maxlength="2000"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
+      <div class="formfoot"><button class="btn solid" type="submit" id="f-submit">Send pilot request</button><span class="small" id="f-hint"></span></div>
+      <div class="status ok" id="s-ok" role="status" hidden></div>
+      <div class="status warn" id="s-fallback" role="status" hidden>
+        <b>Your request didn't send.</b>
+        <span id="fb-mail"></span>
+        <textarea id="fb-text" readonly aria-label="Your pilot request, ready to copy"></textarea>
+        <div class="formfoot" style="margin-top:10px"><button class="btn solid" type="button" id="fb-copy">Copy request</button><span class="small" id="fb-copied" aria-live="polite"></span></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="band">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top" style="color:#fff">
+        <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12.5" fill="none" stroke="#f1dccf" stroke-width="3"/><circle cx="17.5" cy="13" r="4.6" fill="#f1dccf"/></svg>Nevio</a>
+      <p style="margin-top:14px">Nevio is an investigational research tool. It is not cleared or approved by the U.S. Food and Drug Administration, is not intended to diagnose any disease, and is used only in research settings under clinician supervision.</p>
+      <p>&copy; 2026 Nevio. Pennsylvania, USA.</p>
+    </div>
+    <div>
+      <b style="color:#fff">Sources</b>
+      <ol>
+        <li id="src1"><a href="https://www.cancer.org/cancer/types/melanoma-skin-cancer/detection-diagnosis-staging/survival-rates-for-melanoma-skin-cancer-by-stage.html">American Cancer Society, Survival Rates for Melanoma Skin Cancer</a></li>
+        <li id="src2"><a href="https://www.curemelanoma.org/blog/over-112-000-americans-estimated-to-be-diagnosed-with-invasive-melanoma-in-2026">Melanoma Research Alliance, citing ACS Cancer Facts and Figures 2026</a></li>
+        <li id="src3"><a href="https://www.amnhealthcare.com/amn-insights/physician/whitepapers/2025-survey-of-physician-appointment-wait-times/">AMN Healthcare, 2025 Survey of Physician Appointment Wait Times</a></li>
+        <li id="src4"><a href="https://mdedge.com/content/dermatologists-continue-prefer-urban-areas">MDedge, Dermatologists continue to prefer urban areas</a></li>
+        <li id="src5">Nevio team research, extended abstract accepted to the IEEE HealthCom 2026 Young Researcher Symposium</li>
+      </ol>
+    </div>
+  </div>
+</footer>
+
+<script>
+{
+// ---- Site settings ----
+// FORM_ENDPOINT: where pilot requests are sent, e.g. "https://formsubmit.co/ajax/<address or alias>"
+// or a Formspree URL like "https://formspree.io/f/xxxxxxx". Empty = show the copy fallback.
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/jasonxiao421@gmail.com";
+// CONTACT_EMAIL: shown only if a request can't be sent, so people can email it instead.
+const CONTACT_EMAIL = "";
+
+const $ = s => document.querySelector(s);
+
+// reticle ticks on the lens
+let t = '';
+for (let i = 0; i < 72; i++) {
+  if (i % 18 === 0) continue;
+  const a = i * Math.PI / 36, r1 = 158, r2 = i % 6 === 0 ? 168 : 163;
+  t += `<line x1="${(180 + r1 * Math.cos(a)).toFixed(1)}" y1="${(180 + r1 * Math.sin(a)).toFixed(1)}" x2="${(180 + r2 * Math.cos(a)).toFixed(1)}" y2="${(180 + r2 * Math.sin(a)).toFixed(1)}"/>`;
+}
+$('#ticks').innerHTML = t;
+
+// ---- mobile menu ----
+const menuBtn = $('#menubtn'), links = $('#navlinks');
+function setMenu(open) {
+  links.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', String(open));
+}
+menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+links.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && links.classList.contains('open')) { setMenu(false); menuBtn.focus(); } });
+document.addEventListener('click', e => { if (links.classList.contains('open') && !e.target.closest('.navin')) setMenu(false); });
+window.matchMedia('(min-width: 941px)').addEventListener?.('change', m => { if (m.matches) setMenu(false); });
+
+// ---- pilot form ----
+const form = $('#pilot-form');
+const fields = [
+  ['f-name', 'e-name', 'Enter your name.'],
+  ['f-role', 'e-role', 'Choose your role.'],
+  ['f-org', 'e-org', 'Enter your clinic or organization.'],
+  ['f-email', 'e-email', 'Enter a valid email address, like name@clinic.org.'],
+  ['f-loc', 'e-loc', 'Enter your city and state.'],
+];
+function check(id, eid, msg) {
+  const el = document.getElementById(id), e = document.getElementById(eid);
+  if (el.tagName !== 'SELECT') el.value = el.value.trim();
+  const ok = el.checkValidity();
+  e.textContent = ok ? '' : msg;
+  el.closest('.field').classList.toggle('bad', !ok);
+  el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+  if (!ok) el.setAttribute('aria-describedby', eid); else el.removeAttribute('aria-describedby');
+  return ok;
+}
+for (const [id, eid, msg] of fields) {
+  const el = document.getElementById(id);
+  el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'blur', () => { if (document.getElementById(eid).textContent) check(id, eid, msg); });
+}
+function collect() {
+  const f = new FormData(form);
+  const v = k => String(f.get(k) || '').trim().slice(0, 2000);
+  return { name: v('name'), role: v('role'), organization: v('organization'), email: v('email'), phone: v('phone'), location: v('location'), volume: v('volume'), message: v('message') };
+}
+function asText(d) {
+  return `Nevio pilot request\n\nName: ${d.name}\nRole: ${d.role}\nClinic or organization: ${d.organization}\nEmail: ${d.email}\nPhone: ${d.phone || '-'}\nCity and state: ${d.location}\nSkin spots per month: ${d.volume || 'Not sure'}\n\n${d.message || ''}`.trim();
+}
+async function send(d) {
+  if (!FORM_ENDPOINT) return false;
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 15000);
+  try {
+    const r = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        ...d,
+        _subject: `Nevio pilot request: ${d.organization}`,
+        _replyto: d.email,
+        _template: 'table',
+        _captcha: 'false',
+      }),
+      signal: ctl.signal,
+    });
+    let body = {};
+    try { body = await r.json(); } catch (err) { body = {}; }
+    return r.ok && body.ok !== false && String(body.success ?? 'true') === 'true';
+  } catch (err) {
+    return false;
+  } finally { clearTimeout(timer); }
+}
+const okBox = $('#s-ok'), fb = $('#s-fallback'), btn = $('#f-submit');
+let busy = false;
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (busy) return;
+  okBox.hidden = true; fb.hidden = true;
+  let first = null;
+  for (const [id, eid, msg] of fields) { if (!check(id, eid, msg) && !first) first = document.getElementById(id); }
+  if (first) { first.focus(); return; }
+  if ($('#f-web').value) { okBox.textContent = 'Request sent.'; okBox.hidden = false; return; } // bot trap
+  const d = collect();
+  busy = true; btn.disabled = true; btn.textContent = 'Sending...';
+  const sent = await send(d);
+  busy = false; btn.disabled = false; btn.textContent = 'Send pilot request';
+  if (sent) {
+    okBox.textContent = `Request sent. We'll reply to ${d.email} to set up a call.`;
+    okBox.hidden = false;
+    form.reset();
+  } else {
+    $('#fb-text').value = asText(d);
+    $('#fb-mail').textContent = CONTACT_EMAIL
+      ? ` Copy your request below and email it to ${CONTACT_EMAIL}.`
+      : ' Copy your request below and try again in a few minutes.';
+    fb.hidden = false;
+  }
+});
+$('#fb-copy').addEventListener('click', () => {
+  const ta = $('#fb-text'), note = $('#fb-copied');
+  const manual = () => { ta.focus(); ta.select(); note.textContent = 'Press Ctrl+C or Cmd+C to copy.'; };
+  try { navigator.clipboard.writeText(ta.value).then(() => { note.textContent = 'Copied.'; }, manual); } catch (err) { manual(); }
+});
+}
+</script>
+</body>
+</html>
