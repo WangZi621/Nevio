@@ -49,6 +49,8 @@ The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page scri
 
 ## Design brief (short version)
 
+The full design system (palette, type, layout, components, page plan, CSS tokens) is the private Google Doc "Nevio design system" in the hub's 4 Website folder. Ask Jason for it; where it differs from the notes below, it wins.
+
 The current page reads as generated: eleven bands with the same shape, too many words, a product mock drawn in HTML instead of a real screenshot, no logo, and the same rounded card everywhere. For the next version:
 
 - Six or seven sections at most. Fewer words per section.
