@@ -14,9 +14,10 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 ## Stack
 
 - One static `index.html` (HTML, CSS and vanilla JS inline). No build step, no framework, no package manager.
-- Images in `img/`. `og.jpg` is the 1200 x 630 share image.
+- Images in `img/`. `og.jpg` is the 1200 x 630 share image. `mark.svg` is the logo mark and favicon.
+- `img/app-*.webp` are real screenshots of the research app (github.com/WangZi621/SkinCancer-AI, `docs/`), run locally at 390 px wide on sample ISIC_5700648 and cropped so the app's current Stryde name never shows. Retake them the same way if the app changes or is renamed.
 - `.nojekyll` so Pages serves files as they are.
-- Fonts from Google Fonts: Schibsted Grotesk (headings), Atkinson Hyperlegible (body).
+- Fonts from Google Fonts: Newsreader (headings, wordmark), Atkinson Hyperlegible Next (body and interface).
 
 Keep it static and dependency-free unless Jason asks otherwise. It has to load fast on a clinic computer and a phone.
 
@@ -51,7 +52,7 @@ The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page scri
 
 The full design system (palette, type, layout, components, page plan, CSS tokens) is the private Google Doc "Nevio design system" in the hub's 4 Website folder. Ask Jason for it; where it differs from the notes below, it wins.
 
-The current page reads as generated: eleven bands with the same shape, too many words, a product mock drawn in HTML instead of a real screenshot, no logo, and the same rounded card everywhere. For the next version:
+The Nov 2026 rebuild follows the design system: porcelain ground, indigo, one Lamp accent (the LED arc on the lens and logo), the case card with the photo-only toggle in the hero, real app screenshots, one indigo band. It replaced a page that read as generated (eleven same-shaped bands, too many words, drawn mocks, no logo). Keep to these rules:
 
 - Six or seven sections at most. Fewer words per section.
 - Keep the real case card and the photo-only versus photo-plus-details toggle. They are the memorable part.
