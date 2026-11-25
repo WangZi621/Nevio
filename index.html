@@ -645,7 +645,7 @@ footer .credit{margin-top:18px;font-size:13.5px}
       <div class="formfoot"><button class="btn solid" type="submit" id="f-submit">Send pilot request</button></div>
       <div class="msg ok" id="s-ok" role="status" hidden></div>
       <div class="msg warn" id="s-fallback" role="status" hidden>
-        <b>Your request didn't send.</b>
+        <b id="fb-title">Your request didn't send.</b>
         <span id="fb-mail"></span>
         <textarea id="fb-text" readonly aria-label="Your pilot request, ready to copy"></textarea>
         <div class="formfoot" style="margin-top:10px"><button class="btn solid" type="button" id="fb-copy">Copy request</button><span class="small" id="fb-copied" aria-live="polite"></span></div>
@@ -756,10 +756,12 @@ function collect() {
 function asText(d) {
   return `Nevio pilot request\n\nName: ${d.name}\nRole: ${d.role}\nClinic or organization: ${d.organization}\nEmail: ${d.email}\nPhone: ${d.phone || '-'}\nCity and state: ${d.location}\nSkin spots per month: ${d.volume || 'Not sure'}\n\n${d.message || ''}`.trim();
 }
+// Returns 'ok', 'slow' (no answer in time; FormSubmit often delivers anyway) or 'fail'.
 async function send(d) {
-  if (!FORM_ENDPOINT) return false;
+  if (!FORM_ENDPOINT) return 'fail';
   const ctl = new AbortController();
-  const timer = setTimeout(() => ctl.abort(), 15000);
+  let timedOut = false;
+  const timer = setTimeout(() => { timedOut = true; ctl.abort(); }, 40000);
   try {
     const r = await fetch(FORM_ENDPOINT, {
       method: 'POST',
@@ -775,9 +777,9 @@ async function send(d) {
     });
     let body = {};
     try { body = await r.json(); } catch (err) { body = {}; }
-    return r.ok && body.ok !== false && String(body.success ?? 'true') === 'true';
+    return (r.ok && body.ok !== false && String(body.success ?? 'true') === 'true') ? 'ok' : 'fail';
   } catch (err) {
-    return false;
+    return timedOut ? 'slow' : 'fail';
   } finally { clearTimeout(timer); }
 }
 const okBox = $('#s-ok'), fb = $('#s-fallback'), btn = $('#f-submit');
@@ -794,12 +796,19 @@ form.addEventListener('submit', async e => {
   busy = true; btn.disabled = true; btn.textContent = 'Sending...';
   const sent = await send(d);
   busy = false; btn.disabled = false; btn.textContent = 'Send pilot request';
-  if (sent) {
+  if (sent === 'ok') {
     okBox.textContent = `Request sent. We'll reply to ${d.email} to set up a call.`;
     okBox.hidden = false;
     form.reset();
   } else {
     $('#fb-text').value = asText(d);
+    if (sent === 'slow') {
+      $('#fb-title').textContent = "Your request is probably on its way, but we couldn't confirm it.";
+      $('#fb-mail').textContent = " If you don't hear from us within two business days, copy it below and send it again.";
+      fb.hidden = false;
+      return;
+    }
+    $('#fb-title').textContent = "Your request didn't send.";
     $('#fb-mail').textContent = CONTACT_EMAIL
       ? ` Copy your request below and email it to ${CONTACT_EMAIL}.`
       : ' Copy your request below and try again in a few minutes.';
