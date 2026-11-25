@@ -95,7 +95,7 @@ header.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--i
 @media(max-width:560px){.pt{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.case-top{grid-template-columns:96px minmax(0,1fr);gap:14px}}
 .scores{display:grid;gap:11px}
-.sc{display:grid;grid-template-columns:7.2em minmax(0,1fr) 3em;gap:12px;align-items:center;font-size:15px}
+.sc{display:grid;grid-template-columns:8.6em minmax(0,1fr) 3em;gap:12px;align-items:center;font-size:15px}
 .sc b{text-align:right;font:700 16px "Schibsted Grotesk",sans-serif}
 .tr{position:relative;height:12px;background:var(--mist);border-radius:999px}
 .tr i{position:absolute;inset:0 auto 0 0;width:var(--w);border-radius:999px;background:var(--c,#a9a7c4)}
@@ -354,8 +354,8 @@ footer .credit{margin-top:18px;font-size:13.5px}
       </dl>
       <div class="scores" role="list" aria-label="Nevio scores">
         <div class="sc" role="listitem"><span>Melanoma</span><div class="tr"><i style="--w:82%;--c:var(--urgent)"></i><span class="cut" style="left:27.8%" aria-hidden="true"></span></div><b>82%</b></div>
-        <div class="sc" role="listitem"><span>Benign mole</span><div class="tr"><i style="--w:17%"></i></div><b>17%</b></div>
-        <div class="sc" role="listitem"><span>Other lesion</span><div class="tr"><i style="--w:2%"></i></div><b>2%</b></div>
+        <div class="sc" role="listitem"><span>Benign</span><div class="tr"><i style="--w:17%"></i></div><b>17%</b></div>
+        <div class="sc" role="listitem"><span>Other skin cancer</span><div class="tr"><i style="--w:2%"></i></div><b>2%</b></div>
       </div>
       <p class="cutnote">The black line is the 27.8% referral cutoff.</p>
       <figcaption id="case-cap">Real output from Nevio's research model, run in a browser in 0.65 seconds. The photo is a biopsy-confirmed melanoma in situ the model never saw in training (ISIC_5700648, Memorial Sloan Kettering Cancer Center, CC BY).</figcaption>
@@ -422,8 +422,8 @@ footer .credit{margin-top:18px;font-size:13.5px}
       </div>
       <div class="scores">
         <div class="sc"><span>Melanoma</span><div class="tr"><i id="b-mel" style="--w:82%;width:82%;--c:var(--urgent)"></i><span class="cut" style="left:27.8%" aria-hidden="true"></span></div><b id="v-mel">82%</b></div>
-        <div class="sc"><span>Benign mole</span><div class="tr"><i id="b-ben" style="width:17%"></i></div><b id="v-ben">17%</b></div>
-        <div class="sc"><span>Other lesion</span><div class="tr"><i id="b-oth" style="width:2%"></i></div><b id="v-oth">2%</b></div>
+        <div class="sc"><span>Benign</span><div class="tr"><i id="b-ben" style="width:17%"></i></div><b id="v-ben">17%</b></div>
+        <div class="sc"><span>Other skin cancer</span><div class="tr"><i id="b-oth" style="width:2%"></i></div><b id="v-oth">2%</b></div>
       </div>
       <p class="inputs-used" id="cmp-inputs">Inputs: the photo, plus age 65, female, head or neck, looks like a mole.</p>
       <p class="small" style="margin:0">One real case, shown to explain how Nevio works. Results across 9,080 test images are under Evidence.</p>
@@ -460,8 +460,8 @@ footer .credit{margin-top:18px;font-size:13.5px}
                 <b class="verdict">Refer urgently</b>
                 <div class="mini">
                   <div>Melanoma 82%</div><div class="tr"><i style="--w:82%;width:82%;--c:var(--urgent)"></i></div>
-                  <div>Benign mole 17%</div><div class="tr"><i style="width:17%"></i></div>
-                  <div>Other lesion 2%</div><div class="tr"><i style="width:2%"></i></div>
+                  <div>Benign 17%</div><div class="tr"><i style="width:17%"></i></div>
+                  <div>Other skin cancer 2%</div><div class="tr"><i style="width:2%"></i></div>
                 </div>
               </div>
             </div>
