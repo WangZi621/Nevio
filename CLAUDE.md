@@ -66,11 +66,11 @@ On Nov 26, 2026, after rejecting several directions as vibecoded or generic, Jas
 - Intro: once per visit (sessionStorage), a lime scan line sweeps across and acquires the mark and the wordmark, which then fly into the header; any key, click or scroll skips it, reduced motion skips it, and `?intro=off` skips it for screenshots.
 - Signature: a millimetre depth ruler at the left edge (wide screens): scroll reads as depth from the surface to 2 mm.
 - Type: Host Grotesk only, 400 and 500 (600 for the wordmark), tight tracking on display sizes, tabular figures. No italics, no all-caps labels, no monospace.
-- Shape: 6 px control radius, 8 to 10 px panels, round only for lenses, toggles and status dots. Depth from surface steps and hairlines, not glows.
+- Shape: 6 px control radius (the Model's view switch too: 6 px, 4 px track, 2 px knob), 8 to 10 px panels, round only for lenses and status dots. Depth from surface steps and hairlines, not glows.
 - Keep: the pinned case scene with the real step outputs and the 17 numbers the model reads; the pinned phone scene with real app screenshots; the icon arrays; the ASCII footer wordmark built from the evidence numbers, stirred by the pointer; easter eggs (type "scan" for a wider light, "abcde" for the ABCDE checklist, hover scramble on big numbers and names, a console note). Keep them truthful and small.
-- Motion explains something: the scan line acquiring, the develop under the pointer, scores tweening to real values, a sweep over the case photo on each rescore. One easing curve, transform, opacity, clip-path and mask only. Everything works with reduced motion and without JavaScript.
+- Motion explains something: the scan line acquiring, the develop under the pointer, scores tweening to real values, a sweep over the case photo on each rescore. One easing curve; transform, opacity, clip-path, mask and filter (the case photo dims under Model's view, the privacy statement comes into focus). Everything works with reduced motion and without JavaScript.
 - Few words, sentence case, no eyebrow labels, no arrows on links, no em dashes, no periods on headings.
-- Works at 375 px wide; the pinned case scene fits down to 960 x 700 (the lead hides below 1000 px tall, the 17-number strip below 800). Keyboard accessible, visible focus, WCAG AA contrast.
+- Works at 375 px wide; the pinned case scene fits down to 960 x 700 (below 1000 px tall the lead shortens to "Scroll, or pick a step", and below 800 the 17-number strip hides). Keyboard accessible, visible focus, WCAG AA contrast.
 
 ## How to check your work
 

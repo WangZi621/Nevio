@@ -211,7 +211,7 @@ html.intro-done .intro { display: none; }
 .scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; background: var(--raised); }
 .scope-clip img, .scope-clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .scope-clip img { transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); transition: filter 400ms var(--ease); }
-.scope:not(.no-eye) .scope-clip img { filter: grayscale(0.75) brightness(0.5) contrast(1.15) blur(var(--blur, 0px)); }
+.scope:not(.no-eye) .scope-clip img { filter: grayscale(0.75) brightness(0.65) contrast(1.1) blur(var(--blur, 0px)); }
 .scope-clip canvas { transform: scale(var(--zoom, 1)); }
 .scope-eye { opacity: 0.85; transition: opacity 400ms var(--ease); mix-blend-mode: screen; }
 .scope.no-eye .scope-eye { opacity: 0; }
@@ -936,9 +936,10 @@ void main(){
     float al=ba+a*(1.-ba);
     // attention bloom: where the pointer rests, drawn on the attention ramp, inside the tissue only
     float bd=distance(px,uBloom.xy);
-    float bf=exp(-bd*bd/(2.*78.*78.))*uBloom.z*step(y0+5.,yb)*fade*clamp(v*2.6,.4,1.);
-    bf=clamp(bf,0.,1.);
-    pre=pre*(1.-bf*.8)+att(bf)*bf*.8; al=max(al,bf*.8);
+    float g=exp(-bd*bd/(2.*64.*64.))*uBloom.z*step(y0+5.,yb)*fade;
+    float bf=clamp(g*(.82+.36*h1(cell+5.3)),0.,1.);
+    float bw=smoothstep(.03,.3,g)*.82;
+    pre=pre*(1.-bw)+att(bf)*bw; al=max(al,bw);
     float line=(1.-smoothstep(.0,1.6,abs(x-uScan)))*fade;
     float trail=step(x,uScan)*(1.-smoothstep(0.,70.,uScan-x))*.10*fade;
     vec3 lime=vec3(.843,.949,.353);
@@ -1000,7 +1001,7 @@ function scanFrame(now) {
   s.light += (s.tlight - s.light) * k(0.1);
   s.sx += (s.tsx - s.sx) * k(s.sweep ? 0.045 : 0.12);
   s.wide += (s.twide - s.wide) * k(0.08);
-  s.bx += (s.tbx - s.bx) * k(0.08); s.by += (s.tby - s.by) * k(0.08); s.bs += (s.tbs - s.bs) * k(0.05);
+  s.bx += (s.tbx - s.bx) * k(0.08); s.by += (s.tby - s.by) * k(0.08); s.bs += (s.tbs - s.bs) * k(0.09);
   if (gl) gl.draw();
   const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.tlight - s.light) > 0.003 || Math.abs(s.tsx - s.sx) > 0.3 || Math.abs(s.twide - s.wide) > 0.003
     || Math.abs(s.tbx - s.bx) > 0.3 || Math.abs(s.tby - s.by) > 0.3 || Math.abs(s.tbs - s.bs) > 0.003;
@@ -1100,7 +1101,7 @@ function paintEye(img, id, canvas, mode) {
     } else {
       // Light only, for screen blending over the photo: black where the model is quiet,
       // a soft glow where it responds. Contour lines are added below.
-      const w = smooth(clamp((a - 0.16) / 0.84, 0, 1)) * 0.9, c = ramp(a);
+      const w = 0.3 + smooth(clamp((a - 0.16) / 0.84, 0, 1)) * 0.4, c = ramp(a);
       D[k] = c[0] * w; D[k + 1] = c[1] * w; D[k + 2] = c[2] * w; D[k + 3] = 255;
       if (A) A[y * N + x] = a;
     }
