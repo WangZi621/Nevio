@@ -13,7 +13,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#131917">
+<meta name="theme-color" content="#ECECEC">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,24 +21,32 @@
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
 <style>
 :root {
-  /* Surgical: operating-room green (the complement of red tissue), bone, sage and one warm light */
-  --ground: #131917;
-  --raised: #1B2320;
-  --raised-2: #222C28;
-  --line: #2A3531;
-  --line-2: #3A4843;
-  --edge: #7E8E87;
-  --text: #E8E6DE;
-  --text-2: #B9BEB6;
-  --muted: #8F9891;
-  --dim: #6F7A74;
-  --led: #F7A98B;
-  --led-hi: #FFCDB9;
-  --led-ink: #1C1310;
-  --sage: #9FC7B8;
-  --urgent: #FF6A5C;
-  --review: #F2B04A;
-  --routine: #5FD0BE;
+  /* Clinic light, the research app's own colors: off-white ground under a dot lattice, white sheets,
+     ink for text, outlines and hard shadows, and cobalt as the one color that acts */
+  --ground: #ECECEC;
+  --raised: #FFFFFF;
+  --raised-2: #F6F6F4;
+  --line: #D5D7DC;
+  --line-2: #B9BCC3;
+  --edge: #0B0E14;
+  --text: #0B0E14;
+  --head-ink: #14213D;
+  --text-2: #363B44;
+  --muted: #4C525D;
+  --dim: #6B7079;
+  --led: #1B4FD8;
+  --led-hi: #14213D;
+  --led-ink: #FFFFFF;
+  --sage: #1B4FD8;
+  --phone: #0B0E14;
+  --shadow: #0B0E14;
+  --ghost: #E2E2E0;
+  --net: #14213D;
+  --net-hot: #1B4FD8;
+  --net-base: 0.30;
+  --urgent: #B42318;
+  --review: #9A4A06;
+  --routine: #1A7247;
 
   --font-display: "Anybody", "Arial Narrow", sans-serif;
   --font-body: "Bricolage Grotesque", system-ui, sans-serif;
@@ -60,10 +68,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--head); -webkit-text-size-adjust: 100%; interpolate-size: allow-keywords; }
 body { margin: 0; color: var(--text); font: 400 18px/1.6 var(--font-body); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--led);
-  background: var(--ground) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='90' viewBox='0 0 52 90'%3E%3Cpath d='M26 0 52 15v30L26 60 0 45V15zM26 60v30' fill='none' stroke='%239FC7B8' stroke-opacity='.07' stroke-width='1.2'/%3E%3C/svg%3E"); }
+  background: var(--ground) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48.5' viewBox='0 0 28 48.5'%3E%3Cg fill='%2314213D' fill-opacity='.3'%3E%3Ccircle cx='0' cy='0' r='1.15'/%3E%3Ccircle cx='28' cy='0' r='1.15'/%3E%3Ccircle cx='14' cy='24.25' r='1.15'/%3E%3Ccircle cx='0' cy='48.5' r='1.15'/%3E%3Ccircle cx='28' cy='48.5' r='1.15'/%3E%3C/g%3E%3C/svg%3E"); }
 html.has-net body { background-image: none; }
 img { display: block; max-width: 100%; height: auto; }
-h1, h2, h3 { margin: 0; font-family: var(--font-display); font-stretch: 62%; font-weight: 800; letter-spacing: 0; text-wrap: balance; }
+h1, h2, h3 { margin: 0; color: var(--head-ink); font-family: var(--font-display); font-stretch: 62%; font-weight: 800; letter-spacing: 0; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -82,24 +90,23 @@ a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1
 main, .site-foot { position: relative; z-index: 1; }
 
 /* Buttons: a tissue-cassette tab, with its 45 degree writing face cut into the corner */
-.btn { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 28px 0 24px; border: 0; background: none; font: 600 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color 200ms ease, transform 160ms var(--ease-out); }
-.btn::before, .btn::after { content: ""; position: absolute; inset: 0; z-index: -1; clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
-.btn::after { transform: scaleX(0); transform-origin: left center; transition: transform 320ms var(--ease-out); }
-.btn:active { transform: scale(0.97); }
-.btn-led { color: var(--led-ink); }
-.btn-led::before { background: var(--led); }
-.btn-led::after { background: var(--led-hi); }
-.btn-ghost { color: var(--text); }
-.btn-ghost::before { background: var(--edge); clip-path: polygon(evenodd, 0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%, 0 0, 1.5px 1.5px, 1.5px calc(100% - 1.5px), calc(100% - 1.5px) calc(100% - 1.5px), calc(100% - 1.5px) calc(var(--cut) + 0.6px), calc(100% - var(--cut) - 0.6px) 1.5px, 1.5px 1.5px); }
-.btn-ghost::after { background: var(--text); }
+.btn { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 28px 0 24px; border: 0; background: none; font: 600 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color 200ms ease, transform 160ms var(--ease-out), filter 160ms var(--ease-out); }
+.btn::before, .btn::after { content: ""; position: absolute; z-index: -1; }
+.btn::before { inset: 0; background: var(--edge); clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
+.btn::after { inset: 2px; clip-path: polygon(0 0, calc(100% - var(--cut) + 1.17px) 0, 100% calc(var(--cut) - 1.17px), 100% 100%, 0 100%); background: linear-gradient(var(--wipe), var(--wipe)) left / 0% 100% no-repeat, var(--fill); transition: background-size 320ms var(--ease-out); }
+.btn { filter: drop-shadow(4px 4px 0 var(--shadow)); }
+.btn:active { transform: translate(3px, 3px); filter: drop-shadow(1px 1px 0 var(--shadow)); }
+.btn-led { color: var(--led-ink); --fill: var(--led); --wipe: var(--led-hi); }
+.btn-ghost { color: var(--text); --fill: var(--raised); --wipe: var(--text); }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover::after { transform: scaleX(1); }
-  .btn-ghost:hover { color: var(--ground); }
+  .btn:hover { transform: translate(-2px, -2px); filter: drop-shadow(6px 6px 0 var(--shadow)); }
+  .btn:hover::after { background-size: 100% 100%; }
+  .btn-ghost:hover { color: var(--raised); }
 }
 
 /* Header */
 .site-head { position: fixed; inset: 0 0 auto; z-index: 40; border-bottom: 1px solid transparent; transition: background-color 300ms ease, border-color 300ms ease; }
-.site-head.is-solid, .site-head.is-open { background: var(--ground); border-color: var(--line); }
+.site-head.is-solid, .site-head.is-open { background: color-mix(in srgb, var(--ground) 95%, transparent); border-color: var(--line); }
 .head-in { display: flex; align-items: center; gap: 24px; height: var(--head); }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text); text-decoration: none; }
 .brand svg { width: 28px; height: 28px; flex: none; }
@@ -109,7 +116,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 1px; background: var(--sage); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
 @media (hover: hover) { .nav a:hover { color: var(--text); } .nav a:hover::after { transform: scaleX(1); } }
 .menu-btn { display: none; }
-.head-cta { height: 44px; padding: 0 22px 0 18px; font-size: 16px; --cut: 10px; }
+.head-cta { height: 44px; padding: 0 22px 0 18px; font-size: 16px; --cut: 10px; filter: drop-shadow(3px 3px 0 var(--shadow)); }
 @media (max-width: 860px) {
   .head-in { gap: 12px; }
   .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 0; background: transparent; box-shadow: inset 0 0 0 1.5px var(--edge); color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; }
@@ -134,7 +141,7 @@ html:not(.js) .hero-lens { display: none; }
 .hero h1 { font-size: var(--fs-display); line-height: 0.88; max-width: 8.4em; }
 .hero-sub { margin-top: 28px; max-width: 30em; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 36px; }
-.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(244, 239, 233, 0.16); font-size: var(--fs-small); color: var(--text-2); }
+.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: var(--fs-small); color: var(--text-2); }
 .hover-only { display: none; }
 @media (hover: hover) and (pointer: fine) { .hover-only { display: inline; } }
 @media (max-width: 640px) {
@@ -165,7 +172,9 @@ html:not(.js) .hero-lens { display: none; }
 
 /* Intro: the lens draws itself, the LED comes on, the spot comes into focus */
 .intro { display: none; }
-.js .intro { display: grid; position: fixed; inset: 0; z-index: 100; place-items: center; background: var(--ground); }
+.js .intro { display: grid; position: fixed; inset: 0; z-index: 100; place-items: center; }
+.intro-bg { position: absolute; inset: 0; background: var(--ground); }
+.intro-in { position: relative; }
 html.intro-done .intro { display: none; }
 .intro-in { display: flex; align-items: center; gap: 22px; transform-origin: 0 0; }
 .intro-mark { width: 104px; height: 104px; overflow: visible; }
@@ -216,7 +225,7 @@ html.intro-done .intro { display: none; }
 .inputs button.is-given { color: var(--text); }
 .inputs button.is-given .tick { background: var(--sage); box-shadow: none; }
 .inputs button.is-given .tick svg { opacity: 1; }
-.inputs button[aria-current="step"] { background: linear-gradient(90deg, rgba(159, 199, 184, 0.10), rgba(159, 199, 184, 0)); }
+.inputs button[aria-current="step"] { background: linear-gradient(90deg, color-mix(in srgb, var(--sage) 12%, transparent), transparent); }
 .inputs button[aria-current="step"] .label { font-weight: 600; }
 @media (hover: hover) { .inputs button:hover { color: var(--text); } }
 .scores { display: grid; gap: 18px; }
@@ -245,14 +254,18 @@ html.intro-done .intro { display: none; }
   .js .case-head .h2 { font-size: clamp(46px, 4.6vw, 72px); }
   .js .case-head .lead { font-size: 18px; }
   .js .scope { width: min(100%, 46vh, 470px); justify-self: start; }
-  .js .readout { gap: 22px; }
+  .js .readout { gap: 20px; }
+  .js .inputs button { min-height: 46px; padding: 4px 0; }
+  .js .vec-cells { height: 24px; }
 }
+@media (min-width: 960px) and (max-height: 710px) { .js .vec { display: none; } }
+@media (min-width: 960px) and (max-height: 780px) { .js .scores { gap: 12px; } .js .score .s-val { font-size: 30px; } .js .verdict { padding-top: 16px; } .js .vec-now { display: none; } }
 @media (max-width: 959px) { .case-grid { grid-template-columns: minmax(0, 1fr); } .scope { width: min(100%, 380px); } }
 
 /* How a visit works */
 .how { padding-top: var(--section); }
 .how-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
-.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 38px; background: #0B0F0D; box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(247, 169, 139, 0.22); }
+.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 38px; background: var(--phone); box-shadow: inset 0 0 0 1px #2A2F38, 10px 10px 0 -2px var(--ground), 10px 10px 0 0 var(--edge); }
 .phone-screen { position: relative; aspect-ratio: 624 / 1152; border-radius: 28px; overflow: hidden; background: #f2f3f5; }
 .phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); filter: blur(6px); transition: opacity 500ms var(--ease-out), transform 700ms var(--ease-out), filter 500ms var(--ease-out); }
 .phone-screen img.on { opacity: 1; transform: none; filter: none; }
@@ -278,7 +291,7 @@ html.intro-done .intro { display: none; }
   .how-steps li { color: var(--text); }
   .how-steps .n { color: var(--led); }
   .how-steps p { color: var(--text-2); }
-  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 32px; background: #0B0F0D; box-shadow: inset 0 0 0 1px var(--line-2); }
+  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 32px; background: var(--phone); box-shadow: inset 0 0 0 1px var(--line-2); }
   .step-shot img { border-radius: 24px; }
 }
 
@@ -372,7 +385,7 @@ details[open]::details-content { block-size: auto; }
 .field-f label { font-weight: 600; font-size: 16px; }
 .opt { font-weight: 400; color: var(--muted); }
 .field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 52px; padding: 0 14px; border: 0; border-radius: 0; background: var(--raised-2); box-shadow: inset 0 0 0 1px var(--edge); font-size: 17px; transition: box-shadow 150ms ease; }
-.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239FC7B8' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231B4FD8' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
 .field-f select option { background: var(--raised-2); color: var(--text); }
 .field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
 .field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--led); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--led); }
@@ -384,7 +397,8 @@ details[open]::details-content { block-size: auto; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
 .btn[disabled] { cursor: progress; color: var(--text); }
-.btn[disabled]::before { background: var(--line-2); }
+.btn[disabled]::after { --fill: var(--line); background-color: var(--line); }
+.btn[disabled] { color: var(--text); }
 .spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: var(--text); animation: spin 700ms linear infinite; }
 .btn.is-busy .spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -402,12 +416,60 @@ details[open]::details-content { block-size: auto; }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
 
 /* Footer */
-.site-foot { border-top: 1px solid var(--line-2); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); background: var(--ground); }
-.foot-word { display: block; padding-top: 56px; font: 800 clamp(120px, 24vw, 380px)/0.78 var(--font-display); font-stretch: 62%; color: var(--raised-2); letter-spacing: 0; user-select: none; }
+.site-foot { border-top: 1px solid var(--line-2); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); }
+.foot-word { display: block; padding-top: 56px; font: 800 clamp(120px, 24vw, 380px)/0.78 var(--font-display); font-stretch: 62%; color: var(--ghost); letter-spacing: 0; user-select: none; }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: 32px 48px; padding-block: 40px 56px; }
 .site-foot .brand { align-self: start; }
 .site-foot p + p { margin-top: 12px; }
 @media (max-width: 860px) { .foot-grid { grid-template-columns: minmax(0, 1fr); padding-block: 32px 40px; } }
+
+
+/* Specimens print as a 1-bit dither until you look closer */
+@property --d { syntax: "<length>"; inherits: false; initial-value: 0px; }
+.dith { position: absolute; inset: 7%; width: 86%; height: 86%; border-radius: 50%; image-rendering: pixelated; pointer-events: none;
+  -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--d), #000 calc(var(--d) + 1px));
+  mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--d), #000 calc(var(--d) + 1px));
+  transition: --d 720ms var(--ease-out); }
+.spec.dev .dith { --d: 420px; }
+.js .spec-lens { cursor: zoom-in; }
+.spec-lens svg { pointer-events: none; }
+
+/* The model's input, as 17 cells */
+.vec { display: grid; gap: 8px; }
+.vec-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font-size: var(--fs-small); color: var(--muted); }
+.vec-head span:first-child { color: var(--text); font-weight: 600; }
+.vec-now { font-variant-numeric: tabular-nums; }
+.vec-cells { display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: 3px; height: 28px; }
+.vec-cells i { position: relative; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
+.vec-cells i::after { content: ""; position: absolute; inset: 3px; background: var(--led); transform-origin: 50% 100%; transform: scaleY(var(--v, 0)); transition: transform 560ms var(--ease-in-out); }
+.vec-cells i.hit { box-shadow: inset 0 0 0 2px var(--text); }
+.vec-cells i:hover { box-shadow: inset 0 0 0 2px var(--led); }
+
+/* Rescoring: the LED sweeps once round the ring and a scan line passes over the spot */
+.scope .sweep { transform-origin: 50px 50px; opacity: 0; }
+.scan { position: absolute; left: 0; right: 0; top: 0; z-index: 1; height: 2px; background: var(--led); opacity: 0; pointer-events: none; }
+.b-arc { transform-box: view-box; transform-origin: 24px 24px; }
+
+/* Easter eggs */
+.foot-word { position: relative; }
+.foot-word canvas { position: absolute; left: 0; pointer-events: none; }
+.foot-word.is-ascii { color: transparent; }
+.psst { color: var(--muted); }
+kbd { font: inherit; font-weight: 600; color: var(--text); padding: 0 4px; box-shadow: inset 0 0 0 1px var(--line-2); }
+.toast { position: fixed; left: var(--side); bottom: 24px; z-index: 70; isolation: isolate; width: min(440px, calc(100vw - 2 * var(--side))); padding: 18px 22px 20px; color: var(--text); font-size: 16px; line-height: 1.5; filter: drop-shadow(4px 4px 0 var(--shadow)); visibility: hidden; opacity: 0; transform: translateY(14px); transition: opacity 180ms ease, transform 180ms var(--ease-out), visibility 0s 180ms; }
+.toast.on { visibility: visible; opacity: 1; transform: none; transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), visibility 0s; }
+.toast::before, .toast::after { content: ""; position: absolute; z-index: -1; }
+.toast::before { inset: 0; background: var(--edge); clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); }
+.toast::after { inset: 2px; background: var(--raised); clip-path: polygon(0 0, calc(100% - 16.83px) 0, 100% 16.83px, 100% 100%, 0 100%); }
+.toast b { display: block; margin-bottom: 4px; font: 800 30px/1 var(--font-display); font-stretch: 62%; color: var(--head-ink); }
+.toast b em { font-style: normal; color: var(--led); }
+.scope-cursor { position: fixed; left: 0; top: 0; z-index: 45; width: 150px; aspect-ratio: 1; pointer-events: none; display: none; transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -50%); }
+.scope-cursor svg { width: 100%; height: 100%; overflow: visible; }
+.scope-cursor .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
+html.scope-mode .scope-cursor { display: block; }
+html.scope-mode .hero-lens { opacity: 0; }
+html.scope-mode, html.scope-mode * { cursor: none !important; }
+html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor: auto !important; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -423,6 +485,7 @@ details[open]::details-content { block-size: auto; }
 <a class="skip" href="#main">Skip to content</a>
 <canvas id="net" aria-hidden="true"></canvas>
 <div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-bg"></div>
   <div class="intro-in">
     <svg class="intro-mark" viewBox="0 0 48 48"><circle class="i-ring" cx="24" cy="24" r="19" pathLength="1"/><path class="i-arc" d="M24 5 A19 19 0 0 1 41.2 15.9" pathLength="1"/><path class="i-spot" d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z"/></svg>
     <span class="intro-word"><span>n</span><span>e</span><span>v</span><span>i</span><span>o</span></span>
@@ -432,7 +495,7 @@ details[open]::details-content { block-size: auto; }
 <header class="site-head" id="site-head">
   <div class="wrap head-in">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#E8E6DE" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F7A98B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#E8E6DE"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" style="stroke:var(--text)" stroke-width="3.5"/><path class="b-arc" d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" style="stroke:var(--led)" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" style="fill:var(--text)"/></svg>
       <span>nevio</span>
     </a>
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -450,7 +513,7 @@ details[open]::details-content { block-size: auto; }
 <main id="main">
 
 <section class="hero" id="top" aria-labelledby="hero-h">
-  <div class="hero-lens" id="hero-lens" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" stroke="#E8E6DE" stroke-opacity="0.7" stroke-width="0.5"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" stroke="#F7A98B" stroke-width="1.6"/></g></svg></div>
+  <div class="hero-lens" id="hero-lens" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" style="stroke:var(--text)" stroke-opacity="0.7" stroke-width="0.5"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" style="stroke:var(--led)" stroke-width="1.6"/></g></svg></div>
   <div class="wrap hero-in">
     <h1 id="hero-h">Know which skin spots need a dermatologist first</h1>
     <p class="hero-sub">Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer. The clinician decides.</p>
@@ -471,14 +534,14 @@ details[open]::details-content { block-size: auto; }
     <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Every photo here was confirmed by biopsy, and none was used to train the model.</p>
   </div>
   <div class="wrap"><div class="spec-row" id="spec-row">
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec is-case"><div class="spec-lens"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/><path d="M50 5 A45 45 0 0 1 90.8 31" fill="none" stroke="#F7A98B" stroke-width="2"/></svg></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec is-case"><div class="spec-lens"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/><path d="M50 5 A45 45 0 0 1 90.8 31" fill="none" style="stroke:var(--led)" stroke-width="2"/></svg></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
   </div></div>
 </section>
 
@@ -492,17 +555,22 @@ details[open]::details-content { block-size: auto; }
             <p class="lead">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. Scroll or pick a step, and watch the pigment network behind the page turn irregular as melanoma rises.</p>
           </div>
           <figure class="scope" id="scope">
-            <div class="scope-clip"><img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ"></div>
-            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" stroke="#3A4843" stroke-width="0.6"/><g class="arc"><path d="M50 5.5 A44.5 44.5 0 0 1 90.33 31.2" fill="none" stroke="#F7A98B" stroke-width="1.5"/></g></svg>
+            <div class="scope-clip"><span class="scan" aria-hidden="true"></span><img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ"></div>
+            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" style="stroke:var(--line-2)" stroke-width="0.6"/><g class="arc"><path d="M50 5.5 A44.5 44.5 0 0 1 90.33 31.2" fill="none" style="stroke:var(--led)" stroke-width="1.5"/></g><g class="sweep"><path d="M50 5.5 A44.5 44.5 0 0 1 94.5 50" fill="none" style="stroke:var(--led)" stroke-width="3"/></g></svg>
           </figure>
         </div>
 
         <div class="readout">
           <div class="inputs" role="group" aria-label="Details given to the model">
-            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
-            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
-            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
-            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
+            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
+            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
+            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+          </div>
+
+          <div class="vec" aria-hidden="true">
+            <p class="vec-head"><span>The 17 numbers the model reads</span><span class="vec-now" id="vec-now">Blank details use neutral defaults</span></p>
+            <div class="vec-cells" id="vec-cells"></div>
           </div>
 
           <ul class="scores" aria-label="Nevio's scores">
@@ -684,7 +752,7 @@ details[open]::details-content { block-size: auto; }
     <span class="foot-word" aria-hidden="true">nevio</span>
     <div class="foot-grid">
       <a class="brand" href="#top" aria-label="Nevio, back to top">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#E8E6DE" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F7A98B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#E8E6DE"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" style="stroke:var(--text)" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" style="stroke:var(--led)" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" style="fill:var(--text)"/></svg>
         <span>nevio</span>
       </a>
       <div>
@@ -694,10 +762,13 @@ details[open]::details-content { block-size: auto; }
       <div>
         <p>Questions? Use the <a href="#pilot">pilot request form</a>.</p>
         <p>&copy; 2026 Nevio. Pennsylvania, USA.</p>
+        <p class="psst">Psst: type <kbd>scope</kbd> anywhere on the page.</p>
       </div>
     </div>
   </div>
 </footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="scope-cursor" id="scope-cursor" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" style="stroke:var(--text)" stroke-width="0.8"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" style="stroke:var(--led)" stroke-width="2.4"/></g></svg></div>
 
 <script>
 {
@@ -743,14 +814,17 @@ for (const svg of $$('svg[data-ticks]')) {
   svg.insertBefore(g, svg.firstChild);
 }
 
-// ---- the pigment network: the mesh dermatologists read under the scope, drawn behind the page ----
-// Typical networks are regular (benign moles); atypical ones have uneven lines and holes (a melanoma
-// sign). The pointer lights it like the scope's LED, the hero lens magnifies it, and the case scene
-// drives `atypia` from the real melanoma score.
-const hero = $('.hero'), heroLens = $('#hero-lens');
-const netState = { mx: -999, my: -999, tx: -999, ty: -999, light: 0, tlight: 0, atypia: 0.12, tatypia: 0.12,
-  lx: 0, ly: 0, ltx: 0, lty: 0, lensOn: 0, tlensOn: 0, drawing: false };
+// ---- the lattice: still until the pointer touches it ----
+// A triangular lattice of dots (Stryde's ground). Near the pointer the dots swell and bulge like
+// glass, and struts light up between them; a click or tap sends a ripple through it. The hero lens
+// shows what a dermatoscope shows underneath: the pigment network. The case scene drives `atypia`
+// from the real melanoma score, so the lattice turns irregular, the way an atypical network does.
+const hero = $('.hero'), heroLens = $('#hero-lens'), scopeCursor = $('#scope-cursor');
+let scopeOn = false;
+const netState = { mx: -999, my: -999, tx: -999, ty: -999, light: 0, tlight: 0, atypia: 0, tatypia: 0,
+  lx: 0, ly: 0, ltx: 0, lty: 0, lensOn: 0, tlensOn: 0, drawing: false, ripples: [] };
 let lensR = heroLens.offsetWidth * 0.44;
+const hexRgb = h => { h = h.trim().replace('#', ''); if (h.length === 3) h = h.replace(/./g, c => c + c); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255); };
 const net = (() => {
   const canvas = $('#net');
   const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
@@ -762,37 +836,52 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform float uAtypia; uniform float uScroll;
-uniform vec3 uLens; uniform float uLensOn;
+uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform float uAtypia;
+uniform vec3 uLens; uniform float uLensOn; uniform vec3 uCol; uniform vec3 uHot; uniform float uBase;
+uniform vec4 uRip[4];
+const float S=28.;
 vec2 h2(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p)*43758.5453);}
 float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);float a=h2(i).x,b=h2(i+vec2(1.,0.)).x,c=h2(i+vec2(0.,1.)).x,d=h2(i+vec2(1.,1.)).x;return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
+float network(vec2 q){
+  vec2 p=q/18.,ip=floor(p),fp=fract(p);float f1=9.,f2=9.;
+  for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 g=vec2(float(i),float(j)),c=ip+g;
+    vec2 o=vec2(.25+.5*mod(c.y,2.),.5)+(h2(c)-.5)*(.42+.5*uAtypia);float d=length(g+o-fp);
+    if(d<f1){f2=f1;f1=d;}else if(d<f2){f2=d;}}
+  float w=.035+.05*n2(p*.8)+uAtypia*.12*n2(p*.45);return (1.-smoothstep(w,w+.07,f2-f1))*(.55+.45*n2(p*1.7+3.));
+}
 void main(){
   vec2 px=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;
+  float dm=distance(px,uMouse);
+  float near=(1.-smoothstep(0.,200.,dm))*uLight;
+  vec2 q=mix(px,uMouse,near*near*.32);
+  float rip=0.;
+  for(int k=0;k<4;k++){vec4 r=uRip[k];if(r.w>0.){float d=distance(px,r.xy);float front=r.z*560.;
+    float band=exp(-pow((d-front)/46.,2.))*(1.-r.z/1.5)*r.w;rip+=band;q+=normalize(px-r.xy+.001)*band*9.;}}
+  float v=q.y/(S*.8660254),u=q.x/S-v*.5;vec2 b=floor(vec2(u,v));float dd=99.;
+  for(int j=0;j<2;j++)for(int i=0;i<2;i++){vec2 c=b+vec2(float(i),float(j));
+    vec2 pt=vec2((c.x+c.y*.5)*S,c.y*S*.8660254)+(h2(c)-.5)*S*.62*uAtypia;dd=min(dd,distance(q,pt));}
+  float r0=1.15+near*2.4+rip*1.6;
+  float dot_=1.-smoothstep(r0-.6,r0+.6,dd);
+  float h=S*.8660254;
+  float l1=abs(fract(q.y/h+.5)-.5)*h;
+  float l2=abs(fract(dot(q,vec2(.8660254,-.5))/h+.5)-.5)*h;
+  float l3=abs(fract(dot(q,vec2(.8660254,.5))/h+.5)-.5)*h;
+  float strut=(1.-smoothstep(.35,1.1,min(l1,min(l2,l3))))*(1.-uAtypia);
   float ld=distance(px,uLens.xy);
   float inL=(1.-smoothstep(uLens.z-1.5,uLens.z+1.5,ld))*uLensOn;
-  float mag=clamp(uLens.z/72.,1.5,2.4);
-  vec2 q=mix(px,uLens.xy+(px-uLens.xy)/mag,inL);
-  float dm=distance(px,uMouse);
-  q=mix(q,uMouse,(1.-smoothstep(0.,230.,dm))*uLight*(1.-uLensOn)*.2);
-  q.y+=uScroll;
-  vec2 p=q/30.;
-  vec2 ip=floor(p),fp=fract(p);
-  float f1=9.,f2=9.;
-  for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){
-    vec2 g=vec2(float(i),float(j)),c=ip+g;
-    vec2 o=vec2(.25+.5*mod(c.y,2.),.5)+(h2(c)-.5)*(.16+.66*uAtypia);
-    float d=length(g+o-fp);
-    if(d<f1){f2=f1;f1=d;}else if(d<f2){f2=d;}
-  }
-  float e=f2-f1;
-  float w=.045+uAtypia*.13*n2(p*.45);
-  float line=1.-smoothstep(w,w+.05,e);
-  float smudge=uAtypia*smoothstep(.6,.95,n2(p*.22+7.))*.5;
-  float glow=(1.-smoothstep(0.,270.,dm))*uLight*(1.-.7*uLensOn);
-  vec3 sage=vec3(.624,.780,.722), warm=vec3(.969,.663,.545);
-  vec3 col=mix(sage,warm,max(glow*glow*.8,inL));
-  float a=line*(.07+.24*glow+.5*inL)+smudge*(1.-line)*.06+inL*.05*(1.-ld/max(uLens.z,1.));
-  gl_FragColor=vec4(col*a,a);
+  float mag=clamp(uLens.z/80.,1.2,2.2);
+  float netL=0.;
+  if(inL>0.){netL=network(uLens.xy+(px-uLens.xy)/mag);}
+  float hot=clamp(near*1.1+rip*.9,0.,1.);
+  vec3 col=mix(uCol,uHot,hot);
+  float a=clamp(dot_*(uBase+.55*near+.7*rip)+strut*(.32*near+.35*rip),0.,1.);
+  float rim=smoothstep(.72,1.,ld/max(uLens.z,1.));
+  vec3 lc=mix(mix(vec3(1.),uHot,netL*.9),uCol,rim*.18);
+  float la=inL*.94;
+  vec3 pre=lc*la+col*a*(1.-la);
+  float al=la+a*(1.-la);
+  float g=h2(floor(px*uDpr)+.5).x*.075;
+  gl_FragColor=vec4(pre+uCol*g*(1.-al),al+g*(1.-al));
 }`;
   const sh = (type, src) => { const x = gl.createShader(type); gl.shaderSource(x, src); gl.compileShader(x); return gl.getShaderParameter(x, gl.COMPILE_STATUS) ? x : null; };
   const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
@@ -804,42 +893,68 @@ void main(){
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const u = n => gl.getUniformLocation(prog, n);
-  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), atypia: u('uAtypia'), scroll: u('uScroll'), lens: u('uLens'), lensOn: u('uLensOn') };
-  let dpr = 1, w = 0, h = 0;
+  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), atypia: u('uAtypia'), lens: u('uLens'), lensOn: u('uLensOn'), col: u('uCol'), hot: u('uHot'), base: u('uBase'), rip: u('uRip') };
+  let dpr = 1, w = 0, h = 0, colors = null;
+  function theme() {
+    const cs = getComputedStyle(document.documentElement);
+    colors = { col: hexRgb(cs.getPropertyValue('--net')), hot: hexRgb(cs.getPropertyValue('--net-hot')), base: parseFloat(cs.getPropertyValue('--net-base')) || 0.1 };
+  }
   function size() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5); w = window.innerWidth; h = window.innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
-  size();
+  size(); theme();
   document.documentElement.classList.add('has-net');
-  function draw(lensX, lensY) {
+  const rip = new Float32Array(16);
+  function draw(lensX, lensY, lensRad, lensOn, now) {
     const s = netState;
     gl.uniform2f(U.res, w, h); gl.uniform1f(U.dpr, dpr);
     gl.uniform2f(U.mouse, s.mx, s.my); gl.uniform1f(U.light, s.light); gl.uniform1f(U.atypia, s.atypia);
-    gl.uniform3f(U.lens, lensX, lensY, lensR); gl.uniform1f(U.lensOn, s.lensOn);
-    gl.uniform1f(U.scroll, reduce.matches ? 0 : (window.scrollY * 0.22) % 6000);
+    gl.uniform3f(U.lens, lensX, lensY, lensRad); gl.uniform1f(U.lensOn, lensOn);
+    gl.uniform3fv(U.col, colors.col); gl.uniform3fv(U.hot, colors.hot); gl.uniform1f(U.base, colors.base);
+    rip.fill(0);
+    s.ripples.slice(-4).forEach((r, i) => { rip[i * 4] = r.x; rip[i * 4 + 1] = r.y; rip[i * 4 + 2] = (now - r.t) / 1000; rip[i * 4 + 3] = 1; });
+    gl.uniform4fv(U.rip, rip);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
-  return { draw, size };
+  return { draw, size, theme };
 })();
-function frame() {
-  const s = netState, k = reduce.matches ? 1 : 0.14;
+// Smoothing per 60 Hz frame, scaled by the real frame time so slow machines settle just as fast.
+let lastFrame = 0;
+function frame(now) {
+  const s = netState, dt = Math.min(100, lastFrame ? now - lastFrame : 16.7) / 16.7; lastFrame = now;
+  const ease = r => reduce.matches ? 1 : 1 - Math.pow(1 - r, dt), k = ease(0.14);
   s.mx += (s.tx - s.mx) * k; s.my += (s.ty - s.my) * k;
   s.lx += (s.ltx - s.lx) * k; s.ly += (s.lty - s.ly) * k;
-  s.light += (s.tlight - s.light) * (reduce.matches ? 1 : 0.08);
-  s.atypia += (s.tatypia - s.atypia) * (reduce.matches ? 1 : 0.06);
-  s.lensOn += (s.tlensOn - s.lensOn) * (reduce.matches ? 1 : 0.07);
+  s.light += (s.tlight - s.light) * ease(0.08);
+  s.atypia += (s.tatypia - s.atypia) * ease(0.06);
+  s.lensOn += (s.tlensOn - s.lensOn) * ease(0.07);
+  s.ripples = s.ripples.filter(r => now - r.t < 1500);
   const hr = hero.getBoundingClientRect();
   heroLens.style.setProperty('--x', s.lx.toFixed(1) + 'px');
   heroLens.style.setProperty('--y', s.ly.toFixed(1) + 'px');
   heroLens.style.setProperty('--turn', ((s.lx / Math.max(1, hr.width)) * 160 - 60).toFixed(1) + 'deg');
-  if (net) net.draw(hr.left + s.lx, hr.top + s.ly);
-  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.ltx - s.lx) > 0.3 || Math.abs(s.lty - s.ly) > 0.3
+  if (scopeOn) {
+    scopeCursor.style.setProperty('--x', s.mx.toFixed(1) + 'px');
+    scopeCursor.style.setProperty('--y', s.my.toFixed(1) + 'px');
+    scopeCursor.style.setProperty('--turn', ((s.mx / Math.max(1, window.innerWidth)) * 200 - 60).toFixed(1) + 'deg');
+  }
+  if (net) {
+    if (scopeOn) net.draw(s.mx, s.my, scopeCursor.offsetWidth * 0.44, 1, now);
+    else net.draw(hr.left + s.lx, hr.top + s.ly, lensR, s.lensOn, now);
+  }
+  const busy = s.ripples.length || Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.ltx - s.lx) > 0.3 || Math.abs(s.lty - s.ly) > 0.3
     || Math.abs(s.tlight - s.light) > 0.002 || Math.abs(s.tatypia - s.atypia) > 0.002 || Math.abs(s.tlensOn - s.lensOn) > 0.002;
-  if (busy) requestAnimationFrame(frame); else s.drawing = false;
+  if (busy) requestAnimationFrame(frame); else { s.drawing = false; lastFrame = 0; }
 }
 function wake() { if (!netState.drawing) { netState.drawing = true; requestAnimationFrame(frame); } }
+// A click or tap on the page (not on a control) sends a ripple through the lattice.
+document.addEventListener('pointerdown', e => {
+  if (!net || reduce.matches || e.target.closest('a, button, input, select, textarea, label, summary, .form-card')) return;
+  netState.ripples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+  wake();
+});
 
 // ---- hero: a lens over the lattice that follows the pointer and rests clear of the words ----
 function restPoint() {
@@ -907,7 +1022,7 @@ else {
     const dx = to.left - (box.left + (from.left - box.left) * sc), dy = to.top - (box.top + (from.top - box.top) * sc);
     const move = q('.intro-in').animate([{ transform: 'none' }, { transform: `translate(${dx}px, ${dy}px) scale(${sc})` }], { duration: 720, easing: MOVE, fill: 'forwards' });
     anims.push(move);
-    anims.push(intro.animate([{ backgroundColor: 'rgb(19, 25, 23)' }, { backgroundColor: 'rgba(19, 25, 23, 0)' }], { duration: 560, delay: 160, easing: 'ease', fill: 'forwards' }));
+    anims.push(q('.intro-bg').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 560, delay: 160, easing: 'ease', fill: 'forwards' }));
     setTimeout(enterHero, 300);
     move.onfinish = endIntro;
   }, 1420);
@@ -917,6 +1032,27 @@ else {
 }
 
 // ---- the case: real model outputs as details are added (ISIC_5700648) ----
+// What the patient branch actually receives at each step (encodeMetadata in the research app).
+// Blank details are filled with neutral defaults: age 60, size 6.1 mm, skin type 3, mole "unsure".
+const VEC_NAMES = ['Sex is male', 'Age, scaled', 'Age under 35', 'Age 35 to 49', 'Age 50 to 64', 'Age 65 or older',
+  'Site: front of torso', 'Site: head or neck', 'Site: side of torso', 'Site: leg or foot', 'Site: mouth or genitals',
+  'Site: palm or sole', 'Site: back', 'Site: arm or hand', 'Size, scaled', 'Skin type, scaled', 'Looks like a mole'];
+const VECS = (() => {
+  const v0 = Array(17).fill(0); v0[1] = 0.0946; v0[4] = 1; v0[14] = 0.122; v0[15] = 0.5; v0[16] = 0.5;
+  const v1 = v0.slice(); v1[16] = 1;
+  const v2 = v1.slice(); v2[1] = 0.3923; v2[4] = 0; v2[5] = 1;
+  const v3 = v2.slice(); v3[7] = 1;
+  return [v0, v1, v2, v3];
+})();
+const vecCells = $('#vec-cells'), vecNow = $('#vec-now'), VEC_REST = vecNow.textContent;
+vecCells.innerHTML = VEC_NAMES.map((n, i) => `<i data-i="${i}"></i>`).join('');
+const cells = [...vecCells.children];
+let vecHover = -1;
+function vecLabel(i) { return i < 0 ? VEC_REST : `${VEC_NAMES[i]}: ${VECS[Math.max(0, current)][i].toFixed(2)}`; }
+cells.forEach((c, i) => {
+  c.addEventListener('pointerenter', () => { vecHover = i; vecNow.textContent = vecLabel(i); });
+  c.addEventListener('pointerleave', () => { vecHover = -1; vecNow.textContent = VEC_REST; });
+});
 const STEPS = [
   { mel: 6,  ben: 18, oth: 75, lead: 'oth', tone: 'review', word: 'Refer for review', why: 'Melanoma 6% is under the 27.8% cutoff. Other skin cancer scores highest.' },
   { mel: 74, ben: 24, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 74%, over the 27.8% cutoff.' },
@@ -937,7 +1073,7 @@ function tween(el, to, ms, from = Number(el.textContent)) {
   };
   requestAnimationFrame(tick);
 }
-let current = -1, swap = null;
+let current = -1, stepPrev = 0, swap = null;
 function showStep(i) {
   if (i === current) return;
   const first = current === -1;
@@ -960,12 +1096,24 @@ function showStep(i) {
     swap = verdict.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(6px)' }], { duration: 120, easing: 'ease-in', fill: 'forwards' });
     swap.onfinish = () => { apply(); swap = verdict.animate([{ opacity: 0, filter: 'blur(6px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 260, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' }); };
   }
+  const vec = VECS[i], prev = first ? null : VECS[stepPrev];
+  cells.forEach((c, j) => {
+    c.style.setProperty('--v', vec[j]);
+    c.classList.toggle('hit', !!prev && prev[j] !== vec[j]);
+  });
+  if (vecHover >= 0) vecNow.textContent = vecLabel(vecHover);
+  stepPrev = i;
+  if (!first && !reduce.matches && scope.animate) {
+    scope.querySelector('.sweep').animate([{ transform: 'rotate(0deg)', opacity: 1 }, { transform: 'rotate(330deg)', opacity: 1, offset: 0.8 }, { transform: 'rotate(360deg)', opacity: 0 }], { duration: 760, easing: 'cubic-bezier(0.77, 0, 0.175, 1)' });
+    const h = scope.querySelector('.scope-clip').offsetHeight;
+    scope.querySelector('.scan').animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${h}px)`, opacity: 1, offset: 0.9 }, { transform: `translateY(${h}px)`, opacity: 0 }], { duration: 700, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
+  }
   updateAtypia();
 }
 function updateAtypia() {
   const r = caseSection.getBoundingClientRect(), vh = window.innerHeight;
   const inCase = r.top < vh * 0.5 && r.bottom > vh * 0.5;
-  netState.tatypia = inCase && current >= 0 ? 0.12 + 0.88 * (STEPS[current].mel / 100) : 0.12;
+  netState.tatypia = inCase && current >= 0 ? 0.9 * (STEPS[current].mel / 100) : 0;
   wake();
 }
 const pinned = window.matchMedia('(min-width: 960px) and (min-height: 680px)');
@@ -999,11 +1147,13 @@ statement.innerHTML = statement.textContent.split(' ').map(w => `<span class="w"
 const words = $$('.statement .w');
 
 // ---- one scroll loop for every scroll-linked scene ----
+const brandArc = $('.site-head .b-arc');
 let ticking = false;
 function onScroll() {
   ticking = false;
   const vh = window.innerHeight;
   head.classList.toggle('is-solid', window.scrollY > 24);
+  brandArc.style.transform = `rotate(${(window.scrollY / Math.max(1, document.documentElement.scrollHeight - vh)) * 360}deg)`;
   netState.tlensOn = document.documentElement.classList.contains('entered') && hero.getBoundingClientRect().bottom > 0 ? 1 : 0;
   if (pinned.matches) {
     const p = sceneProgress(caseTrack);
@@ -1039,6 +1189,184 @@ if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { onSeen(e.target); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
   watched.forEach(el => io.observe(el));
 } else watched.forEach(onSeen);
+
+
+// ---- specimens: printed as a 1-bit ordered dither; they develop where you look ----
+const BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22,
+  3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
+const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+function dither(fig) {
+  const lens = fig.querySelector('.spec-lens'), img = lens.querySelector('img');
+  const cv = document.createElement('canvas'); cv.className = 'dith'; cv.setAttribute('aria-hidden', 'true');
+  let px = null, n = 0, drawn = false;
+  function prepare() {
+    const size = img.getBoundingClientRect().width || 200, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    n = Math.max(32, Math.round(size / 3));
+    const off = document.createElement('canvas'); off.width = off.height = n;
+    const o = off.getContext('2d', { willReadFrequently: true });
+    o.drawImage(img, 0, 0, n, n);
+    let d; try { d = o.getImageData(0, 0, n, n).data; } catch (err) { return false; }
+    const lum = new Float32Array(n * n);
+    for (let i = 0; i < n * n; i++) lum[i] = (0.2126 * d[i * 4] + 0.7152 * d[i * 4 + 1] + 0.0722 * d[i * 4 + 2]) / 255;
+    const sorted = Float32Array.from(lum).sort(), lo = sorted[Math.floor(n * n * 0.03)], hi = sorted[Math.floor(n * n * 0.97)];
+    px = lum.map(v => clamp((v - lo) / Math.max(0.05, hi - lo), 0, 1));
+    cv.width = cv.height = Math.round(n * 3 * dpr);
+    lens.insertBefore(cv, lens.querySelector('svg'));
+    return true;
+  }
+  function paint(upto) {
+    const ctx = cv.getContext('2d'), c = cv.width / n, rows = Math.ceil(n * upto);
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, cv.width, Math.ceil(rows * c));
+    ctx.fillStyle = fig.classList.contains('is-case') ? '#1B4FD8' : '#14213D';
+    for (let y = 0; y < rows; y++) for (let x = 0; x < n; x++) {
+      if (px[y * n + x] < (BAYER[(y & 7) * 8 + (x & 7)] + 0.5) / 64) ctx.fillRect(Math.floor(x * c), Math.floor(y * c), Math.ceil(c), Math.ceil(c));
+    }
+  }
+  function print() {
+    if (drawn || !px) return; drawn = true;
+    if (reduce.matches) { paint(1); return; }
+    const t0 = performance.now();
+    const step = now => { const p = Math.min(1, (now - t0) / 900); paint(p); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  const aim = e => {
+    const r = cv.getBoundingClientRect();
+    cv.style.setProperty('--mx', (e ? e.clientX - r.left : r.width / 2) + 'px');
+    cv.style.setProperty('--my', (e ? e.clientY - r.top : r.height / 2) + 'px');
+  };
+  const ready = () => { if (!prepare()) return; fig._print = print; if (fig._seen) print(); };
+  if (img.complete && img.naturalWidth) ready(); else img.addEventListener('load', ready, { once: true });
+  lens.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { aim(e); fig.classList.add('dev'); } });
+  lens.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { aim(e); fig.classList.remove('dev'); } });
+  lens.addEventListener('click', e => { if (!fine.matches) { aim(e); fig.classList.toggle('dev'); } });
+}
+const specs = $$('.spec');
+specs.forEach(dither);
+if ('IntersectionObserver' in window) {
+  const sio = new IntersectionObserver(es => es.forEach(e => {
+    const fig = e.target;
+    if (e.isIntersecting) { fig._seen = true; fig._print?.(); }
+  }), { threshold: 0.3 });
+  specs.forEach(f => sio.observe(f));
+  // On touch screens there is no pointer to look with, so a spot develops while it sits mid-screen.
+  const mid = new IntersectionObserver(es => es.forEach(e => { if (!fine.matches) e.target.classList.toggle('dev', e.isIntersecting); }), { rootMargin: '-38% 0px -38% 0px' });
+  specs.forEach(f => mid.observe(f));
+} else specs.forEach(f => { f._seen = true; f._print?.(); });
+
+// ---- footer: the wordmark in ASCII, built from the evidence numbers; the pointer stirs it ----
+(() => {
+  const box = $('.foot-word'); if (!box) return;
+  const cv = document.createElement('canvas'); cv.setAttribute('aria-hidden', 'true');
+  const ctx = cv.getContext('2d');
+  let CW = 9, CH = 13, FS = 12;
+  const NUMS = '0.940 93.2 78.6 90.0 81.5 27.8 9080 '.replace(/ /g, '·'), RAMP = ' .:-=+*#%@';
+  let cols = 0, rows = 0, cov = null, W = 0, H = 0, dpr = 1, mx = -999, my = -999, heat = 0, theat = 0, running = false, last = 0;
+  function layout() {
+    const cs = getComputedStyle(box), pad = parseFloat(cs.paddingTop);
+    W = box.clientWidth; H = box.clientHeight - pad; dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const small = W < 700; CW = small ? 5 : 9; CH = small ? 7 : 13; FS = small ? 7 : 12;
+    if (W < 40 || H < 20) return;
+    cv.style.top = pad + 'px'; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cols = Math.floor(W / CW); rows = Math.floor(H / CH);
+    const off = document.createElement('canvas'); off.width = cols; off.height = rows;
+    const o = off.getContext('2d', { willReadFrequently: true });
+    o.font = `800 ${parseFloat(cs.fontSize)}px Anybody, sans-serif`;
+    if ('fontStretch' in o) o.fontStretch = 'extra-condensed';
+    const range = document.createRange(); range.selectNodeContents(box);
+    const tr = range.getBoundingClientRect(), br = box.getBoundingClientRect();
+    const m = o.measureText('nevio'), sx = m.width ? tr.width / m.width : 1;
+    const top = m.actualBoundingBoxAscent, bottom = m.actualBoundingBoxDescent;
+    o.setTransform(sx / CW, 0, 0, 1 / CH, 0, 0);
+    o.fillText('nevio', (tr.left - br.left) / sx, (H - (top + bottom)) / 2 + top);
+    const d = o.getImageData(0, 0, cols, rows).data;
+    cov = new Float32Array(cols * rows);
+    for (let i = 0; i < cols * rows; i++) cov[i] = d[i * 4 + 3] / 255;
+    box.append(cv); box.classList.add('is-ascii');
+    draw(true);
+  }
+  function draw(settle) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.font = `700 ${FS}px "Bricolage Grotesque", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const R = CW > 6 ? 130 : 80;
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const i = y * cols + x, c = cov[i], cx = x * CW + CW / 2, cy = y * CH + CH / 2;
+      const near = settle ? 0 : heat * Math.max(0, 1 - Math.hypot(cx - mx, cy - my) / R);
+      if (c < 0.12 && near < 0.2) continue;
+      let ch;
+      if (near > 0.05 && Math.random() < near * 0.7) ch = RAMP[1 + Math.floor(Math.random() * 9)];
+      else if (c > 0.8) ch = NUMS[i % NUMS.length];
+      else if (c >= 0.12) ch = RAMP[Math.min(9, 1 + Math.floor(c * 8))];
+      else ch = '.';
+      ctx.fillStyle = near > 0.06 ? `rgba(27, 79, 216, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(20, 33, 61, ${c > 0.8 ? 0.62 : 0.4})`;
+      ctx.fillText(ch, cx, cy);
+    }
+  }
+  function loop(now) {
+    heat += (theat - heat) * 0.12;
+    if (now - last > 50) { draw(false); last = now; }
+    if (heat > 0.01 || theat) requestAnimationFrame(loop); else { running = false; draw(true); }
+  }
+  const foot = $('.site-foot');
+  foot.addEventListener('pointermove', e => {
+    if (!cov || reduce.matches) return;
+    const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
+    theat = my > -80 && my < H + 80 ? 1 : 0;
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  });
+  foot.addEventListener('pointerleave', () => { theat = 0; });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 200); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(layout);
+})();
+
+// ---- easter eggs: type scope, or abcde; big numbers and names re-read themselves on hover ----
+const toastEl = $('#toast');
+let toastT;
+function toast(html, ms = 6000) {
+  toastEl.innerHTML = html; toastEl.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), ms);
+}
+function setScope(on) {
+  scopeOn = on;
+  document.documentElement.classList.toggle('scope-mode', on);
+  toast(on ? '<b>Scope <em>on</em></b>The lens follows you around the page now. Type scope again to put it down.'
+    : '<b>Scope off</b>Back in its case.', on ? 6000 : 2400);
+  if (on && netState.mx < -900) { netState.mx = netState.tx = window.innerWidth / 2; netState.my = netState.ty = window.innerHeight / 2; }
+  netState.tlight = 1; wake();
+}
+let typed = '';
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1 || e.target.closest('input, textarea, select, [contenteditable]')) return;
+  typed = (typed + e.key.toLowerCase()).slice(-8);
+  if (typed.endsWith('scope')) { typed = ''; setScope(!scopeOn); }
+  else if (typed.endsWith('abcde')) {
+    typed = '';
+    toast('<b>You found <em>ABCDE</em></b>Asymmetry, Border, Color, Diameter over 6 mm, Evolving. The checklist many clinicians learn for spotting melanoma.', 9000);
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (scopeOn) setScope(false); else toastEl.classList.remove('on'); } });
+const SCRAMBLE_D = '0123456789', SCRAMBLE_L = 'abcdefghijklmnopqrstuvwxyz';
+for (const el of $$('.sheet dd, .facts dt, .people b, .spec b')) {
+  const text = el.textContent;
+  el.setAttribute('aria-label', text);
+  let busy = false;
+  el.addEventListener('pointerenter', e => {
+    if (e.pointerType !== 'mouse' || reduce.matches || busy) return;
+    busy = true; const t0 = performance.now();
+    const tick = now => {
+      const p = Math.min(1, (now - t0) / 520), keep = Math.floor(p * text.length);
+      el.textContent = [...text].map((ch, i) => {
+        if (i < keep || !/[0-9a-z]/i.test(ch)) return ch;
+        const set = /[0-9]/.test(ch) ? SCRAMBLE_D : SCRAMBLE_L, r = set[Math.floor(Math.random() * set.length)];
+        return ch === ch.toUpperCase() && /[a-z]/i.test(ch) ? r.toUpperCase() : r;
+      }).join('');
+      if (p < 1) requestAnimationFrame(tick); else { el.textContent = text; busy = false; }
+    };
+    requestAnimationFrame(tick);
+  });
+}
+console.log('%c\n    .-\"\"\"\"-.\n   /  .--.  \\\n  |  ( ## )  |   nevio\n   \\  \'--\'  /    skin spot triage, research stage\n    \'-....-\'\n', 'color:#1B4FD8;font-weight:700');
+console.log('Looking under the hood? The model runs in the browser and photos never leave the device. Try typing scope or abcde on the page.');
 
 // ---- pilot form ----
 const form = $('#pilot-form');
