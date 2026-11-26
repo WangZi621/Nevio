@@ -13,33 +13,32 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#100D12">
+<meta name="theme-color" content="#131917">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="img/case-wide.jpg" media="(min-aspect-ratio: 4/5)" fetchpriority="high">
-<link rel="preload" as="image" href="img/case-tall.jpg" media="(max-aspect-ratio: 4/5)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,600..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..700&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
 <style>
 :root {
-  /* Scope: the dark barrel, skin under the LED, and the ink of the marker */
-  --ground: #100D12;
-  --raised: #19141B;
-  --raised-2: #221B25;
-  --line: #2E2531;
-  --line-2: #443849;
-  --edge: #85778A;
-  --text: #F4EFE9;
-  --text-2: #C6BBC1;
-  --muted: #9A8E98;
-  --led: #FFD43B;
-  --led-hi: #FFF1B8;
-  --led-ink: #161004;
-  --skin: #F6B49A;
-  --urgent: #FF5A5F;
-  --review: #FF9A3C;
-  --routine: #3CD3BD;
+  /* Surgical: operating-room green (the complement of red tissue), bone, sage and one warm light */
+  --ground: #131917;
+  --raised: #1B2320;
+  --raised-2: #222C28;
+  --line: #2A3531;
+  --line-2: #3A4843;
+  --edge: #7E8E87;
+  --text: #E8E6DE;
+  --text-2: #B9BEB6;
+  --muted: #8F9891;
+  --dim: #6F7A74;
+  --led: #F7A98B;
+  --led-hi: #FFCDB9;
+  --led-ink: #1C1310;
+  --sage: #9FC7B8;
+  --urgent: #FF6A5C;
+  --review: #F2B04A;
+  --routine: #5FD0BE;
 
   --font-display: "Anybody", "Arial Narrow", sans-serif;
   --font-body: "Bricolage Grotesque", system-ui, sans-serif;
@@ -61,14 +60,14 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--head); -webkit-text-size-adjust: 100%; interpolate-size: allow-keywords; }
 body { margin: 0; color: var(--text); font: 400 18px/1.6 var(--font-body); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--led);
-  background: var(--ground) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='90' viewBox='0 0 52 90'%3E%3Cpath d='M26 0 52 15v30L26 60 0 45V15zM26 60v30' fill='none' stroke='%23F6B49A' stroke-opacity='.07' stroke-width='1.2'/%3E%3C/svg%3E"); }
+  background: var(--ground) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='90' viewBox='0 0 52 90'%3E%3Cpath d='M26 0 52 15v30L26 60 0 45V15zM26 60v30' fill='none' stroke='%239FC7B8' stroke-opacity='.07' stroke-width='1.2'/%3E%3C/svg%3E"); }
 html.has-net body { background-image: none; }
 img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); font-stretch: 62%; font-weight: 800; letter-spacing: 0; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
-a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--skin); }
+a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--sage); }
 ::selection { background: var(--led); color: var(--led-ink); }
 :focus-visible { outline: 2px solid var(--led); outline-offset: 3px; }
 .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -107,7 +106,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .brand span { font: 800 28px/1 var(--font-display); font-stretch: 84%; padding-bottom: 3px; }
 .nav { display: flex; gap: 4px; margin-left: auto; }
 .nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--text-2); text-decoration: none; font-size: 16px; transition: color 150ms ease; }
-.nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 1px; background: var(--skin); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
+.nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 1px; background: var(--sage); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
 @media (hover: hover) { .nav a:hover { color: var(--text); } .nav a:hover::after { transform: scaleX(1); } }
 .menu-btn { display: none; }
 .head-cta { height: 44px; padding: 0 22px 0 18px; font-size: 16px; --cut: 10px; }
@@ -124,18 +123,11 @@ main, .site-foot { position: relative; z-index: 1; }
 }
 @media (max-width: 380px) { .head-cta { padding: 0 16px 0 12px; } .menu-btn { padding: 0 12px; } .brand span { font-size: 24px; } }
 
-/* Hero: the out-of-focus skin field and a lens that brings it into focus */
+/* Hero: a lens over the pigment network */
 .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
-.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; z-index: -1; background: linear-gradient(to bottom, rgba(16, 13, 18, 0), var(--ground)); pointer-events: none; }
-.field { --x: 62%; --y: 55%; --r: clamp(84px, 11vw, 176px); position: absolute; inset: 0; z-index: -2; touch-action: pan-y; }
-.field picture, .field img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.field img { object-fit: cover; object-position: 50% 50%; }
-.field-base img { filter: blur(2px); }
-@media (min-aspect-ratio: 4/5) and (min-width: 900px) { .field { right: -30%; } }
-.field-lens { position: absolute; inset: 0; clip-path: circle(var(--r) at var(--x) var(--y)); }
-.field-lens img { transform-origin: var(--x) var(--y); transform: scale(1.3); filter: contrast(1.05) saturate(1.08); }
-.lens-ring { position: absolute; left: 0; top: 0; width: calc(2 * var(--r) + 28px); aspect-ratio: 1; transform: translate(var(--x), var(--y)) translate(-50%, -50%); pointer-events: none; will-change: transform; }
-.lens-ring svg, .scope svg { width: 100%; height: 100%; overflow: visible; }
+.hero-lens { --r: clamp(96px, 12vw, 184px); position: absolute; left: 0; top: 0; width: calc(var(--r) * 2 / 0.88); aspect-ratio: 1; transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -50%); pointer-events: none; will-change: transform; }
+html:not(.js) .hero-lens { display: none; }
+.hero-lens svg, .scope svg { width: 100%; height: 100%; overflow: visible; }
 .ticks line { stroke: var(--text); stroke-opacity: 0.5; stroke-width: 0.35; }
 .ticks line.major { stroke-opacity: 0.9; stroke-width: 0.5; }
 .hero-in { position: relative; width: 100%; padding-top: calc(var(--head) + 48px); padding-bottom: clamp(56px, 9vh, 112px); }
@@ -143,11 +135,10 @@ main, .site-foot { position: relative; z-index: 1; }
 .hero-sub { margin-top: 28px; max-width: 30em; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 36px; }
 .hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(244, 239, 233, 0.16); font-size: var(--fs-small); color: var(--text-2); }
-.hero-credit { max-width: 52ch; text-align: right; }
 .hover-only { display: none; }
 @media (hover: hover) and (pointer: fine) { .hover-only { display: inline; } }
 @media (max-width: 640px) {
-  .field { --r: 64px; }
+  .hero-lens { --r: 64px; }
   .hero { align-items: stretch; }
   .hero-in { padding-top: calc(var(--head) + 20px); padding-bottom: 20px; min-height: 100svh; display: flex; flex-direction: column; }
   .hero h1 { font-size: clamp(50px, 15vw, 64px); }
@@ -155,25 +146,44 @@ main, .site-foot { position: relative; z-index: 1; }
   .actions { margin-top: 20px; gap: 10px; flex-wrap: nowrap; }
   .actions .btn { flex: 1 1 auto; height: 50px; padding: 0 16px 0 12px; font-size: 16px; --cut: 10px; }
   .hero-meta { margin-top: 16px; padding-top: 14px; }
-  .hero-credit { display: none; }
 }
 @media (max-width: 640px) and (max-height: 720px) {
-  .field { --r: 50px; }
+  .hero-lens { --r: 50px; }
   .hero h1 { font-size: 44px; }
   .hero-sub { font-size: 16px; }
 }
 
 /* Reveal on scroll: out of focus, then into focus */
-.js [data-reveal] { transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out), filter 900ms var(--ease-out); }
-.js [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(28px); filter: blur(10px); }
+/* Hero entrance, once, after the intro */
+.js .hero-in > * { transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out), filter 800ms var(--ease-out); }
+.js .hero-in > :nth-child(2) { transition-delay: 90ms; }
+.js .hero-in > :nth-child(3) { transition-delay: 180ms; }
+.js .hero-in > :nth-child(4) { transition-delay: 270ms; }
+.js:not(.entered) .hero-in > * { opacity: 0; transform: translateY(28px); filter: blur(8px); }
+.js .hero-lens { transition: opacity 900ms var(--ease-out) 240ms; }
+.js:not(.entered) .hero-lens { opacity: 0; }
+
+/* Intro: the lens draws itself, the LED comes on, the spot comes into focus */
+.intro { display: none; }
+.js .intro { display: grid; position: fixed; inset: 0; z-index: 100; place-items: center; background: var(--ground); }
+html.intro-done .intro { display: none; }
+.intro-in { display: flex; align-items: center; gap: 22px; transform-origin: 0 0; }
+.intro-mark { width: 104px; height: 104px; overflow: visible; }
+.i-ring { fill: none; stroke: var(--text); stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 1; transform-box: fill-box; transform-origin: center; transform: rotate(-90deg); }
+.i-arc { fill: none; stroke: var(--led); stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.i-spot { fill: var(--text); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.intro-word { display: flex; overflow: hidden; padding-bottom: 6px; font: 800 96px/0.9 var(--font-display); font-stretch: 84%; color: var(--text); }
+.intro-word span { display: inline-block; transform: translateY(110%); }
+@media (max-width: 640px) { .intro-mark { width: 72px; height: 72px; } .intro-word { font-size: 66px; } .intro-in { gap: 14px; } }
 
 /* Specimens: real biopsy-confirmed spots in the three groups Nevio sorts */
 .specimens { padding-top: clamp(72px, 9vw, 128px); overflow: hidden; }
 .spec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 48px; }
 .spec-head .h2 { max-width: 9em; }
 .spec-head .lead { max-width: 24em; }
-.spec-row { display: flex; gap: clamp(20px, 3vw, 44px); margin-top: 56px; padding-inline: var(--side); width: max-content; will-change: transform; }
-.spec { width: clamp(150px, 16vw, 230px); flex: none; margin: 0; }
+.spec-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px clamp(24px, 4vw, 64px); margin-top: 64px; }
+.spec { margin: 0; }
+.spec-lens { max-width: 260px; }
 .spec-lens { position: relative; aspect-ratio: 1; }
 .spec-lens img { position: absolute; inset: 7%; width: 86%; height: 86%; border-radius: 50%; object-fit: cover; }
 .spec-lens svg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -182,7 +192,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .spec span { display: block; margin-top: 4px; font-size: var(--fs-small); color: var(--muted); }
 .spec.is-case b { color: var(--led); }
 .spec-note { margin-top: 28px; font-size: var(--fs-small); color: var(--muted); max-width: 60ch; }
-@media (max-width: 860px) { .spec-row { overflow-x: auto; width: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; } .spec { scroll-snap-align: start; } }
+@media (max-width: 860px) { .spec-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 20px; } .spec b { font-size: 22px; } }
 
 /* The case, one detail at a time */
 .case { position: relative; padding-top: var(--section); }
@@ -195,9 +205,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; }
 .scope-clip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); }
 .scope svg { position: absolute; inset: 0; }
-.scope .arc, .lens-ring .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
-.spec-tag { position: absolute; left: 0; bottom: 4%; padding: 8px 14px 8px 12px; background: var(--raised-2); font-size: 14px; line-height: 1.3; color: var(--text-2); clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
-.spec-tag b { color: var(--text); font-weight: 600; }
+.scope .arc, .hero-lens .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
 .readout { display: grid; gap: 28px; }
 .inputs { border-top: 1px solid var(--line-2); }
 .inputs button { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 0; border: 0; border-bottom: 1px solid var(--line-2); background: none; text-align: left; cursor: pointer; color: var(--muted); transition: color 240ms ease, background-color 240ms ease; }
@@ -206,9 +214,9 @@ main, .site-foot { position: relative; z-index: 1; }
 .inputs .label { font-size: 17px; }
 .inputs .value { font-size: 17px; font-variant-numeric: tabular-nums; }
 .inputs button.is-given { color: var(--text); }
-.inputs button.is-given .tick { background: var(--skin); box-shadow: none; }
+.inputs button.is-given .tick { background: var(--sage); box-shadow: none; }
 .inputs button.is-given .tick svg { opacity: 1; }
-.inputs button[aria-current="step"] { background: linear-gradient(90deg, rgba(246, 180, 154, 0.10), rgba(246, 180, 154, 0)); }
+.inputs button[aria-current="step"] { background: linear-gradient(90deg, rgba(159, 199, 184, 0.10), rgba(159, 199, 184, 0)); }
 .inputs button[aria-current="step"] .label { font-weight: 600; }
 @media (hover: hover) { .inputs button:hover { color: var(--text); } }
 .scores { display: grid; gap: 18px; }
@@ -228,7 +236,6 @@ main, .site-foot { position: relative; z-index: 1; }
 .verdict[data-tone="urgent"] .v-word { color: var(--urgent); }
 .verdict[data-tone="review"] .v-word { color: var(--review); }
 .v-why { display: block; margin-top: 8px; color: var(--text-2); }
-.case-note { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); max-width: 62ch; }
 @media (min-width: 960px) and (min-height: 680px) {
   .js .case-track { height: 440vh; }
   .js .case-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--head); }
@@ -245,14 +252,14 @@ main, .site-foot { position: relative; z-index: 1; }
 /* How a visit works */
 .how { padding-top: var(--section); }
 .how-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
-.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 38px; background: #0A080B; box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(246, 180, 154, 0.35); }
+.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 38px; background: #0B0F0D; box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(247, 169, 139, 0.22); }
 .phone-screen { position: relative; aspect-ratio: 624 / 1152; border-radius: 28px; overflow: hidden; background: #f2f3f5; }
 .phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); filter: blur(6px); transition: opacity 500ms var(--ease-out), transform 700ms var(--ease-out), filter 500ms var(--ease-out); }
 .phone-screen img.on { opacity: 1; transform: none; filter: none; }
 .how-steps { display: grid; margin-top: 48px; }
 .how-steps li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 16px; padding: 24px 0; border-top: 1px solid var(--line-2); color: var(--muted); transition: color 300ms ease; }
 .how-steps li.on { color: var(--text); }
-.how-steps .n { font: 800 52px/0.9 var(--font-display); font-stretch: 62%; color: #7D6F81; transition: color 300ms ease; }
+.how-steps .n { font: 800 52px/0.9 var(--font-display); font-stretch: 62%; color: var(--dim); transition: color 300ms ease; }
 .how-steps li.on .n { color: var(--led); }
 .how-steps h3 { font-size: var(--fs-h3); line-height: 1.1; color: inherit; font-stretch: 70%; }
 .how-steps p { grid-column: 2; color: var(--muted); max-width: 30em; }
@@ -271,7 +278,7 @@ main, .site-foot { position: relative; z-index: 1; }
   .how-steps li { color: var(--text); }
   .how-steps .n { color: var(--led); }
   .how-steps p { color: var(--text-2); }
-  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 32px; background: #0A080B; box-shadow: inset 0 0 0 1px var(--line-2); }
+  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 32px; background: #0B0F0D; box-shadow: inset 0 0 0 1px var(--line-2); }
   .step-shot img { border-radius: 24px; }
 }
 
@@ -280,8 +287,8 @@ main, .site-foot { position: relative; z-index: 1; }
 .arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); margin-top: 72px; }
 .arrays > div { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
 .arrays > div > * { align-self: start; }
-.freq { font: 800 clamp(72px, 9vw, 150px)/0.85 var(--font-display); font-stretch: 62%; font-variant-numeric: tabular-nums lining-nums; color: var(--skin); }
-.freq .of { color: #7D6F81; }
+.freq { font: 800 clamp(72px, 9vw, 150px)/0.85 var(--font-display); font-stretch: 62%; font-variant-numeric: tabular-nums lining-nums; color: var(--led); }
+.freq .of { color: var(--dim); }
 .freq-label { margin-top: 16px; font-size: var(--fs-lead); line-height: 1.5; max-width: 18em; }
 .freq-meta { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
 .array { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; margin-top: 32px; max-width: 440px; }
@@ -303,7 +310,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .limits h3 { font-size: var(--fs-h3); line-height: 1.1; font-stretch: 70%; }
 .limits ul { display: grid; gap: 16px; margin-top: 20px; }
 .limits li { color: var(--text-2); padding-left: 22px; position: relative; }
-.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; background: var(--skin); }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; background: var(--sage); }
 @media (max-width: 859px) {
   .arrays, .ev-more { grid-template-columns: minmax(0, 1fr); }
   .arrays > div { grid-template-rows: none; grid-row: auto; display: block; }
@@ -315,7 +322,7 @@ main, .site-foot { position: relative; z-index: 1; }
 .privacy { padding-top: var(--section); }
 .statement { font-size: clamp(64px, 11vw, 190px); line-height: 0.84; max-width: 7em; }
 .js .statement .w { opacity: var(--o, 0.14); filter: blur(calc((1 - var(--o, 0.14)) * 8px)); }
-.statement .w:last-child { color: var(--skin); }
+.statement .w:last-child { color: var(--led); }
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 72px; }
 .facts div { padding-top: 20px; border-top: 2px solid var(--text); }
 .facts dt { font: 800 48px/0.9 var(--font-display); font-stretch: 62%; }
@@ -331,9 +338,9 @@ main, .site-foot { position: relative; z-index: 1; }
 .honors li { padding: 14px 18px; background: var(--raised); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
 .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
 .people li { padding: 24px 0 32px; border-top: 2px solid var(--line-2); transition: border-color 300ms ease; }
-@media (hover: hover) { .people li:hover { border-top-color: var(--skin); } }
+@media (hover: hover) { .people li:hover { border-top-color: var(--sage); } }
 .people b { display: block; font: 800 clamp(48px, 5vw, 80px)/0.9 var(--font-display); font-stretch: 62%; }
-.people .role { display: block; margin-top: 10px; font-weight: 600; color: var(--skin); }
+.people .role { display: block; margin-top: 10px; font-weight: 600; color: var(--sage); }
 .people p { margin-top: 6px; font-size: 16px; color: var(--text-2); }
 @media (max-width: 899px) { .team-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 480px) { .people p { display: none; } }
@@ -351,7 +358,7 @@ details { border-bottom: 1px solid var(--line-2); }
 summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 14px 0; font-weight: 600; cursor: pointer; list-style: none; }
 summary::-webkit-details-marker { display: none; }
 .plus { position: relative; flex: none; width: 16px; height: 16px; }
-.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: var(--skin); transition: transform 200ms var(--ease-out); }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: var(--sage); transition: transform 200ms var(--ease-out); }
 .plus::after { transform: rotate(90deg); }
 details[open] .plus::after { transform: rotate(0deg); }
 details p { padding-bottom: 22px; color: var(--text-2); max-width: 34em; }
@@ -365,7 +372,7 @@ details[open]::details-content { block-size: auto; }
 .field-f label { font-weight: 600; font-size: 16px; }
 .opt { font-weight: 400; color: var(--muted); }
 .field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 52px; padding: 0 14px; border: 0; border-radius: 0; background: var(--raised-2); box-shadow: inset 0 0 0 1px var(--edge); font-size: 17px; transition: box-shadow 150ms ease; }
-.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23F6B49A' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239FC7B8' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
 .field-f select option { background: var(--raised-2); color: var(--text); }
 .field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
 .field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--led); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--led); }
@@ -405,7 +412,7 @@ details[open]::details-content { block-size: auto; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation-duration: 0s !important; }
-  .js [data-reveal]:not(.is-in) { opacity: 1; transform: none; filter: none; }
+  .js:not(.entered) .hero-in > *, .js:not(.entered) .hero-lens { opacity: 1; transform: none; filter: none; }
   .js .array:not(.is-in) i { opacity: 1; transform: none; }
   .js .statement .w { opacity: 1; filter: none; }
   .spinner { animation: none; }
@@ -415,11 +422,17 @@ details[open]::details-content { block-size: auto; }
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <canvas id="net" aria-hidden="true"></canvas>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <svg class="intro-mark" viewBox="0 0 48 48"><circle class="i-ring" cx="24" cy="24" r="19" pathLength="1"/><path class="i-arc" d="M24 5 A19 19 0 0 1 41.2 15.9" pathLength="1"/><path class="i-spot" d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z"/></svg>
+    <span class="intro-word"><span>n</span><span>e</span><span>v</span><span>i</span><span>o</span></span>
+  </div>
+</div>
 
 <header class="site-head" id="site-head">
   <div class="wrap head-in">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#F4EFE9" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#FFD43B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#F6B49A"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#E8E6DE" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F7A98B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#E8E6DE"/></svg>
       <span>nevio</span>
     </a>
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -437,11 +450,7 @@ details[open]::details-content { block-size: auto; }
 <main id="main">
 
 <section class="hero" id="top" aria-labelledby="hero-h">
-  <div class="field" id="field" aria-hidden="true">
-    <picture class="field-base"><source media="(max-aspect-ratio: 4/5)" srcset="img/case-tall-soft.jpg"><img src="img/case-wide-soft.jpg" alt="" width="480" height="360"></picture>
-    <div class="field-lens"><picture><source media="(max-aspect-ratio: 4/5)" srcset="img/case-tall.jpg"><img src="img/case-wide.jpg" alt="" width="1600" height="1200"></picture></div>
-    <div class="lens-ring"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" stroke="#F4EFE9" stroke-opacity="0.6" stroke-width="0.5"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" stroke="#FFD43B" stroke-width="1.6"/></g></svg></div>
-  </div>
+  <div class="hero-lens" id="hero-lens" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" stroke="#E8E6DE" stroke-opacity="0.7" stroke-width="0.5"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" stroke="#F7A98B" stroke-width="1.6"/></g></svg></div>
   <div class="wrap hero-in">
     <h1 id="hero-h">Know which skin spots need a dermatologist first</h1>
     <p class="hero-sub">Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer. The clinician decides.</p>
@@ -451,27 +460,26 @@ details[open]::details-content { block-size: auto; }
     </div>
     <div class="hero-meta">
       <p>Research stage. Not FDA-cleared.</p>
-      <p class="hero-credit">Behind this text: case ISIC_5700648, a biopsy-confirmed melanoma.<span class="hover-only"> Move your pointer to look closer.</span></p>
+      <p class="hover-only">Move your pointer to look through the lens.</p>
     </div>
   </div>
 </section>
 
 <section class="specimens" aria-labelledby="spec-h">
   <div class="wrap spec-head">
-    <h2 class="h2" id="spec-h" data-reveal>Every spot lands in one of three groups</h2>
-    <p class="lead" data-reveal>Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Each of these was confirmed by biopsy.</p>
+    <h2 class="h2" id="spec-h">Every spot lands in one of three groups</h2>
+    <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Every photo here was confirmed by biopsy, and none was used to train the model.</p>
   </div>
-  <div class="spec-row" id="spec-row">
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec is-case"><div class="spec-lens"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/><path d="M50 5 A45 45 0 0 1 90.8 31" fill="none" stroke="#FFD43B" stroke-width="2"/></svg></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#443849" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-  </div>
-  <div class="wrap"><p class="spec-note">Biopsy-confirmed photos from the ISIC Archive, CC BY. None of them were used to train the model.</p></div>
+  <div class="wrap"><div class="spec-row" id="spec-row">
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec is-case"><div class="spec-lens"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/><path d="M50 5 A45 45 0 0 1 90.8 31" fill="none" stroke="#F7A98B" stroke-width="2"/></svg></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#3A4843" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+  </div></div>
 </section>
 
 <section class="case" id="case" aria-labelledby="case-h">
@@ -480,22 +488,21 @@ details[open]::details-content { block-size: auto; }
       <div class="wrap case-grid">
         <div class="case-left">
           <div class="case-head">
-            <h2 class="h2" id="case-h" data-reveal>What the patient's details change</h2>
-            <p class="lead" data-reveal>The same photo, scored by the real model as a clinician adds each detail. Scroll, or pick a step.</p>
+            <h2 class="h2" id="case-h">What the patient's details change</h2>
+            <p class="lead">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. Scroll or pick a step, and watch the pigment network behind the page turn irregular as melanoma rises.</p>
           </div>
           <figure class="scope" id="scope">
             <div class="scope-clip"><img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ"></div>
-            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" stroke="#443849" stroke-width="0.6"/><g class="arc"><path d="M50 5.5 A44.5 44.5 0 0 1 90.33 31.2" fill="none" stroke="#FFD43B" stroke-width="1.5"/></g></svg>
-            <figcaption class="spec-tag"><b>ISIC_5700648</b> melanoma in situ, biopsy-confirmed</figcaption>
+            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" stroke="#3A4843" stroke-width="0.6"/><g class="arc"><path d="M50 5.5 A44.5 44.5 0 0 1 90.33 31.2" fill="none" stroke="#F7A98B" stroke-width="1.5"/></g></svg>
           </figure>
         </div>
 
         <div class="readout">
           <div class="inputs" role="group" aria-label="Details given to the model">
-            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#100D12" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
-            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#100D12" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
-            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#100D12" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
-            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#100D12" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
+            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
+            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
+            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#131917" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
           </div>
 
           <ul class="scores" aria-label="Nevio's scores">
@@ -520,7 +527,6 @@ details[open]::details-content { block-size: auto; }
           </div>
         </div>
 
-        <p class="case-note">Real outputs from Nevio's research model on this case, with details added one at a time. The lattice behind the page is drawn as a pigment network, the mesh dermatologists read under the scope; it turns irregular as the melanoma score rises.</p>
       </div>
     </div>
   </div>
@@ -538,14 +544,13 @@ details[open]::details-content { block-size: auto; }
           </div>
         </figure>
         <div>
-          <h2 class="h2" id="how-h" data-reveal>It fits inside a normal visit</h2>
-          <p class="lead" style="margin-top:24px" data-reveal>A computer or phone the clinic already has, and a clip-on dermatoscope.</p>
+          <h2 class="h2" id="how-h">It fits inside a normal visit</h2>
+          <p class="lead" style="margin-top:24px">Real screens from the research app, running the case above. All a clinic needs is a computer or phone it already has, and a clip-on dermatoscope.</p>
           <ol class="how-steps">
             <li class="on"><span class="n">1</span><h3>Photograph the spot</h3><p>Through a clip-on dermatoscope. The app checks focus, exposure and contrast before it scores.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-photo.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
             <li><span class="n">2</span><h3>Add the patient's details</h3><p>Age, sex, body site and a few short answers. Every field is optional, and each one can change the answer.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-details.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
             <li><span class="n">3</span><h3>Read the suggestion</h3><p>Three scores, one suggestion and a referral note to print. The clinician makes the call.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-result.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
           </ol>
-          <p class="how-note">Screens from Nevio's research app on a phone, running the case above.</p>
         </div>
       </div>
     </div>
@@ -554,19 +559,19 @@ details[open]::details-content { block-size: auto; }
 
 <section class="evidence" id="evidence" aria-labelledby="evidence-h">
   <div class="wrap">
-    <h2 class="h2" id="evidence-h" data-reveal>Tested on 9,080 biopsy-confirmed images it never saw</h2>
-    <p class="lead" style="margin-top:28px" data-reveal>Each grid stands for 200 test images, in the same proportions as the full results. These come from a held-out test set, not a clinical study.</p>
+    <h2 class="h2" id="evidence-h">Tested on 9,080 biopsy-confirmed images it never saw</h2>
+    <p class="lead" style="margin-top:28px">Each grid stands for 200 test images, in the same proportions as the full results. These come from a held-out test set, not a clinical study.</p>
 
     <div class="arrays">
       <div>
-        <p class="freq" data-reveal><span class="cnt" data-to="180">180</span> <span class="of">of 200</span></p>
+        <p class="freq"><span class="cnt" data-count="180">180</span> <span class="of">of 200</span></p>
         <p class="freq-label">melanomas scored above the 27.8% cutoff, so Nevio suggested an urgent referral</p>
         <p class="freq-meta">Melanoma sensitivity 90.0%</p>
         <div class="array" data-array data-total="200" data-hit="180" aria-hidden="true"></div>
         <p class="array-key"><span><i></i>Flagged</span><span><i class="miss"></i>Missed</span></p>
       </div>
       <div>
-        <p class="freq" data-reveal><span class="cnt" data-to="163">163</span> <span class="of">of 200</span></p>
+        <p class="freq"><span class="cnt" data-count="163">163</span> <span class="of">of 200</span></p>
         <p class="freq-label">other spots scored below the cutoff and were not flagged for melanoma</p>
         <p class="freq-meta">Melanoma specificity 81.5%</p>
         <div class="array" data-array data-total="200" data-hit="163" aria-hidden="true"></div>
@@ -608,7 +613,7 @@ details[open]::details-content { block-size: auto; }
 <section class="team" id="team" aria-labelledby="team-h">
   <div class="wrap team-grid">
     <div>
-      <h2 class="h2" id="team-h" data-reveal>Who is building it</h2>
+      <h2 class="h2" id="team-h">Who is building it</h2>
       <p class="story">For years, Jason's mom waited, even with good insurance, to learn whether a growth on her leg was dangerous. Nevio started as his research project to shorten that wait. The four of us met at a summer camp and build it together.</p>
       <ul class="honors">
         <li>First place, Computer Science, 2026 Delaware Valley Science Fair</li>
@@ -627,7 +632,7 @@ details[open]::details-content { block-size: auto; }
 <section class="pilot" id="pilot" aria-labelledby="pilot-h">
   <div class="wrap pilot-grid">
     <div class="pilot-head">
-      <h2 class="h2" id="pilot-h" data-reveal>Request a free research pilot</h2>
+      <h2 class="h2" id="pilot-h">Request a free research pilot</h2>
       <p class="lead">For primary care practices and community health centers in southeastern Pennsylvania, starting 2027. No cost and no commitment.</p>
     </div>
 
@@ -679,7 +684,7 @@ details[open]::details-content { block-size: auto; }
     <span class="foot-word" aria-hidden="true">nevio</span>
     <div class="foot-grid">
       <a class="brand" href="#top" aria-label="Nevio, back to top">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#F4EFE9" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#FFD43B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#F6B49A"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#E8E6DE" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F7A98B" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#E8E6DE"/></svg>
         <span>nevio</span>
       </a>
       <div>
@@ -738,10 +743,14 @@ for (const svg of $$('svg[data-ticks]')) {
   svg.insertBefore(g, svg.firstChild);
 }
 
-// ---- the pigment network: a lattice the pointer lights up like the scope's LED ----
-// Typical networks are regular (benign moles); atypical ones have uneven lines and holes
-// (a melanoma sign). The case scene drives `atypia` from the real melanoma score.
-const netState = { mx: -999, my: -999, tx: -999, ty: -999, light: 0, tlight: 0, atypia: 0.12, tatypia: 0.12, drawing: false };
+// ---- the pigment network: the mesh dermatologists read under the scope, drawn behind the page ----
+// Typical networks are regular (benign moles); atypical ones have uneven lines and holes (a melanoma
+// sign). The pointer lights it like the scope's LED, the hero lens magnifies it, and the case scene
+// drives `atypia` from the real melanoma score.
+const hero = $('.hero'), heroLens = $('#hero-lens');
+const netState = { mx: -999, my: -999, tx: -999, ty: -999, light: 0, tlight: 0, atypia: 0.12, tatypia: 0.12,
+  lx: 0, ly: 0, ltx: 0, lty: 0, lensOn: 0, tlensOn: 0, drawing: false };
+let lensR = heroLens.offsetWidth * 0.44;
 const net = (() => {
   const canvas = $('#net');
   const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
@@ -754,13 +763,17 @@ precision highp float;
 precision mediump float;
 #endif
 uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform float uAtypia; uniform float uScroll;
+uniform vec3 uLens; uniform float uLensOn;
 vec2 h2(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p)*43758.5453);}
 float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);float a=h2(i).x,b=h2(i+vec2(1.,0.)).x,c=h2(i+vec2(0.,1.)).x,d=h2(i+vec2(1.,1.)).x;return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
 void main(){
   vec2 px=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;
+  float ld=distance(px,uLens.xy);
+  float inL=(1.-smoothstep(uLens.z-1.5,uLens.z+1.5,ld))*uLensOn;
+  float mag=clamp(uLens.z/72.,1.5,2.4);
+  vec2 q=mix(px,uLens.xy+(px-uLens.xy)/mag,inL);
   float dm=distance(px,uMouse);
-  float lens=(1.-smoothstep(0.,230.,dm))*uLight;
-  vec2 q=mix(px,uMouse,lens*.24);
+  q=mix(q,uMouse,(1.-smoothstep(0.,230.,dm))*uLight*(1.-uLensOn)*.2);
   q.y+=uScroll;
   vec2 p=q/30.;
   vec2 ip=floor(p),fp=fract(p);
@@ -775,13 +788,13 @@ void main(){
   float w=.045+uAtypia*.13*n2(p*.45);
   float line=1.-smoothstep(w,w+.05,e);
   float smudge=uAtypia*smoothstep(.6,.95,n2(p*.22+7.))*.5;
-  float glow=(1.-smoothstep(0.,270.,dm))*uLight;
-  vec3 skin=vec3(.965,.706,.604), led=vec3(1.,.831,.231);
-  vec3 col=mix(skin,led,glow*glow*.7);
-  float a=line*(.075+.26*glow)+smudge*(1.-line)*.06;
+  float glow=(1.-smoothstep(0.,270.,dm))*uLight*(1.-.7*uLensOn);
+  vec3 sage=vec3(.624,.780,.722), warm=vec3(.969,.663,.545);
+  vec3 col=mix(sage,warm,max(glow*glow*.8,inL));
+  float a=line*(.07+.24*glow+.5*inL)+smudge*(1.-line)*.06+inL*.05*(1.-ld/max(uLens.z,1.));
   gl_FragColor=vec4(col*a,a);
 }`;
-  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
+  const sh = (type, src) => { const x = gl.createShader(type); gl.shaderSource(x, src); gl.compileShader(x); return gl.getShaderParameter(x, gl.COMPILE_STATUS) ? x : null; };
   const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
   if (!v || !f) { canvas.remove(); return null; }
   const prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
@@ -791,7 +804,7 @@ void main(){
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const u = n => gl.getUniformLocation(prog, n);
-  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), atypia: u('uAtypia'), scroll: u('uScroll') };
+  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), atypia: u('uAtypia'), scroll: u('uScroll'), lens: u('uLens'), lensOn: u('uLensOn') };
   let dpr = 1, w = 0, h = 0;
   function size() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5); w = window.innerWidth; h = window.innerHeight;
@@ -800,10 +813,11 @@ void main(){
   }
   size();
   document.documentElement.classList.add('has-net');
-  function draw() {
+  function draw(lensX, lensY) {
     const s = netState;
     gl.uniform2f(U.res, w, h); gl.uniform1f(U.dpr, dpr);
     gl.uniform2f(U.mouse, s.mx, s.my); gl.uniform1f(U.light, s.light); gl.uniform1f(U.atypia, s.atypia);
+    gl.uniform3f(U.lens, lensX, lensY, lensR); gl.uniform1f(U.lensOn, s.lensOn);
     gl.uniform1f(U.scroll, reduce.matches ? 0 : (window.scrollY * 0.22) % 6000);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
@@ -812,75 +826,95 @@ void main(){
 function frame() {
   const s = netState, k = reduce.matches ? 1 : 0.14;
   s.mx += (s.tx - s.mx) * k; s.my += (s.ty - s.my) * k;
+  s.lx += (s.ltx - s.lx) * k; s.ly += (s.lty - s.ly) * k;
   s.light += (s.tlight - s.light) * (reduce.matches ? 1 : 0.08);
   s.atypia += (s.tatypia - s.atypia) * (reduce.matches ? 1 : 0.06);
-  net.draw();
-  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.tlight - s.light) > 0.002 || Math.abs(s.tatypia - s.atypia) > 0.002;
+  s.lensOn += (s.tlensOn - s.lensOn) * (reduce.matches ? 1 : 0.07);
+  const hr = hero.getBoundingClientRect();
+  heroLens.style.setProperty('--x', s.lx.toFixed(1) + 'px');
+  heroLens.style.setProperty('--y', s.ly.toFixed(1) + 'px');
+  heroLens.style.setProperty('--turn', ((s.lx / Math.max(1, hr.width)) * 160 - 60).toFixed(1) + 'deg');
+  if (net) net.draw(hr.left + s.lx, hr.top + s.ly);
+  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.ltx - s.lx) > 0.3 || Math.abs(s.lty - s.ly) > 0.3
+    || Math.abs(s.tlight - s.light) > 0.002 || Math.abs(s.tatypia - s.atypia) > 0.002 || Math.abs(s.tlensOn - s.lensOn) > 0.002;
   if (busy) requestAnimationFrame(frame); else s.drawing = false;
 }
-function wake() { if (net && !netState.drawing) { netState.drawing = true; requestAnimationFrame(frame); } }
-if (net) {
-  window.addEventListener('pointermove', e => {
-    if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
-    if (netState.mx < -900) { netState.mx = e.clientX; netState.my = e.clientY; }
-    netState.tx = e.clientX; netState.ty = e.clientY; netState.tlight = 1; wake();
-  }, { passive: true });
-  document.documentElement.addEventListener('pointerleave', () => { netState.tlight = 0; wake(); });
-  window.addEventListener('resize', () => { net.size(); wake(); });
+function wake() { if (!netState.drawing) { netState.drawing = true; requestAnimationFrame(frame); } }
+
+// ---- hero: a lens over the lattice that follows the pointer and rests clear of the words ----
+function restPoint() {
+  const hr = hero.getBoundingClientRect(), w = hr.width, h = hr.height;
+  if (!window.matchMedia('(max-width: 640px)').matches) {
+    const h1 = $('.hero h1').getBoundingClientRect();
+    const x = clamp(Math.max(w * 0.76, h1.right - hr.left + lensR + 32), lensR + 24, w - lensR - 24);
+    return { x, y: h * 0.48 };
+  }
+  const top = $('.hero h1').getBoundingClientRect().bottom - hr.top + lensR + 18;
+  const bottom = $('.hero-sub').getBoundingClientRect().top - hr.top - lensR - 18;
+  return { x: w * 0.6, y: bottom > top ? (top + bottom) / 2 : top };
+}
+function restLens(jump) {
+  const p = restPoint(); netState.ltx = p.x; netState.lty = p.y;
+  if (jump) { netState.lx = p.x; netState.ly = p.y; }
   wake();
 }
-
-// ---- hero: a lens that brings the out-of-focus skin into focus ----
-const hero = $('.hero'), field = $('#field');
-const LESION = { wide: [0.619, 0.592], tall: [0.408, 0.619] }; // lesion centre in each image, as a fraction
-const lens = { x: 0, y: 0, tx: 0, ty: 0, running: false };
-function lesionPoint() {
-  const r = field.getBoundingClientRect();
-  const tall = window.matchMedia('(max-aspect-ratio: 4/5)').matches;
-  const [iw, ih] = tall ? [1200, 1600] : [1600, 1200];
-  const [fx, fy] = tall ? LESION.tall : LESION.wide;
-  const s = Math.max(r.width / iw, r.height / ih);
-  return { x: (r.width - iw * s) / 2 + fx * iw * s, y: (r.height - ih * s) / 2 + fy * ih * s };
-}
-// Where the lens rests: on the lesion, kept inside the clear window between the
-// headline and the words below it when the layout stacks (phones).
-function restPoint() {
-  const p = lesionPoint();
-  if (!window.matchMedia('(max-width: 640px)').matches) return p;
-  const fr = field.getBoundingClientRect();
-  const r = parseFloat(getComputedStyle(field).getPropertyValue('--r')) || 64;
-  const top = $('.hero h1').getBoundingClientRect().bottom - fr.top + r + 16;
-  const bottom = $('.hero-sub').getBoundingClientRect().top - fr.top - r - 16;
-  if (bottom > top) p.y = clamp(p.y, top, bottom);
-  return p;
-}
-function paintLens() {
-  field.style.setProperty('--x', lens.x.toFixed(1) + 'px');
-  field.style.setProperty('--y', lens.y.toFixed(1) + 'px');
-}
-function stepLens() {
-  const k = reduce.matches ? 1 : 0.14;
-  lens.x += (lens.tx - lens.x) * k; lens.y += (lens.ty - lens.y) * k;
-  paintLens();
-  if (Math.abs(lens.tx - lens.x) > 0.3 || Math.abs(lens.ty - lens.y) > 0.3) requestAnimationFrame(stepLens);
-  else { lens.x = lens.tx; lens.y = lens.ty; paintLens(); lens.running = false; }
-}
-function aimLens(x, y) { lens.tx = x; lens.ty = y; if (!lens.running) { lens.running = true; requestAnimationFrame(stepLens); } }
-function restLens(jump) { const p = restPoint(); if (jump) { lens.x = lens.tx = p.x; lens.y = lens.ty = p.y; paintLens(); } else aimLens(p.x, p.y); }
 restLens(true);
 document.fonts?.ready.then(() => restLens(true));
-window.addEventListener('resize', () => restLens(true));
-hero.addEventListener('pointermove', e => {
+window.addEventListener('resize', () => { if (net) net.size(); lensR = heroLens.offsetWidth * 0.44; restLens(true); });
+window.addEventListener('pointermove', e => {
   if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
-  const r = field.getBoundingClientRect();
-  aimLens(e.clientX - r.left, e.clientY - r.top);
-});
+  if (netState.mx < -900) { netState.mx = e.clientX; netState.my = e.clientY; }
+  netState.tx = e.clientX; netState.ty = e.clientY; netState.tlight = 1;
+  const hr = hero.getBoundingClientRect();
+  if (e.clientY >= hr.top && e.clientY <= hr.bottom) { netState.ltx = e.clientX - hr.left; netState.lty = e.clientY - hr.top; }
+  wake();
+}, { passive: true });
 hero.addEventListener('pointerleave', () => restLens(false));
 hero.addEventListener('pointerdown', e => {
   if (e.pointerType === 'mouse' || e.target.closest('a, button')) return;
-  const r = field.getBoundingClientRect();
-  aimLens(e.clientX - r.left, e.clientY - r.top);
+  const hr = hero.getBoundingClientRect();
+  netState.ltx = e.clientX - hr.left; netState.lty = e.clientY - hr.top; wake();
 });
+document.documentElement.addEventListener('pointerleave', () => { netState.tlight = 0; wake(); });
+
+// ---- intro, once a visit: the lens draws itself, the LED comes on, the spot comes into focus ----
+const intro = $('#intro'), brandMark = $('.site-head .brand svg'), brandWord = $('.site-head .brand span');
+function enterHero() {
+  document.documentElement.classList.add('entered');
+  netState.tlensOn = hero.getBoundingClientRect().bottom > 0 ? 1 : 0; wake();
+}
+function endIntro() {
+  if (!intro.isConnected) return;
+  intro.remove(); document.documentElement.classList.add('intro-done');
+  brandMark.style.opacity = ''; brandWord.style.opacity = '';
+  enterHero();
+}
+let seen = false;
+try { seen = sessionStorage.getItem('nevio-intro') === '1'; sessionStorage.setItem('nevio-intro', '1'); } catch (err) { /* private mode */ }
+if (seen || reduce.matches || !intro.animate) endIntro();
+else {
+  brandMark.style.opacity = '0'; brandWord.style.opacity = '0';
+  const OUT = 'cubic-bezier(0.23, 1, 0.32, 1)', MOVE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+  const q = sel => intro.querySelector(sel), anims = [];
+  anims.push(q('.i-ring').animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 720, easing: MOVE, fill: 'forwards' }));
+  anims.push(q('.i-arc').animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 420, delay: 500, easing: OUT, fill: 'forwards' }));
+  anims.push(q('.i-spot').animate([{ opacity: 0, transform: 'scale(0.4)', filter: 'blur(3px)' }, { opacity: 1, transform: 'none', filter: 'blur(0px)' }], { duration: 420, delay: 660, easing: OUT, fill: 'forwards' }));
+  intro.querySelectorAll('.intro-word span').forEach((l, i) => anims.push(l.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], { duration: 560, delay: 540 + i * 50, easing: OUT, fill: 'forwards' })));
+  const fly = setTimeout(() => {
+    const from = q('.intro-mark').getBoundingClientRect(), to = brandMark.getBoundingClientRect();
+    const sc = to.width / from.width;
+    const box = q('.intro-in').getBoundingClientRect();
+    const dx = to.left - (box.left + (from.left - box.left) * sc), dy = to.top - (box.top + (from.top - box.top) * sc);
+    const move = q('.intro-in').animate([{ transform: 'none' }, { transform: `translate(${dx}px, ${dy}px) scale(${sc})` }], { duration: 720, easing: MOVE, fill: 'forwards' });
+    anims.push(move);
+    anims.push(intro.animate([{ backgroundColor: 'rgb(19, 25, 23)' }, { backgroundColor: 'rgba(19, 25, 23, 0)' }], { duration: 560, delay: 160, easing: 'ease', fill: 'forwards' }));
+    setTimeout(enterHero, 300);
+    move.onfinish = endIntro;
+  }, 1420);
+  const skip = () => { clearTimeout(fly); anims.forEach(x => x.cancel()); endIntro(); };
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => window.addEventListener(ev, skip, { once: true, passive: true }));
+  setTimeout(endIntro, 4200);
+}
 
 // ---- the case: real model outputs as details are added (ISIC_5700648) ----
 const STEPS = [
@@ -964,16 +998,13 @@ statement.setAttribute('aria-label', statement.textContent);
 statement.innerHTML = statement.textContent.split(' ').map(w => `<span class="w" aria-hidden="true">${w}</span>`).join(' ');
 const words = $$('.statement .w');
 
-// ---- specimens drift sideways as the page scrolls ----
-const specRow = $('#spec-row'), specSection = $('.specimens');
-const wide = window.matchMedia('(min-width: 861px)');
-
 // ---- one scroll loop for every scroll-linked scene ----
 let ticking = false;
 function onScroll() {
   ticking = false;
   const vh = window.innerHeight;
   head.classList.toggle('is-solid', window.scrollY > 24);
+  netState.tlensOn = document.documentElement.classList.contains('entered') && hero.getBoundingClientRect().bottom > 0 ? 1 : 0;
   if (pinned.matches) {
     const p = sceneProgress(caseTrack);
     showStep(Math.min(STEPS.length - 1, Math.floor(p * STEPS.length)));
@@ -984,12 +1015,6 @@ function onScroll() {
     }
     showHow(Math.min(2, Math.floor(sceneProgress(howTrack) * 3)));
   }
-  if (wide.matches && !reduce.matches) {
-    const r = specSection.getBoundingClientRect();
-    const p = clamp((vh - r.top) / (vh + r.height), 0, 1);
-    const travel = Math.max(0, specRow.scrollWidth - window.innerWidth);
-    specRow.style.transform = `translateX(${(-travel * p).toFixed(1)}px)`;
-  } else specRow.style.transform = '';
   const r = statement.getBoundingClientRect();
   const sp = clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1);
   words.forEach((w, i) => w.style.setProperty('--o', (0.14 + clamp(sp * words.length - i, 0, 1) * 0.86).toFixed(3)));
@@ -1000,21 +1025,20 @@ window.addEventListener('scroll', () => { if (!ticking) { ticking = true; reques
 window.addEventListener('resize', onScroll);
 onScroll();
 
-// ---- reveals, counters and icon arrays ----
+// ---- counters and icon arrays fill when they come into view ----
 for (const a of $$('[data-array]')) {
   const total = +a.dataset.total, hit = +a.dataset.hit;
   a.innerHTML = Array.from({ length: total }, (_, i) => `<i${i >= hit ? ' class="miss"' : ''} style="--i:${i}"></i>`).join('');
 }
-const revealables = $$('[data-reveal], [data-array]');
-function onReveal(el) {
+const watched = $$('[data-array], [data-count]');
+function onSeen(el) {
   el.classList.add('is-in');
-  const cnt = el.querySelector('.cnt');
-  if (cnt) tween(cnt, +cnt.dataset.to, 1400, 0);
+  if (el.dataset.count) tween(el, +el.dataset.count, 1400, 0);
 }
 if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { onReveal(e.target); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
-  revealables.forEach(el => io.observe(el));
-} else revealables.forEach(onReveal);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { onSeen(e.target); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  watched.forEach(el => io.observe(el));
+} else watched.forEach(onSeen);
 
 // ---- pilot form ----
 const form = $('#pilot-form');

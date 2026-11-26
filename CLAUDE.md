@@ -17,7 +17,6 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 - Images in `img/`. `og.jpg` is the 1200 x 630 share image. `mark.svg` is the logo mark and favicon.
 - `img/app-*.webp` are real screenshots of the research app (github.com/WangZi621/SkinCancer-AI, `docs/`), run locally at 390 px wide on sample ISIC_5700648 and cropped so the app's current Stryde name never shows. Retake them the same way if the app changes or is renamed.
 - `.nojekyll` so Pages serves files as they are.
-- `img/case-wide.jpg` and `img/case-tall.jpg` are the full ISIC_5700648 photo (landscape is the original rotated 90 degrees) for the hero lens; `img/case-*-soft.jpg` are tiny pre-blurred, darkened copies for the out-of-focus field behind the hero text.
 - `img/specimens/*.webp` are 480 px crops of the app's eight biopsy-confirmed ISIC samples (CC BY: MSK and Dr. Cristian Navarrete et al.; credits in the footer).
 - Fonts from Google Fonts: Anybody (headlines, big numbers and the wordmark, set condensed with `font-stretch: 62%`, weight 800), Bricolage Grotesque (everything else).
 
@@ -58,15 +57,16 @@ The full design system (palette, type, layout, components, page plan, CSS tokens
 
 On Nov 26, 2026 Jason asked for a bolder, less generic site than the light design-system version, then for more texture, more style and no AI-looking fonts or rounded buttons. The page now uses a "scope" system that departs from the Drive doc's light palette, type and motion rules (the doc still holds for voice, facts and components until it is updated):
 
-- The view through a dermatoscope: one plum-black ground (#100D12) for the whole page. Sections never change background color; they are separated by space and scale.
-- Texture: a WebGL pigment-network lattice behind the page (the mesh dermatologists read under the scope). The pointer lights it like the scope's LED; it drifts with scroll; it turns atypical (irregular) as the case's melanoma score rises. Without WebGL, a faint SVG honeycomb stands in. Keep it subtle behind text.
-- Color: LED yellow (#FFD43B) for primary buttons, the LED arc and focus; skin peach (#F6B49A) for the lattice, key figures and small highlights. Triage colors (urgent #FF5A5F, review #FF9A3C, routine #3CD3BD) appear only on results, always with their words; LED yellow never touches a result.
+- Color, "surgical": one green-black ground (#131917) for the whole page, bone text (#E8E6DE), sage (#9FC7B8) for the lattice and quiet highlights, and one warm accent, peach (#F7A98B), for actions, the LED arcs and the figure that matters. Green is the complement of red tissue (why operating rooms went green in the 1920s), so the peach and the photos pop against it. Never violet or lavender anywhere. Sections never change background color; they are separated by space and scale. Triage colors (urgent #FF6A5C, review #F2B04A, routine #5FD0BE) appear only on results, always with their words; the peach accent never touches a result.
+- Texture: a WebGL pigment-network lattice behind the page (the mesh dermatologists read under the scope). The pointer lights it, it drifts with scroll, and it turns atypical (irregular) as the case's melanoma score rises. Without WebGL, a faint SVG honeycomb stands in. Keep it subtle behind text.
+- No flesh on first load (Jason, Nov 26): the hero is a lens over the lattice that follows the pointer and magnifies it; the real lesion photos start below the fold.
+- Intro: once per visit (sessionStorage), the logo's ring draws itself, the LED arc lights, the spot comes into focus, the wordmark rises, and the mark flies into the header; any key, click or scroll skips it, and reduced motion skips it entirely. The hero then enters once. No fade-in on every section, no captions under images (credits go in the footer), per the taste skill (Leonxlnx/taste-skill).
 - Shape: no rounded corners on controls. Buttons, panels and tags have one 45 degree cut corner, like the writing face of a biopsy tissue cassette. Only physical things are round: lenses and the phone.
 - Type: Anybody condensed 800 for headlines and big numbers, Bricolage Grotesque for text. No italics, no monospace.
-- The memorable parts: the hero's out-of-focus skin field with a lens that follows the pointer and brings the real case into focus; the specimen strip; the pinned case scene where real model outputs change as details are added; the pinned phone scene with real app screenshots; the icon arrays.
+- The memorable parts: the intro; the hero lens over the lattice; the specimen grid; the pinned case scene where real model outputs change as details are added; the pinned phone scene with real app screenshots; the icon arrays.
 - Motion explains something: focus (blur to clear), the LED arc turning like a focus ring, scores moving to real values. Transform, opacity, clip-path and filter only. Everything still works and reads with reduced motion and without JavaScript.
 - Six or seven sections, few words, sentence case, no eyebrow labels, no arrows on links, no em dashes, no periods on headings.
-- Works at 375 px wide (the hero keeps a clear window for the lens between headline and buttons), keyboard accessible, visible focus, WCAG AA contrast including text over the photo.
+- Works at 375 px wide (the hero keeps a clear window for the lens between headline and buttons), keyboard accessible, visible focus, WCAG AA contrast.
 
 ## How to check your work
 
