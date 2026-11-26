@@ -18,7 +18,8 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 - `img/app-*.webp` are real screenshots of the research app (github.com/WangZi621/SkinCancer-AI, `docs/`), run locally at 390 px wide on sample ISIC_5700648 and cropped so the app's current Stryde name never shows. Retake them the same way if the app changes or is renamed.
 - `.nojekyll` so Pages serves files as they are.
 - `img/case-wide.jpg` and `img/case-tall.jpg` are the full ISIC_5700648 photo (landscape is the original rotated 90 degrees) for the hero lens; `img/case-*-soft.jpg` are tiny pre-blurred, darkened copies for the out-of-focus field behind the hero text.
-- Fonts from Google Fonts: Archivo (display, set wide with `font-stretch: 112%`, and the wordmark), Atkinson Hyperlegible Next (body and interface).
+- `img/specimens/*.webp` are 480 px crops of the app's eight biopsy-confirmed ISIC samples (CC BY: MSK and Dr. Cristian Navarrete et al.; credits in the footer).
+- Fonts from Google Fonts: Anybody (headlines, big numbers and the wordmark, set condensed with `font-stretch: 62%`, weight 800), Bricolage Grotesque (everything else).
 
 Keep it static and dependency-free unless Jason asks otherwise. It has to load fast on a clinic computer and a phone.
 
@@ -55,12 +56,14 @@ The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page scri
 
 The full design system (palette, type, layout, components, page plan, CSS tokens) is the private Google Doc "Nevio design system" in the hub's 4 Website folder. Ask Jason for it; where it differs from the notes below, it wins.
 
-On Nov 26, 2026 Jason asked for a bolder, less generic site than the light design-system version. The page now uses a "scope" system that departs from the Drive doc's light palette, type and motion rules (the doc still holds for voice, facts and components until it is updated):
+On Nov 26, 2026 Jason asked for a bolder, less generic site than the light design-system version, then for more texture, more style and no AI-looking fonts or rounded buttons. The page now uses a "scope" system that departs from the Drive doc's light palette, type and motion rules (the doc still holds for voice, facts and components until it is updated):
 
-- The view through a dermatoscope: one dark ground (#0D0F13) for the whole page. Sections never change background color; they are separated by space and scale.
-- One accent, Lamp (#F3E3A0): the LED arc on the lens and logo, primary buttons, focus rings. Triage colors (urgent #F0675B, review #E9AA42, routine #5CC0B1 on dark) appear only on results, always with their words.
-- Archivo set wide for headlines, Atkinson Hyperlegible Next for everything else. Weights 400 to 700, no italics, no monospace.
-- The memorable parts: the hero's out-of-focus skin field with a lens that follows the pointer and brings the real case into focus; the pinned case scene where real model outputs change as details are added; the pinned phone scene with real app screenshots; the icon arrays.
+- The view through a dermatoscope: one plum-black ground (#100D12) for the whole page. Sections never change background color; they are separated by space and scale.
+- Texture: a WebGL pigment-network lattice behind the page (the mesh dermatologists read under the scope). The pointer lights it like the scope's LED; it drifts with scroll; it turns atypical (irregular) as the case's melanoma score rises. Without WebGL, a faint SVG honeycomb stands in. Keep it subtle behind text.
+- Color: LED yellow (#FFD43B) for primary buttons, the LED arc and focus; skin peach (#F6B49A) for the lattice, key figures and small highlights. Triage colors (urgent #FF5A5F, review #FF9A3C, routine #3CD3BD) appear only on results, always with their words; LED yellow never touches a result.
+- Shape: no rounded corners on controls. Buttons, panels and tags have one 45 degree cut corner, like the writing face of a biopsy tissue cassette. Only physical things are round: lenses and the phone.
+- Type: Anybody condensed 800 for headlines and big numbers, Bricolage Grotesque for text. No italics, no monospace.
+- The memorable parts: the hero's out-of-focus skin field with a lens that follows the pointer and brings the real case into focus; the specimen strip; the pinned case scene where real model outputs change as details are added; the pinned phone scene with real app screenshots; the icon arrays.
 - Motion explains something: focus (blur to clear), the LED arc turning like a focus ring, scores moving to real values. Transform, opacity, clip-path and filter only. Everything still works and reads with reduced motion and without JavaScript.
 - Six or seven sections, few words, sentence case, no eyebrow labels, no arrows on links, no em dashes, no periods on headings.
 - Works at 375 px wide (the hero keeps a clear window for the lens between headline and buttons), keyboard accessible, visible focus, WCAG AA contrast including text over the photo.
