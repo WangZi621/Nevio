@@ -135,12 +135,13 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 .ruler .mark { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; transform: translateY(calc(var(--p, 0) * (100cqh - 1px))); }
 .ruler { container-type: size; }
 .ruler .mark i { width: 18px; height: 2px; background: var(--lime); }
-.ruler .mark span { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.ruler .mark span { display: none; font-size: 12px; color: var(--text-2); white-space: nowrap; }
+@media (min-width: 1560px) { .ruler .mark span { display: inline; } }
 
 /* Hero: the headline over a cross-section scan */
 .hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: auto 1fr; }
 .hero-top { width: 100%; padding-top: calc(var(--head) + clamp(40px, 7vh, 88px)); }
-.hero h1 { font-size: var(--fs-display); line-height: 0.98; letter-spacing: -0.042em; max-width: 13.5em; }
+.hero h1 { font-size: var(--fs-display); line-height: 0.98; letter-spacing: -0.04em; max-width: 13.5em; }
 .hero-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; margin-top: clamp(24px, 3.4vh, 40px); }
 .hero-sub { max-width: 31em; font-size: var(--fs-lead); line-height: 1.55; color: var(--text-2); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -148,7 +149,8 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 .band-fallback { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 182, 72, 0.35) 0 1%, rgba(47, 224, 198, 0.22) 2% 24%, rgba(14, 74, 79, 0.35) 30%, transparent 92%); }
 html.has-gl .band-fallback { display: none; }
 .band-tag { position: absolute; z-index: 2; padding: 4px 9px; border-radius: 4px; background: rgba(5, 8, 10, 0.72); box-shadow: inset 0 0 0 1px var(--line); font-size: 12px; color: var(--text-2); }
-.band-note { position: absolute; right: var(--side); bottom: 16px; z-index: 2; font-size: 12px; color: var(--muted); }
+.band-note { position: absolute; right: var(--side); bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--muted); }
+.band-note .ramp i { width: 64px; height: 4px; }
 .band-hint { position: absolute; left: var(--side); bottom: 16px; z-index: 2; font-size: 12px; color: var(--muted); }
 .js:not(.entered) .hero-top > * { opacity: 0; transform: translateY(18px); filter: blur(6px); }
 .js .hero-top > * { transition: opacity 700ms var(--ease), transform 700ms var(--ease), filter 700ms var(--ease); }
@@ -162,6 +164,8 @@ html.has-gl .band-fallback { display: none; }
   .actions .btn { flex: 1 1 0; padding: 0 14px; }
   .band { min-height: 220px; }
   .band-tag.deep { display: none; }
+  .band-hint { bottom: 40px; }
+  .band-note { left: var(--side); right: auto; }
 }
 
 /* Intro: a scan line sweeps across and acquires the mark, then it flies into the header */
@@ -186,10 +190,10 @@ html.intro-done .intro { display: none; }
 .spec { margin: 0; }
 .spec-view { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: var(--raised); box-shadow: 0 0 0 1px var(--line); }
 .spec-view img, .spec-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.spec-eye { --r: 0px; -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--r), #000 calc(var(--r) + 36px)); mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--r), #000 calc(var(--r) + 36px)); transition: --r 520ms var(--ease); }
+.spec-eye { --r: 0px; -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent calc(var(--r) - 36px), #000 var(--r)); mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent calc(var(--r) - 36px), #000 var(--r)); transition: --r 520ms var(--ease); }
 @property --r { syntax: "<length>"; inherits: false; initial-value: 0px; }
-.spec.is-lit .spec-eye { --r: 84px; }
-.spec.is-open .spec-eye { --r: 420px; }
+.spec.is-lit .spec-eye { --r: 124px; }
+.spec.is-open .spec-eye { --r: 460px; }
 .spec figcaption { display: grid; gap: 2px; margin-top: 14px; }
 .spec b { font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
 .spec span { font-size: var(--fs-small); color: var(--muted); }
@@ -206,17 +210,21 @@ html.intro-done .intro { display: none; }
 .scope { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0; justify-self: center; }
 .scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; background: var(--raised); }
 .scope-clip img, .scope-clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.scope-clip img { transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); }
+.scope-clip img { transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); transition: filter 400ms var(--ease); }
+.scope:not(.no-eye) .scope-clip img { filter: grayscale(0.75) brightness(0.5) contrast(1.15) blur(var(--blur, 0px)); }
+.scope-clip canvas { transform: scale(var(--zoom, 1)); }
 .scope-eye { opacity: 0.85; transition: opacity 400ms var(--ease); mix-blend-mode: screen; }
 .scope.no-eye .scope-eye { opacity: 0; }
 .scope-sweep { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--lime); opacity: 0; }
 .scope svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .ticks line { stroke: var(--text); stroke-opacity: 0.35; stroke-width: 0.3; }
 .ticks line.major { stroke-opacity: 0.7; stroke-width: 0.45; }
-.scope-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
-.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 8px; border: 0; border-radius: 999px; background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; cursor: pointer; transition: background-color 160ms ease; }
-.switch i { position: relative; width: 34px; height: 20px; border-radius: 10px; background: #26302F; transition: background-color 200ms ease; }
-.switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--text); transition: transform 220ms var(--ease); }
+.scope-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.scope-bar .ramp { font-size: var(--fs-small); color: var(--muted); }
+.scope-bar .case-note { flex-basis: 100%; }
+.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 8px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; cursor: pointer; transition: background-color 160ms ease; }
+.switch i { position: relative; width: 34px; height: 20px; border-radius: 4px; background: #26302F; transition: background-color 200ms ease; }
+.switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 2px; background: var(--text); transition: transform 220ms var(--ease); }
 .switch[aria-pressed="true"] i { background: var(--lime); }
 .switch[aria-pressed="true"] i::after { transform: translateX(14px); background: var(--lime-ink); }
 @media (hover: hover) { .switch:hover { background: rgba(226, 240, 236, 0.09); } }
@@ -273,7 +281,7 @@ html.intro-done .intro { display: none; }
   .js .readout { gap: 18px; }
   .js .inputs button { min-height: 46px; }
 }
-@media (min-width: 960px) and (max-height: 1000px) { .js .case-head .lead { display: none; } }
+@media (min-width: 960px) and (max-height: 1000px) { .js .case-head .lead-a { display: none; } .js .case-head { gap: 8px; } }
 @media (min-width: 960px) and (max-height: 800px) { .js .vec { display: none; } .js .inputs button { min-height: 42px; } }
 @media (max-width: 959px) {
   .case-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
@@ -321,14 +329,14 @@ html.intro-done .intro { display: none; }
 .arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); margin-top: 72px; }
 .arrays > div { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
 .arrays > div > * { align-self: start; }
-.freq { font-weight: 500; font-size: clamp(64px, 7.4vw, 116px); line-height: 0.9; letter-spacing: -0.05em; color: var(--lime); }
+.freq { font-weight: 500; font-size: clamp(60px, 6.6vw, 96px); line-height: 0.92; letter-spacing: -0.04em; color: var(--lime); }
 .freq .of { color: var(--muted); }
 .freq-label { margin-top: 18px; font-size: var(--fs-lead); line-height: 1.45; max-width: 19em; }
 .freq-meta { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
 .array { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; margin-top: 32px; max-width: 440px; }
 .array i { aspect-ratio: 1; border-radius: 50%; background: var(--text); }
 .array i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
-.js .array i { transition: opacity 360ms var(--ease), transform 360ms var(--ease); transition-delay: calc(var(--i) * 4ms); }
+.js .array i { transition: opacity 320ms var(--ease), transform 320ms var(--ease); transition-delay: calc(var(--c) * 34ms + var(--r) * 6ms); }
 .js .array:not(.is-in) i { opacity: 0; transform: scale(0.3); }
 .array-key { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: var(--fs-small); color: var(--muted); }
 .array-key span { display: inline-flex; align-items: center; gap: 8px; }
@@ -354,14 +362,17 @@ html.intro-done .intro { display: none; }
 
 /* Privacy */
 .privacy { padding-top: var(--section); }
-.statement { font-size: clamp(54px, 8.6vw, 140px); line-height: 0.95; letter-spacing: -0.05em; max-width: 9em; }
+.statement { font-size: clamp(52px, 7vw, 96px); line-height: 0.98; letter-spacing: -0.04em; max-width: 9em; }
 .js .statement .w { opacity: var(--o, 0.16); filter: blur(calc((1 - var(--o, 0.16)) * 10px)); }
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 72px; }
+.band-2 { min-height: 260px; margin-top: 64px; border-top: 0; }
+.band-2 .band-fallback { right: 38%; }
+.edge-tag { left: calc(62% + 14px); top: 16px; color: var(--text); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; }
 .facts div { padding-top: 20px; border-top: 1px solid var(--line-2); }
 .facts dt { font-weight: 500; font-size: 32px; letter-spacing: -0.03em; }
 .facts dd { margin: 10px 0 0; color: var(--text-2); max-width: 22em; }
 .privacy .btn { margin-top: 56px; }
-@media (max-width: 760px) { .facts { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+@media (max-width: 760px) { .facts { grid-template-columns: minmax(0, 1fr); gap: 28px; } .band-2 { min-height: 200px; } .edge-tag { left: auto; right: var(--side); top: auto; bottom: 16px; } }
 
 /* Team */
 .team { padding-top: var(--section); }
@@ -376,7 +387,6 @@ html.intro-done .intro { display: none; }
 .people .role { display: block; margin-top: 10px; color: var(--lime); font-size: 15px; }
 .people p { margin-top: 6px; font-size: 15px; color: var(--text-2); }
 @media (max-width: 899px) { .team-grid { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 480px) { .people p { display: none; } }
 
 /* Pilot and FAQ */
 .pilot { padding-block: var(--section); }
@@ -437,7 +447,7 @@ details[open]::details-content { block-size: auto; }
 
 /* Footer: the wordmark set in scan characters, built from the evidence numbers */
 .site-foot { border-top: 1px solid var(--line); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); }
-.foot-word { position: relative; display: block; padding-top: 48px; font-weight: 600; font-size: clamp(120px, 24vw, 360px); line-height: 0.8; letter-spacing: -0.06em; color: #0E1517; user-select: none; }
+.foot-word { position: relative; display: block; padding-top: 48px; font-weight: 600; font-size: clamp(110px, 37vw, 520px); line-height: 0.8; letter-spacing: -0.05em; color: #0E1517; user-select: none; }
 .foot-word canvas { position: absolute; left: 0; pointer-events: none; }
 .foot-word.is-ascii { color: transparent; }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: 32px 48px; padding-block: 40px 56px; }
@@ -511,7 +521,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
     <span class="band-tag" style="left:var(--side);top:18px">Surface</span>
     <span class="band-tag deep" style="left:var(--side);top:44%">Dermis</span>
     <p class="band-hint">Research stage. Not FDA-cleared.</p>
-    <p class="band-note">Illustration of a skin cross-section</p>
+    <p class="band-note"><span class="ramp"><i></i>Attention</span>Illustration of a skin cross-section</p>
   </div>
 </section>
 
@@ -550,6 +560,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
           </figure>
           <div class="scope-bar">
             <button class="switch" type="button" id="eye-switch" aria-pressed="true"><i></i>Model's view</button>
+            <span class="ramp"><i></i>Low to high response</span>
             <p class="case-note">The colored layer comes from the photo alone, so it stays the same at every step. The details change how the model weighs it.</p>
           </div>
         </div>
@@ -557,7 +568,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
         <div class="readout">
           <div class="case-head">
             <h2 class="h2" id="case-h">What the patient's details change</h2>
-            <p class="lead">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. Scroll, or pick a step.</p>
+            <p class="lead"><span class="lead-a">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. </span>Scroll, or pick a step.</p>
           </div>
           <div class="inputs" role="group" aria-label="Details given to the model">
             <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--lime-ink)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
@@ -663,6 +674,13 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
   <div class="wrap">
     <h2 class="statement" id="privacy-h" data-words>Photos never leave the room</h2>
     <p class="lead" style="margin-top:32px">The model runs in the browser on the clinic's own computer or phone. No photo or patient detail is uploaded, to us or anyone else.</p>
+  </div>
+  <div class="band band-2" id="band2" aria-hidden="true">
+    <div class="band-fallback"></div>
+    <span class="band-tag" style="left:var(--side);top:16px">On the clinic's device</span>
+    <span class="band-tag edge-tag">Nothing crosses this line</span>
+  </div>
+  <div class="wrap">
     <dl class="facts">
       <div><dt>21 MB</dt><dd>The whole model. Smaller than a few phone photos, so an ordinary browser can run it.</dd></div>
       <div><dt>Offline</dt><dd>After the first load, no internet is needed for a result.</dd></div>
@@ -842,7 +860,8 @@ function mapSampler(id) {
     const fx = (u0 + x * us) * 12 - 0.5, fy = (v0 + y * vs) * 12 - 0.5;
     const i = Math.floor(fx), j = Math.floor(fy), tx = smooth(fx - i), ty = smooth(fy - j);
     const a = at(i, j) + (at(i + 1, j) - at(i, j)) * tx, b = at(i, j + 1) + (at(i + 1, j + 1) - at(i, j + 1)) * tx;
-    return a + (b - a) * ty;
+    const edge = smooth(clamp(Math.min(x, 1 - x, y, 1 - y) / 0.08, 0, 1)); // feather the crop edge
+    return (a + (b - a) * ty) * edge;
   };
 }
 
@@ -852,8 +871,10 @@ const MAPS = {"5700648":[1200,1600,"Gree39qWtvZZixe956JNByVZrjj47evzGbgdqElpbttD
 // Everywhere: a faint speckle field, lit teal where the pointer is. In the hero band: an
 // illustrated cross-section of skin (surface, epidermis, dermis), acquired left of a scan line
 // that follows the pointer. Nothing moves on its own; it redraws only when something changes.
-const band = $('#band'), hero = $('.hero');
-const scanState = { mx: -9999, my: -9999, tx: -9999, ty: -9999, light: 0, tlight: 0, sx: -40, tsx: -40, wide: 0, twide: 0, drawing: false, last: 0 };
+const band = $('#band'), band2 = $('#band2'), hero = $('.hero');
+// bx, by: the attention bloom's place (by is measured from the band's top); bs: its strength.
+const scanState = { mx: -9999, my: -9999, tx: -9999, ty: -9999, light: 0, tlight: 0, sx: -40, tsx: -40, wide: 0, twide: 0,
+  bx: 0, by: 150, tbx: 0, tby: 150, bs: 0, tbs: 0, drawing: false, last: 0 };
 const gl = (() => {
   const canvas = $('#scan');
   const ctx = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
@@ -866,6 +887,24 @@ precision highp float;
 precision mediump float;
 #endif
 uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform vec2 uBand; uniform float uScan; uniform float uWide;
+uniform vec3 uBloom; uniform vec2 uBand2; uniform float uEdge;
+vec3 att(float v){
+  vec3 a0=vec3(.043,.11,.2),a1=vec3(.078,.369,.471),a2=vec3(.133,.71,.627),a3=vec3(.49,.839,.416),a4=vec3(.843,.949,.353),a5=vec3(1.,.984,.839);
+  if(v<.2)return mix(a0,a1,v/.2); if(v<.42)return mix(a1,a2,(v-.2)/.22); if(v<.62)return mix(a2,a3,(v-.42)/.2);
+  if(v<.82)return mix(a3,a4,(v-.62)/.2); return mix(a4,a5,clamp((v-.82)/.18,0.,1.));
+}
+float tissue(float x,float yb,float lx,vec2 cell){
+  float y0=26.+9.*sin(x/95.)+5.*sin(x/33.);
+  float dej=y0+70.+14.*sin(x/21.)+5.*sin(x/9.);
+  float les=smoothstep(0.,1.,1.-abs(x-lx)/190.);
+  float v=0.;
+  if(yb<y0)v=0.;
+  else if(yb<y0+6.)v=.95;
+  else if(yb<dej)v=.56-les*.22+.07*sin(yb/3.+x/40.);
+  else{float d=yb-dej;v=.6*exp(-d/170.)+.1*max(0.,sin(x/14.+yb/40.))*exp(-d/260.)-les*.25*exp(-d/90.);if(d<5.)v+=.16;}
+  if(les>.2&&yb>y0+16.&&yb<dej+26.){float cx=mod(x,56.)-28.;if(length(vec2(cx,yb-dej+8.))<13.*les)v*=.3;}
+  return v;
+}
 float h1(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
 vec3 lut(float v){
   vec3 c0=vec3(.02,.031,.039),c1=vec3(.031,.157,.173),c2=vec3(.071,.549,.502),c3=vec3(.184,.878,.776),c4=vec3(1.,.714,.282),c5=vec3(1.,.965,.894);
@@ -885,27 +924,39 @@ void main(){
   vec3 pre=col*a;
   if(px.y>uBand.x&&px.y<uBand.y){
     float x=px.x, yb=px.y-uBand.x, H=uBand.y-uBand.x;
+    float v=tissue(x,yb,uRes.x*.68,cell);
     float y0=26.+9.*sin(x/95.)+5.*sin(x/33.);
-    float dej=y0+70.+14.*sin(x/21.)+5.*sin(x/9.);
-    float lx=uRes.x*.68; float les=smoothstep(0.,1.,1.-abs(x-lx)/190.);
-    float v=0.;
-    if(yb<y0)v=0.;
-    else if(yb<y0+6.)v=.95;
-    else if(yb<dej)v=.56-les*.22+.07*sin(yb/3.+x/40.);
-    else{float d=yb-dej;v=.6*exp(-d/170.)+.1*max(0.,sin(x/14.+yb/40.))*exp(-d/260.)-les*.25*exp(-d/90.);if(d<5.)v+=.16;}
-    if(les>.2&&yb>y0+16.&&yb<dej+26.){float cx=mod(x,56.)-28.;if(length(vec2(cx,yb-dej+8.))<13.*les)v*=.3;}
     v*=.35+1.1*h1(cell+3.7)*h1(cell+9.1);
     float acq=1.-smoothstep(uScan-26.,uScan+2.,x);
     float vis=max(.2+.8*acq,lit*.95);
     float fade=1.-smoothstep(H-110.,H,yb);
     float ba=clamp(v*1.7,0.,1.)*vis*fade;
     vec3 bc=lut(v);
+    pre=bc*ba+pre*(1.-ba);
+    float al=ba+a*(1.-ba);
+    // attention bloom: where the pointer rests, drawn on the attention ramp, inside the tissue only
+    float bd=distance(px,uBloom.xy);
+    float bf=exp(-bd*bd/(2.*78.*78.))*uBloom.z*step(y0+5.,yb)*fade*clamp(v*2.6,.4,1.);
+    bf=clamp(bf,0.,1.);
+    pre=pre*(1.-bf*.8)+att(bf)*bf*.8; al=max(al,bf*.8);
     float line=(1.-smoothstep(.0,1.6,abs(x-uScan)))*fade;
     float trail=step(x,uScan)*(1.-smoothstep(0.,70.,uScan-x))*.10*fade;
     vec3 lime=vec3(.843,.949,.353);
-    pre=bc*ba+pre*(1.-ba);
-    float al=ba+a*(1.-ba);
     pre+=lime*(line*.95+trail); al=clamp(al+line*.95+trail,0.,1.);
+    gl_FragColor=vec4(pre,al);
+    return;
+  }
+  if(px.y>uBand2.x&&px.y<uBand2.y){
+    // privacy band: the scan exists only up to the edge of the clinic's device
+    float x=px.x, yb=px.y-uBand2.x, H=uBand2.y-uBand2.x;
+    float v=tissue(x,yb,-9999.,cell)*(.35+1.1*h1(cell+3.7)*h1(cell+9.1));
+    float inside=1.-smoothstep(uEdge-2.,uEdge,x);
+    float fade=(1.-smoothstep(H-70.,H,yb));
+    float ba=clamp(v*1.7,0.,1.)*max(.55,lit)*inside*fade;
+    pre=lut(v)*ba+pre*(1.-ba);
+    float al=ba+a*(1.-ba);
+    float line=(1.-smoothstep(.0,1.4,abs(x-uEdge)))*fade;
+    pre+=vec3(.843,.949,.353)*line*.9; al=clamp(al+line*.9,0.,1.);
     gl_FragColor=vec4(pre,al);
     return;
   }
@@ -921,7 +972,7 @@ void main(){
   ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), ctx.STATIC_DRAW);
   const loc = ctx.getAttribLocation(prog, 'p'); ctx.enableVertexAttribArray(loc); ctx.vertexAttribPointer(loc, 2, ctx.FLOAT, false, 0, 0);
   const u = n => ctx.getUniformLocation(prog, n);
-  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), band: u('uBand'), scan: u('uScan'), wide: u('uWide') };
+  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), band: u('uBand'), scan: u('uScan'), wide: u('uWide'), bloom: u('uBloom'), band2: u('uBand2'), edge: u('uEdge') };
   let dpr = 1, w = 0, h = 0;
   function size() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5); w = window.innerWidth; h = window.innerHeight;
@@ -935,6 +986,9 @@ void main(){
     ctx.uniform2f(U.res, w, h); ctx.uniform1f(U.dpr, dpr);
     ctx.uniform2f(U.mouse, s.mx, s.my); ctx.uniform1f(U.light, s.light);
     ctx.uniform2f(U.band, br.top, br.bottom); ctx.uniform1f(U.scan, s.sx); ctx.uniform1f(U.wide, s.wide);
+    ctx.uniform3f(U.bloom, s.bx, br.top + s.by, s.bs);
+    const b2 = band2.getBoundingClientRect();
+    ctx.uniform2f(U.band2, b2.top, b2.bottom); ctx.uniform1f(U.edge, b2.left + b2.width * 0.62);
     ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, 4);
   }
   return { draw, size };
@@ -946,12 +1000,16 @@ function scanFrame(now) {
   s.light += (s.tlight - s.light) * k(0.1);
   s.sx += (s.tsx - s.sx) * k(s.sweep ? 0.045 : 0.12);
   s.wide += (s.twide - s.wide) * k(0.08);
+  s.bx += (s.tbx - s.bx) * k(0.08); s.by += (s.tby - s.by) * k(0.08); s.bs += (s.tbs - s.bs) * k(0.05);
   if (gl) gl.draw();
-  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.tlight - s.light) > 0.003 || Math.abs(s.tsx - s.sx) > 0.3 || Math.abs(s.twide - s.wide) > 0.003;
+  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.tlight - s.light) > 0.003 || Math.abs(s.tsx - s.sx) > 0.3 || Math.abs(s.twide - s.wide) > 0.003
+    || Math.abs(s.tbx - s.bx) > 0.3 || Math.abs(s.tby - s.by) > 0.3 || Math.abs(s.tbs - s.bs) > 0.003;
   if (busy) requestAnimationFrame(scanFrame); else { s.drawing = false; s.last = 0; s.sweep = false; }
 }
 function wake() { if (!scanState.drawing) { scanState.drawing = true; requestAnimationFrame(scanFrame); } }
 const restScan = () => window.innerWidth * (window.innerWidth < 760 ? 0.82 : 0.64);
+let restTimer = 0;
+function bloomAt(x, y) { const s = scanState; s.tbx = x; s.tby = y; s.tbs = 1; if (s.bs < 0.05) { s.bx = x; s.by = y; } wake(); }
 window.addEventListener('pointermove', e => {
   if (e.pointerType === 'touch') return;
   const s = scanState;
@@ -959,10 +1017,14 @@ window.addEventListener('pointermove', e => {
   s.tx = e.clientX; s.ty = e.clientY; s.tlight = 1;
   const hr = hero.getBoundingClientRect();
   if (e.clientY > hr.top && e.clientY < hr.bottom && document.documentElement.classList.contains('entered')) s.tsx = e.clientX;
+  // Where the pointer rests on the cross-section for a moment, the attention bloom gathers.
+  clearTimeout(restTimer);
+  const br = band.getBoundingClientRect();
+  if (e.clientY > br.top + 30 && e.clientY < br.bottom - 40) restTimer = setTimeout(() => bloomAt(e.clientX, e.clientY - br.top), 300);
   wake();
 }, { passive: true });
 document.documentElement.addEventListener('pointerleave', () => { scanState.tlight = 0; wake(); });
-band.addEventListener('pointerdown', e => { scanState.tsx = e.clientX; scanState.tx = e.clientX; scanState.ty = e.clientY; scanState.tlight = 1; wake(); });
+band.addEventListener('pointerdown', e => { scanState.tsx = e.clientX; scanState.tx = e.clientX; scanState.ty = e.clientY; scanState.tlight = 1; bloomAt(e.clientX, e.clientY - band.getBoundingClientRect().top); });
 window.addEventListener('resize', () => { if (gl) gl.size(); if (scanState.tsx > window.innerWidth) scanState.tsx = restScan(); wake(); });
 
 // ---- intro, once a visit: a scan line sweeps across and acquires the mark, which flies to the header ----
@@ -971,6 +1033,8 @@ function enterHero() {
   document.documentElement.classList.add('entered');
   // The one authored moment on the page: the hero's scan line sweeps in and acquires the cross-section.
   scanState.sweep = !reduce.matches; scanState.tsx = restScan(); if (reduce.matches) scanState.sx = scanState.tsx;
+  // Once the sweep has passed the lesion, attention gathers on it.
+  setTimeout(() => bloomAt(window.innerWidth * 0.68, Math.min(170, band.offsetHeight * 0.5)), reduce.matches ? 0 : 1300);
   wake();
 }
 function endIntro() {
@@ -1036,7 +1100,7 @@ function paintEye(img, id, canvas, mode) {
     } else {
       // Light only, for screen blending over the photo: black where the model is quiet,
       // a soft glow where it responds. Contour lines are added below.
-      const w = smooth(clamp((a - 0.2) / 0.8, 0, 1)) * 0.5, c = ramp(a);
+      const w = smooth(clamp((a - 0.16) / 0.84, 0, 1)) * 0.9, c = ramp(a);
       D[k] = c[0] * w; D[k + 1] = c[1] * w; D[k + 2] = c[2] * w; D[k + 3] = 255;
       if (A) A[y * N + x] = a;
     }
@@ -1218,7 +1282,8 @@ function onScroll() {
   const sp = clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1);
   words.forEach((w, i) => w.style.setProperty('--o', (0.16 + clamp(sp * words.length - i, 0, 1) * 0.84).toFixed(3)));
   // Redraw while the hero's band is on screen, and once more as it leaves, so it never lingers.
-  const bandOn = band.getBoundingClientRect().bottom > 0;
+  const b2r = band2.getBoundingClientRect();
+  const bandOn = band.getBoundingClientRect().bottom > 0 || (b2r.bottom > 0 && b2r.top < vh);
   if (gl && (bandOn || bandShown)) wake();
   bandShown = bandOn;
 }
@@ -1230,7 +1295,8 @@ onScroll();
 // ---- counters and icon arrays fill when they come into view ----
 for (const a of $$('[data-array]')) {
   const total = +a.dataset.total, hit = +a.dataset.hit;
-  a.innerHTML = Array.from({ length: total }, (_, i) => `<i${i >= hit ? ' class="miss"' : ''} style="--i:${i}"></i>`).join('');
+  // Filled column by column, like a scan line passing left to right.
+  a.innerHTML = Array.from({ length: total }, (_, i) => `<i${i >= hit ? ' class="miss"' : ''} style="--c:${i % 20};--r:${Math.floor(i / 20)}"></i>`).join('');
 }
 const watched = $$('[data-array], [data-count]');
 function onSeen(el) {
@@ -1285,7 +1351,7 @@ if ('IntersectionObserver' in window) {
       else if (c > 0.8) ch = NUMS[i % NUMS.length];
       else if (c >= 0.12) ch = CHARS[Math.min(9, 1 + Math.floor(c * 8))];
       else ch = '.';
-      ctx.fillStyle = near > 0.06 ? `rgba(215, 242, 90, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(47, 224, 198, ${c > 0.8 ? 0.42 : 0.26})`;
+      ctx.fillStyle = near > 0.06 ? `rgba(215, 242, 90, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(47, 224, 198, ${c > 0.8 ? 0.78 : 0.5})`;
       ctx.fillText(ch, cx, cy);
     }
   }
