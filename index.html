@@ -936,10 +936,20 @@ void main(){
     float al=ba+a*(1.-ba);
     // attention bloom: where the pointer rests, drawn on the attention ramp, inside the tissue only
     float bd=distance(px,uBloom.xy);
-    float g=exp(-bd*bd/(2.*64.*64.))*uBloom.z*step(y0+5.,yb)*fade;
-    float bf=clamp(g*(.82+.36*h1(cell+5.3)),0.,1.);
-    float bw=smoothstep(.03,.3,g)*.82;
-    pre=pre*(1.-bw)+att(bf)*bw; al=max(al,bw);
+    // An attention map, not a glow: stretched along the dermal-epidermal junction, warped by the
+    // tissue's own ridges and fibres, fading where the tissue is dark, stepped into contour bands.
+    float bs=clamp(H/420.,.45,1.);
+    vec2 dl=px-uBloom.xy;
+    dl.y+=7.*sin(x/21.)+5.*sin(yb/17.+x/43.);
+    dl.x+=9.*sin(yb/23.+x/61.);
+    float g=exp(-dl.x*dl.x/(2.*90.*90.*bs*bs)-dl.y*dl.y/(2.*50.*50.*bs*bs))*uBloom.z*step(y0+5.,yb)*fade;
+    g*=clamp(.3+tissue(x,yb,uRes.x*.68,cell)*1.5,0.,1.);
+    float q=floor(g*6.)/6.;
+    float bw=step(1./6.,g)*.84;
+    vec3 bcol=att(q+.08)*(.86+.28*h1(cell+5.3));
+    float ring=step(1./6.,g)*(1.-smoothstep(.0,.07,fract(g*6.)));
+    bcol=mix(bcol,vec3(1.,.984,.839),ring*.55);
+    pre=pre*(1.-bw)+bcol*bw; al=max(al,bw);
     float line=(1.-smoothstep(.0,1.6,abs(x-uScan)))*fade;
     float trail=step(x,uScan)*(1.-smoothstep(0.,70.,uScan-x))*.10*fade;
     vec3 lime=vec3(.843,.949,.353);
