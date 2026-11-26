@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nevio | Know which skin spots need a dermatologist first</title>
-<meta name="description" content="Nevio reads a dermoscopic photo together with the patient's details and suggests which skin spots a primary care clinic should refer first. It runs on the clinic's own device. Research stage, not FDA-cleared. Free research pilots in southeastern Pennsylvania from 2027.">
+<meta name="description" content="Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer: refer urgently, refer for review, or routine follow-up. It runs on the clinic's own device. Research stage, not FDA-cleared. Free research pilots in southeastern Pennsylvania from 2027.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nevio | Know which skin spots need a dermatologist first">
 <meta property="og:description" content="A dermoscopic photo and a few patient details suggest who should see a dermatologist first. Runs on the clinic's device; photos never leave the room.">
@@ -13,273 +13,294 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#ECECEC">
+<meta name="theme-color" content="#05080A">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,600..900&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/host-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
 <style>
+@font-face { font-family: "Host Grotesk"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("assets/fonts/host-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Host Grotesk"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("assets/fonts/host-grotesk-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
 :root {
-  /* Clinic light, the research app's own colors: off-white ground under a dot lattice, white sheets,
-     ink for text, outlines and hard shadows, and cobalt as the one color that acts */
-  --ground: #ECECEC;
-  --raised: #FFFFFF;
-  --raised-2: #F6F6F4;
-  --line: #D5D7DC;
-  --line-2: #B9BCC3;
-  --edge: #0B0E14;
-  --text: #0B0E14;
-  --head-ink: #14213D;
-  --text-2: #363B44;
-  --muted: #4C525D;
-  --dim: #6B7079;
-  --led: #1B4FD8;
-  --led-hi: #14213D;
-  --led-ink: #FFFFFF;
-  --sage: #1B4FD8;
-  --phone: #0B0E14;
-  --shadow: #0B0E14;
-  --ghost: #E2E2E0;
-  --net: #14213D;
-  --net-hot: #1B4FD8;
-  --net-base: 0.30;
-  --urgent: #B42318;
-  --review: #9A4A06;
-  --routine: #1A7247;
+  /* Depth scan: one scan-black ground, speckle in teal with amber surface light,
+     the model's attention on its own ramp, and lime as the one color that acts. */
+  --ground: #05080A;
+  --raised: #0A1013;
+  --raised-2: #0E161A;
+  --line: rgba(226, 240, 236, 0.08);
+  --line-2: rgba(226, 240, 236, 0.15);
+  --text: #EAF0EE;
+  --text-2: #A5B2B0;
+  --muted: #7D8A88;
+  --lime: #D7F25A;
+  --lime-hi: #E6FA86;
+  --lime-ink: #10160A;
+  --teal: #2FE0C6;
+  --teal-deep: #0E4A4F;
+  --amber: #FFB648;
+  --att-0: #0B1C33;
+  --att-1: #145E78;
+  --att-2: #22B5A0;
+  --att-3: #7DD66A;
+  --att-4: #D7F25A;
+  --att-5: #FFFBD6;
+  --urgent: #FF6B5E;
+  --review: #F5B342;
+  --routine: #4CC9A0;
 
-  --font-display: "Anybody", "Arial Narrow", sans-serif;
-  --font-body: "Bricolage Grotesque", system-ui, sans-serif;
-  --fs-display: clamp(58px, 8.4vw, 136px);
-  --fs-h2: clamp(46px, 6.2vw, 100px);
-  --fs-h3: clamp(24px, 1.9vw, 30px);
-  --fs-lead: clamp(19px, 1.4vw, 22px);
-  --fs-small: 15px;
-
+  --font: "Host Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --fs-display: clamp(48px, 6.2vw, 92px);
+  --fs-h2: clamp(38px, 4.4vw, 64px);
+  --fs-h3: 22px;
+  --fs-lead: clamp(18px, 1.35vw, 21px);
+  --fs-small: 14px;
   --max: 1280px;
   --side: clamp(20px, 4.4vw, 64px);
   --head: 72px;
-  --section: clamp(104px, 13vw, 192px);
-  --cut: 14px;
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --section: clamp(120px, 12vw, 176px);
+  --radius: 6px;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--head); -webkit-text-size-adjust: 100%; interpolate-size: allow-keywords; }
-body { margin: 0; color: var(--text); font: 400 18px/1.6 var(--font-body); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--led);
-  background: var(--ground) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48.5' viewBox='0 0 28 48.5'%3E%3Cg fill='%2314213D' fill-opacity='.3'%3E%3Ccircle cx='0' cy='0' r='1.15'/%3E%3Ccircle cx='28' cy='0' r='1.15'/%3E%3Ccircle cx='14' cy='24.25' r='1.15'/%3E%3Ccircle cx='0' cy='48.5' r='1.15'/%3E%3Ccircle cx='28' cy='48.5' r='1.15'/%3E%3C/g%3E%3C/svg%3E"); }
-html.has-net body { background-image: none; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--head) + 8px); -webkit-text-size-adjust: 100%; background: var(--ground); scrollbar-color: #24302F var(--ground); }
+body { margin: 0; background: var(--ground); color: var(--text); font: 400 18px/1.6 var(--font); -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--lime); overflow-x: clip; font-variant-numeric: tabular-nums; }
 img { display: block; max-width: 100%; height: auto; }
-h1, h2, h3 { margin: 0; color: var(--head-ink); font-family: var(--font-display); font-stretch: 62%; font-weight: 800; letter-spacing: 0; text-wrap: balance; }
+h1, h2, h3 { margin: 0; font-weight: 500; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
-a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--sage); }
-::selection { background: var(--led); color: var(--led-ink); }
-:focus-visible { outline: 2px solid var(--led); outline-offset: 3px; }
+a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(226, 240, 236, 0.35); transition: text-decoration-color 150ms ease; }
+@media (hover: hover) { a:hover { text-decoration-color: var(--lime); } }
+::selection { background: var(--lime); color: var(--lime-ink); }
+:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 2px; }
 .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .wrap { max-width: calc(var(--max) + 2 * var(--side)); margin: 0 auto; padding-inline: var(--side); }
-.h2 { font-size: var(--fs-h2); line-height: 0.9; }
-.lead { font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); max-width: 32em; }
-.skip { position: absolute; left: 16px; top: -64px; z-index: 60; padding: 12px 16px; background: var(--led); color: var(--led-ink); }
+.h2 { font-size: var(--fs-h2); line-height: 1.02; letter-spacing: -0.035em; }
+.lead { font-size: var(--fs-lead); line-height: 1.55; color: var(--text-2); max-width: 34em; }
+.small { font-size: var(--fs-small); color: var(--muted); }
+.skip { position: absolute; left: 16px; top: -64px; z-index: 120; padding: 12px 16px; border-radius: var(--radius); background: var(--lime); color: var(--lime-ink); }
 .skip:focus { top: 12px; }
 
-/* The pigment network behind the page */
-#net { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-main, .site-foot { position: relative; z-index: 1; }
+/* The scan layer: one fixed WebGL canvas behind everything. Lit only where the pointer goes. */
+#scan { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+main, .site-foot, .site-head { position: relative; z-index: 1; }
 
-/* Buttons: a tissue-cassette tab, with its 45 degree writing face cut into the corner */
-.btn { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 54px; padding: 0 28px 0 24px; border: 0; background: none; font: 600 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color 200ms ease, transform 160ms var(--ease-out), filter 160ms var(--ease-out); }
-.btn::before, .btn::after { content: ""; position: absolute; z-index: -1; }
-.btn::before { inset: 0; background: var(--edge); clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
-.btn::after { inset: 2px; clip-path: polygon(0 0, calc(100% - var(--cut) + 1.17px) 0, 100% calc(var(--cut) - 1.17px), 100% 100%, 0 100%); background: linear-gradient(var(--wipe), var(--wipe)) left / 0% 100% no-repeat, var(--fill); transition: background-size 320ms var(--ease-out); }
-.btn { filter: drop-shadow(4px 4px 0 var(--shadow)); }
-.btn:active { transform: translate(3px, 3px); filter: drop-shadow(1px 1px 0 var(--shadow)); }
-.btn-led { color: var(--led-ink); --fill: var(--led); --wipe: var(--led-hi); }
-.btn-ghost { color: var(--text); --fill: var(--raised); --wipe: var(--text); }
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border: 0; border-radius: var(--radius); font-weight: 500; font-size: 16px; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 120ms var(--ease); }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-led { background: var(--lime); color: var(--lime-ink); }
+.btn-ghost { background: rgba(226, 240, 236, 0.03); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover { transform: translate(-2px, -2px); filter: drop-shadow(6px 6px 0 var(--shadow)); }
-  .btn:hover::after { background-size: 100% 100%; }
-  .btn-ghost:hover { color: var(--raised); }
+  .btn-led:hover { background: var(--lime-hi); }
+  .btn-ghost:hover { background: rgba(226, 240, 236, 0.07); box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.28); }
 }
 
 /* Header */
 .site-head { position: fixed; inset: 0 0 auto; z-index: 40; border-bottom: 1px solid transparent; transition: background-color 300ms ease, border-color 300ms ease; }
-.site-head.is-solid, .site-head.is-open { background: color-mix(in srgb, var(--ground) 95%, transparent); border-color: var(--line); }
+.site-head.is-solid, .site-head.is-open { background: rgba(5, 8, 10, 0.9); border-color: var(--line); -webkit-backdrop-filter: saturate(140%) blur(12px); backdrop-filter: saturate(140%) blur(12px); }
 .head-in { display: flex; align-items: center; gap: 24px; height: var(--head); }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text); text-decoration: none; }
-.brand svg { width: 28px; height: 28px; flex: none; }
-.brand span { font: 800 28px/1 var(--font-display); font-stretch: 84%; padding-bottom: 3px; }
-.nav { display: flex; gap: 4px; margin-left: auto; }
-.nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--text-2); text-decoration: none; font-size: 16px; transition: color 150ms ease; }
-.nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 10px; height: 1px; background: var(--sage); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--ease-out); }
-@media (hover: hover) { .nav a:hover { color: var(--text); } .nav a:hover::after { transform: scaleX(1); } }
+.brand svg { width: 26px; height: 26px; flex: none; overflow: visible; }
+.brand span { font-weight: 600; font-size: 23px; letter-spacing: -0.03em; }
+.nav { display: flex; gap: 2px; margin-left: auto; }
+.nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--text-2); text-decoration: none; font-size: 15px; transition: color 150ms ease; }
+@media (hover: hover) { .nav a:hover { color: var(--text); } }
+.nav a[aria-current="true"] { color: var(--text); }
 .menu-btn { display: none; }
-.head-cta { height: 44px; padding: 0 22px 0 18px; font-size: 16px; --cut: 10px; filter: drop-shadow(3px 3px 0 var(--shadow)); }
+.head-cta { height: 40px; padding: 0 16px; font-size: 15px; }
 @media (max-width: 860px) {
   .head-in { gap: 12px; }
-  .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 0; background: transparent; box-shadow: inset 0 0 0 1.5px var(--edge); color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; }
-  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 20px; background: var(--ground); border-bottom: 1px solid var(--line); }
-  .nav a { min-height: 56px; padding: 0; font: 800 32px/1 var(--font-display); font-stretch: 62%; color: var(--text); border-bottom: 1px solid var(--line); }
-  .nav a::after { display: none; }
+  .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; font-weight: 500; cursor: pointer; }
+  .head-cta { height: 44px; }
+  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 20px; background: rgba(5, 8, 10, 0.97); border-bottom: 1px solid var(--line); }
+  .nav a { min-height: 56px; padding: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; color: var(--text); border-bottom: 1px solid var(--line); }
   .nav a:last-child { border-bottom: 0; }
   .js .nav { opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 120ms ease, transform 120ms ease, visibility 0s 120ms; }
-  .js .site-head.is-open .nav { opacity: 1; visibility: visible; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
-  html:not(.js) .nav { position: static; padding: 0; border: 0; flex-direction: row; flex-wrap: wrap; }
+  .js .site-head.is-open .nav { opacity: 1; visibility: visible; transform: none; transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s; }
+  html:not(.js) .nav { position: static; padding: 0; border: 0; flex-direction: row; flex-wrap: wrap; background: none; }
+  html:not(.js) .nav a { font-size: 16px; min-height: 44px; border: 0; padding: 0 8px; }
 }
-@media (max-width: 380px) { .head-cta { padding: 0 16px 0 12px; } .menu-btn { padding: 0 12px; } .brand span { font-size: 24px; } }
+@media (max-width: 400px) { .head-cta { padding: 0 12px; font-size: 14px; } .menu-btn { padding: 0 12px; } }
 
-/* Hero: a lens over the pigment network */
-.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
-.hero-lens { --r: clamp(96px, 12vw, 184px); position: absolute; left: 0; top: 0; width: calc(var(--r) * 2 / 0.88); aspect-ratio: 1; transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -50%); pointer-events: none; will-change: transform; }
-html:not(.js) .hero-lens { display: none; }
-.hero-lens svg, .scope svg { width: 100%; height: 100%; overflow: visible; }
-.ticks line { stroke: var(--text); stroke-opacity: 0.5; stroke-width: 0.35; }
-.ticks line.major { stroke-opacity: 0.9; stroke-width: 0.5; }
-.hero-in { position: relative; width: 100%; padding-top: calc(var(--head) + 48px); padding-bottom: clamp(56px, 9vh, 112px); }
-.hero h1 { font-size: var(--fs-display); line-height: 0.88; max-width: 8.4em; }
-.hero-sub { margin-top: 28px; max-width: 30em; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); }
-.actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 36px; }
-.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: var(--fs-small); color: var(--text-2); }
-.hover-only { display: none; }
-@media (hover: hover) and (pointer: fine) { .hover-only { display: inline; } }
-@media (max-width: 640px) {
-  .hero-lens { --r: 64px; }
-  .hero { align-items: stretch; }
-  .hero-in { padding-top: calc(var(--head) + 20px); padding-bottom: 20px; min-height: 100svh; display: flex; flex-direction: column; }
-  .hero h1 { font-size: clamp(50px, 15vw, 64px); }
-  .hero-sub { margin-top: auto; font-size: 17px; }
-  .actions { margin-top: 20px; gap: 10px; flex-wrap: nowrap; }
-  .actions .btn { flex: 1 1 auto; height: 50px; padding: 0 16px 0 12px; font-size: 16px; --cut: 10px; }
-  .hero-meta { margin-top: 16px; padding-top: 14px; }
+/* Depth ruler: scroll is depth, from the surface down */
+.ruler { position: fixed; left: 18px; top: calc(var(--head) + 28px); bottom: 32px; z-index: 30; width: 44px; pointer-events: none; display: none; }
+@media (min-width: 1180px) { .js .ruler { display: block; } }
+.ruler .scale { position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: repeating-linear-gradient(to bottom, var(--line-2) 0 1px, transparent 1px 5%); }
+.ruler .scale::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: repeating-linear-gradient(to bottom, rgba(226, 240, 236, 0.32) 0 1px, transparent 1px 25%); }
+.ruler .mark { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; transform: translateY(calc(var(--p, 0) * (100cqh - 1px))); }
+.ruler { container-type: size; }
+.ruler .mark i { width: 18px; height: 2px; background: var(--lime); }
+.ruler .mark span { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+
+/* Hero: the headline over a cross-section scan */
+.hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: auto 1fr; }
+.hero-top { width: 100%; padding-top: calc(var(--head) + clamp(40px, 7vh, 88px)); }
+.hero h1 { font-size: var(--fs-display); line-height: 0.98; letter-spacing: -0.042em; max-width: 13.5em; }
+.hero-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; margin-top: clamp(24px, 3.4vh, 40px); }
+.hero-sub { max-width: 31em; font-size: var(--fs-lead); line-height: 1.55; color: var(--text-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.band { position: relative; min-height: 280px; margin-top: clamp(28px, 4vh, 48px); border-top: 1px solid var(--line); }
+.band-fallback { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 182, 72, 0.35) 0 1%, rgba(47, 224, 198, 0.22) 2% 24%, rgba(14, 74, 79, 0.35) 30%, transparent 92%); }
+html.has-gl .band-fallback { display: none; }
+.band-tag { position: absolute; z-index: 2; padding: 4px 9px; border-radius: 4px; background: rgba(5, 8, 10, 0.72); box-shadow: inset 0 0 0 1px var(--line); font-size: 12px; color: var(--text-2); }
+.band-note { position: absolute; right: var(--side); bottom: 16px; z-index: 2; font-size: 12px; color: var(--muted); }
+.band-hint { position: absolute; left: var(--side); bottom: 16px; z-index: 2; font-size: 12px; color: var(--muted); }
+.js:not(.entered) .hero-top > * { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+.js .hero-top > * { transition: opacity 700ms var(--ease), transform 700ms var(--ease), filter 700ms var(--ease); }
+.js .hero-top > :nth-child(2) { transition-delay: 90ms; }
+@media (max-width: 760px) {
+  .hero-top { padding-top: calc(var(--head) + 32px); }
+  .hero h1 { font-size: clamp(40px, 11.4vw, 56px); line-height: 1; }
+  .hero-row { margin-top: 20px; gap: 22px; }
+  .hero-sub { font-size: 17px; }
+  .actions { width: 100%; }
+  .actions .btn { flex: 1 1 0; padding: 0 14px; }
+  .band { min-height: 220px; }
+  .band-tag.deep { display: none; }
 }
-@media (max-width: 640px) and (max-height: 720px) {
-  .hero-lens { --r: 50px; }
-  .hero h1 { font-size: 44px; }
-  .hero-sub { font-size: 16px; }
-}
 
-/* Reveal on scroll: out of focus, then into focus */
-/* Hero entrance, once, after the intro */
-.js .hero-in > * { transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out), filter 800ms var(--ease-out); }
-.js .hero-in > :nth-child(2) { transition-delay: 90ms; }
-.js .hero-in > :nth-child(3) { transition-delay: 180ms; }
-.js .hero-in > :nth-child(4) { transition-delay: 270ms; }
-.js:not(.entered) .hero-in > * { opacity: 0; transform: translateY(28px); filter: blur(8px); }
-.js .hero-lens { transition: opacity 900ms var(--ease-out) 240ms; }
-.js:not(.entered) .hero-lens { opacity: 0; }
-
-/* Intro: the lens draws itself, the LED comes on, the spot comes into focus */
+/* Intro: a scan line sweeps across and acquires the mark, then it flies into the header */
 .intro { display: none; }
 .js .intro { display: grid; position: fixed; inset: 0; z-index: 100; place-items: center; }
 .intro-bg { position: absolute; inset: 0; background: var(--ground); }
-.intro-in { position: relative; }
 html.intro-done .intro { display: none; }
-.intro-in { display: flex; align-items: center; gap: 22px; transform-origin: 0 0; }
-.intro-mark { width: 104px; height: 104px; overflow: visible; }
-.i-ring { fill: none; stroke: var(--text); stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 1; transform-box: fill-box; transform-origin: center; transform: rotate(-90deg); }
-.i-arc { fill: none; stroke: var(--led); stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.i-spot { fill: var(--text); opacity: 0; transform-box: fill-box; transform-origin: center; }
-.intro-word { display: flex; overflow: hidden; padding-bottom: 6px; font: 800 96px/0.9 var(--font-display); font-stretch: 84%; color: var(--text); }
-.intro-word span { display: inline-block; transform: translateY(110%); }
-@media (max-width: 640px) { .intro-mark { width: 72px; height: 72px; } .intro-word { font-size: 66px; } .intro-in { gap: 14px; } }
+.intro-in { position: relative; display: flex; align-items: center; gap: 20px; transform-origin: 0 0; clip-path: inset(0 100% 0 0); }
+.intro-mark { width: 92px; height: 92px; overflow: visible; }
+.intro-word { font-weight: 600; font-size: 96px; line-height: 1; letter-spacing: -0.045em; color: var(--text); padding-bottom: 8px; }
+.intro-line { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--lime); opacity: 0; transform: translateX(-2px); }
+@media (max-width: 640px) { .intro-mark { width: 64px; height: 64px; } .intro-word { font-size: 64px; } .intro-in { gap: 12px; } }
 
-/* Specimens: real biopsy-confirmed spots in the three groups Nevio sorts */
-.specimens { padding-top: clamp(72px, 9vw, 128px); overflow: hidden; }
-.spec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 48px; }
-.spec-head .h2 { max-width: 9em; }
-.spec-head .lead { max-width: 24em; }
-.spec-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px clamp(24px, 4vw, 64px); margin-top: 64px; }
+/* Section heads */
+.sec-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 64px; align-items: end; }
+.sec-head .lead { justify-self: end; }
+@media (max-width: 900px) { .sec-head { grid-template-columns: minmax(0, 1fr); } .sec-head .lead { justify-self: start; } }
+
+/* Specimens: the model's view, developed into the photo where the pointer looks */
+.specimens { padding-top: var(--section); }
+.spec-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 20px; margin-top: 64px; }
 .spec { margin: 0; }
-.spec-lens { max-width: 260px; }
-.spec-lens { position: relative; aspect-ratio: 1; }
-.spec-lens img { position: absolute; inset: 7%; width: 86%; height: 86%; border-radius: 50%; object-fit: cover; }
-.spec-lens svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.spec figcaption { margin-top: 14px; }
-.spec b { display: block; font: 800 26px/1 var(--font-display); font-stretch: 62%; }
-.spec span { display: block; margin-top: 4px; font-size: var(--fs-small); color: var(--muted); }
-.spec.is-case b { color: var(--led); }
-.spec-note { margin-top: 28px; font-size: var(--fs-small); color: var(--muted); max-width: 60ch; }
-@media (max-width: 860px) { .spec-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 20px; } .spec b { font-size: 22px; } }
+.spec-view { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: var(--raised); box-shadow: 0 0 0 1px var(--line); }
+.spec-view img, .spec-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.spec-eye { --r: 0px; -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--r), #000 calc(var(--r) + 36px)); mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--r), #000 calc(var(--r) + 36px)); transition: --r 520ms var(--ease); }
+@property --r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+.spec.is-lit .spec-eye { --r: 84px; }
+.spec.is-open .spec-eye { --r: 420px; }
+.spec figcaption { display: grid; gap: 2px; margin-top: 14px; }
+.spec b { font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
+.spec span { font-size: var(--fs-small); color: var(--muted); }
+.spec.is-case b { color: var(--lime); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; margin-top: 40px; font-size: var(--fs-small); color: var(--muted); }
+.ramp { display: inline-flex; align-items: center; gap: 10px; }
+.ramp i { width: 120px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--att-0), var(--att-1), var(--att-2), var(--att-3), var(--att-4), var(--att-5)); box-shadow: inset 0 0 0 1px var(--line); }
+@media (max-width: 860px) { .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; margin-top: 44px; } .spec b { font-size: 16px; } }
 
-/* The case, one detail at a time */
+/* The case */
 .case { position: relative; padding-top: var(--section); }
-.case-stage { position: relative; }
-.case-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
-.case-left { display: grid; gap: 40px; }
-.case-head { display: grid; gap: 20px; }
-.case-head .lead { max-width: 24em; }
-.scope { position: relative; width: min(100%, 520px); aspect-ratio: 1; justify-self: center; margin: 0; }
-.scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; }
-.scope-clip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); }
-.scope svg { position: absolute; inset: 0; }
-.scope .arc, .hero-lens .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
-.readout { display: grid; gap: 28px; }
+.case-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 104px); align-items: center; }
+.case-left { display: grid; gap: 32px; }
+.scope { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0; justify-self: center; }
+.scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; background: var(--raised); }
+.scope-clip img, .scope-clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scope-clip img { transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); }
+.scope-eye { opacity: 0.85; transition: opacity 400ms var(--ease); mix-blend-mode: screen; }
+.scope.no-eye .scope-eye { opacity: 0; }
+.scope-sweep { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--lime); opacity: 0; }
+.scope svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.ticks line { stroke: var(--text); stroke-opacity: 0.35; stroke-width: 0.3; }
+.ticks line.major { stroke-opacity: 0.7; stroke-width: 0.45; }
+.scope-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 8px; border: 0; border-radius: 999px; background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; cursor: pointer; transition: background-color 160ms ease; }
+.switch i { position: relative; width: 34px; height: 20px; border-radius: 10px; background: #26302F; transition: background-color 200ms ease; }
+.switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--text); transition: transform 220ms var(--ease); }
+.switch[aria-pressed="true"] i { background: var(--lime); }
+.switch[aria-pressed="true"] i::after { transform: translateX(14px); background: var(--lime-ink); }
+@media (hover: hover) { .switch:hover { background: rgba(226, 240, 236, 0.09); } }
+.case-note { font-size: var(--fs-small); color: var(--muted); max-width: 34em; }
+.readout { display: grid; gap: 26px; }
+.case-head { display: grid; gap: 16px; }
 .inputs { border-top: 1px solid var(--line-2); }
-.inputs button { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 0; border: 0; border-bottom: 1px solid var(--line-2); background: none; text-align: left; cursor: pointer; color: var(--muted); transition: color 240ms ease, background-color 240ms ease; }
-.inputs .tick { width: 18px; height: 18px; box-shadow: inset 0 0 0 1.5px var(--edge); display: grid; place-items: center; transition: background-color 240ms ease, box-shadow 240ms ease; }
-.inputs .tick svg { width: 12px; height: 12px; opacity: 0; transition: opacity 200ms ease; }
-.inputs .label { font-size: 17px; }
-.inputs .value { font-size: 17px; font-variant-numeric: tabular-nums; }
+.inputs button { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 6px 4px; border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; cursor: pointer; color: var(--muted); transition: color 200ms ease, background-color 200ms ease; }
+.inputs .tick { width: 18px; height: 18px; border-radius: 4px; box-shadow: inset 0 0 0 1.5px var(--line-2); display: grid; place-items: center; transition: background-color 200ms ease, box-shadow 200ms ease; }
+.inputs .tick svg { width: 12px; height: 12px; opacity: 0; transition: opacity 160ms ease; }
+.inputs .value { font-variant-numeric: tabular-nums; }
 .inputs button.is-given { color: var(--text); }
-.inputs button.is-given .tick { background: var(--sage); box-shadow: none; }
+.inputs button.is-given .tick { background: var(--lime); box-shadow: none; }
 .inputs button.is-given .tick svg { opacity: 1; }
-.inputs button[aria-current="step"] { background: linear-gradient(90deg, color-mix(in srgb, var(--sage) 12%, transparent), transparent); }
-.inputs button[aria-current="step"] .label { font-weight: 600; }
-@media (hover: hover) { .inputs button:hover { color: var(--text); } }
-.scores { display: grid; gap: 18px; }
+.inputs button[aria-current="step"] { background: rgba(215, 242, 90, 0.05); }
+@media (hover: hover) { .inputs button:hover { color: var(--text); background: rgba(226, 240, 236, 0.03); } }
+.vec { display: grid; gap: 8px; }
+.vec-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font-size: var(--fs-small); color: var(--muted); }
+.vec-head span:first-child { color: var(--text-2); }
+.vec-cells { display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: 3px; height: 26px; }
+.vec-cells i { position: relative; border-radius: 2px; background: rgba(226, 240, 236, 0.03); box-shadow: inset 0 0 0 1px var(--line); }
+.vec-cells i::after { content: ""; position: absolute; inset: 3px; border-radius: 1px; background: var(--teal); transform-origin: 50% 100%; transform: scaleY(var(--v, 0)); transition: transform 560ms var(--ease-io); }
+.vec-cells i.hit { box-shadow: inset 0 0 0 1px var(--lime); }
+.vec-cells i.hit::after { background: var(--lime); }
+.scores { display: grid; gap: 16px; }
 .score { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; }
-.score .s-val { font: 800 34px/1 var(--font-display); font-stretch: 62%; font-variant-numeric: tabular-nums; }
-.track { grid-column: 1 / -1; position: relative; height: 10px; background: var(--raised-2); }
-.fill { position: absolute; inset: 0; background: var(--line-2); transform-origin: left center; transform: scaleX(var(--v)); transition: transform 600ms var(--ease-in-out), background-color 300ms ease; }
+.score .s-val { font-weight: 500; font-size: 32px; letter-spacing: -0.03em; }
+.track { grid-column: 1 / -1; position: relative; height: 6px; border-radius: 3px; background: rgba(226, 240, 236, 0.06); }
+.fill { position: absolute; inset: 0; border-radius: 3px; background: rgba(226, 240, 236, 0.28); transform-origin: left center; transform: scaleX(var(--v)); transition: transform 600ms var(--ease-io), background-color 300ms ease; }
 .score[data-tone="urgent"] .fill { background: var(--urgent); }
 .score[data-tone="review"] .fill { background: var(--review); }
-.cut { position: absolute; left: 27.8%; top: -7px; bottom: -7px; width: 2px; margin-left: -1px; background: var(--text); }
-.cut-note { grid-column: 1 / -1; padding-left: calc(27.8% - 1px); font-size: var(--fs-small); color: var(--muted); }
-.verdict { display: flex; align-items: flex-start; gap: 14px; padding-top: 24px; border-top: 1px solid var(--line-2); }
-.shape { flex: none; width: 16px; height: 16px; margin-top: 14px; border-radius: 50%; }
+.cut { position: absolute; left: 27.8%; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--text); }
+.cut-note { grid-column: 1 / -1; padding-left: calc(27.8% - 1px); font-size: 13px; color: var(--muted); }
+.verdict { display: flex; align-items: flex-start; gap: 14px; padding-top: 22px; border-top: 1px solid var(--line-2); }
+.shape { flex: none; width: 12px; height: 12px; margin-top: 14px; border-radius: 50%; }
 .verdict[data-tone="urgent"] .shape { background: var(--urgent); }
 .verdict[data-tone="review"] .shape { box-shadow: inset 0 0 0 2px var(--review); background: linear-gradient(90deg, var(--review) 50%, transparent 50%); }
-.v-word { display: block; font: 800 clamp(40px, 3.6vw, 56px)/0.95 var(--font-display); font-stretch: 62%; }
+.v-word { display: block; font-weight: 500; font-size: clamp(30px, 2.6vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
 .verdict[data-tone="urgent"] .v-word { color: var(--urgent); }
 .verdict[data-tone="review"] .v-word { color: var(--review); }
-.v-why { display: block; margin-top: 8px; color: var(--text-2); }
-@media (min-width: 960px) and (min-height: 680px) {
+.v-why { display: block; margin-top: 6px; color: var(--text-2); }
+@media (min-width: 960px) and (min-height: 700px) {
   .js .case-track { height: 440vh; }
   .js .case-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--head); }
   .js .case { padding-top: calc(var(--section) - 100px); }
   .js .case-grid { width: 100%; gap: 24px clamp(40px, 6vw, 96px); }
-  .js .case-left { gap: 28px; }
-  .js .case-head .h2 { font-size: clamp(46px, 4.6vw, 72px); }
-  .js .case-head .lead { font-size: 18px; }
-  .js .scope { width: min(100%, 46vh, 470px); justify-self: start; }
-  .js .readout { gap: 20px; }
-  .js .inputs button { min-height: 46px; padding: 4px 0; }
-  .js .vec-cells { height: 24px; }
+  .js .case-left { gap: 20px; }
+  .js .case-head .h2 { font-size: clamp(34px, 3vw, 46px); }
+  .js .scores { gap: 8px; }
+  .js .score .s-val { font-size: 26px; }
+  .js .verdict { padding-top: 14px; }
+  .js .v-word { font-size: 30px; }
+  .js .scope { width: min(100%, 52vh, 500px); }
+  .js .readout { gap: 18px; }
+  .js .inputs button { min-height: 46px; }
 }
-@media (min-width: 960px) and (max-height: 710px) { .js .vec { display: none; } }
-@media (min-width: 960px) and (max-height: 780px) { .js .scores { gap: 12px; } .js .score .s-val { font-size: 30px; } .js .verdict { padding-top: 16px; } .js .vec-now { display: none; } }
-@media (max-width: 959px) { .case-grid { grid-template-columns: minmax(0, 1fr); } .scope { width: min(100%, 380px); } }
+@media (min-width: 960px) and (max-height: 1000px) { .js .case-head .lead { display: none; } }
+@media (min-width: 960px) and (max-height: 800px) { .js .vec { display: none; } .js .inputs button { min-height: 42px; } }
+@media (max-width: 959px) {
+  .case-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .scope { width: min(100%, 400px); }
+  .readout { display: contents; }
+  .case-head { order: 1; }
+  .case-left { order: 2; }
+  .inputs, .vec, .scores, .verdict { order: 3; }
+}
 
 /* How a visit works */
 .how { padding-top: var(--section); }
 .how-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
-.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 38px; background: var(--phone); box-shadow: inset 0 0 0 1px #2A2F38, 10px 10px 0 -2px var(--ground), 10px 10px 0 0 var(--edge); }
-.phone-screen { position: relative; aspect-ratio: 624 / 1152; border-radius: 28px; overflow: hidden; background: #f2f3f5; }
-.phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); filter: blur(6px); transition: opacity 500ms var(--ease-out), transform 700ms var(--ease-out), filter 500ms var(--ease-out); }
-.phone-screen img.on { opacity: 1; transform: none; filter: none; }
-.how-steps { display: grid; margin-top: 48px; }
-.how-steps li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 16px; padding: 24px 0; border-top: 1px solid var(--line-2); color: var(--muted); transition: color 300ms ease; }
+.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 40px; background: #0C1215; box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.6); }
+.phone-screen { position: relative; aspect-ratio: 624 / 1152; border-radius: 30px; overflow: hidden; background: #f2f3f5; }
+.phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: translateY(12px) scale(1.01); transition: opacity 420ms var(--ease), transform 600ms var(--ease); }
+.phone-screen img.on { opacity: 1; transform: none; }
+.how-steps { display: grid; margin-top: 40px; }
+.how-steps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 16px; padding: 22px 0; border-top: 1px solid var(--line); color: var(--muted); transition: color 300ms ease; }
 .how-steps li.on { color: var(--text); }
-.how-steps .n { font: 800 52px/0.9 var(--font-display); font-stretch: 62%; color: var(--dim); transition: color 300ms ease; }
-.how-steps li.on .n { color: var(--led); }
-.how-steps h3 { font-size: var(--fs-h3); line-height: 1.1; color: inherit; font-stretch: 70%; }
-.how-steps p { grid-column: 2; color: var(--muted); max-width: 30em; }
+.how-steps .n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 500; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-2); transition: color 300ms ease, background-color 300ms ease, box-shadow 300ms ease; }
+.how-steps li.on .n { color: var(--lime-ink); background: var(--lime); box-shadow: none; }
+.how-steps h3 { font-size: var(--fs-h3); line-height: 1.25; letter-spacing: -0.015em; color: inherit; }
+.how-steps p { grid-column: 2; color: var(--muted); max-width: 32em; }
 .how-steps li.on p { color: var(--text-2); }
 .step-shot { display: none; }
-.how-note { margin-top: 24px; font-size: var(--fs-small); color: var(--muted); }
-@media (min-width: 960px) and (min-height: 680px) {
+@media (min-width: 960px) and (min-height: 700px) {
   .js .how-track { height: 320vh; }
   .js .how-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--head); }
   .js .how-grid { width: 100%; }
@@ -289,10 +310,10 @@ html.intro-done .intro { display: none; }
   .how-grid { grid-template-columns: minmax(0, 1fr); }
   .how-grid > .phone { display: none; }
   .how-steps li { color: var(--text); }
-  .how-steps .n { color: var(--led); }
+  .how-steps .n { color: var(--lime-ink); background: var(--lime); box-shadow: none; }
   .how-steps p { color: var(--text-2); }
-  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 32px; background: var(--phone); box-shadow: inset 0 0 0 1px var(--line-2); }
-  .step-shot img { border-radius: 24px; }
+  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 34px; background: #0C1215; box-shadow: inset 0 0 0 1px var(--line-2); }
+  .step-shot img { border-radius: 26px; }
 }
 
 /* Evidence */
@@ -300,30 +321,30 @@ html.intro-done .intro { display: none; }
 .arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); margin-top: 72px; }
 .arrays > div { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
 .arrays > div > * { align-self: start; }
-.freq { font: 800 clamp(72px, 9vw, 150px)/0.85 var(--font-display); font-stretch: 62%; font-variant-numeric: tabular-nums lining-nums; color: var(--led); }
-.freq .of { color: var(--dim); }
-.freq-label { margin-top: 16px; font-size: var(--fs-lead); line-height: 1.5; max-width: 18em; }
+.freq { font-weight: 500; font-size: clamp(64px, 7.4vw, 116px); line-height: 0.9; letter-spacing: -0.05em; color: var(--lime); }
+.freq .of { color: var(--muted); }
+.freq-label { margin-top: 18px; font-size: var(--fs-lead); line-height: 1.45; max-width: 19em; }
 .freq-meta { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
 .array { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; margin-top: 32px; max-width: 440px; }
 .array i { aspect-ratio: 1; border-radius: 50%; background: var(--text); }
-.array i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--edge); }
-.js .array i { transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out); transition-delay: calc(var(--i) * 4ms); }
+.array i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.js .array i { transition: opacity 360ms var(--ease), transform 360ms var(--ease); transition-delay: calc(var(--i) * 4ms); }
 .js .array:not(.is-in) i { opacity: 0; transform: scale(0.3); }
 .array-key { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: var(--fs-small); color: var(--muted); }
 .array-key span { display: inline-flex; align-items: center; gap: 8px; }
 .array-key i { width: 10px; height: 10px; border-radius: 50%; background: var(--text); }
-.array-key i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--edge); }
-.ev-more { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px clamp(40px, 6vw, 96px); margin-top: 112px; align-items: start; }
-.sheet { border-top: 2px solid var(--text); }
-.sheet div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 24px; padding: 22px 0; border-bottom: 1px solid var(--line-2); }
-.sheet dt { font-weight: 600; }
-.sheet dd { margin: 0; font: 800 48px/0.9 var(--font-display); font-stretch: 62%; font-variant-numeric: tabular-nums lining-nums; text-align: right; }
+.array-key i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.ev-more { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px clamp(40px, 6vw, 96px); margin-top: 104px; align-items: start; }
+.sheet { border-top: 1px solid var(--line-2); }
+.sheet div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.sheet dt { font-weight: 500; }
+.sheet dd { margin: 0; font-weight: 500; font-size: 44px; line-height: 1; letter-spacing: -0.04em; text-align: right; }
 .sheet .note { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); font-weight: 400; max-width: 60ch; }
-.limits { padding: 32px; background: var(--raised); clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%); }
-.limits h3 { font-size: var(--fs-h3); line-height: 1.1; font-stretch: 70%; }
-.limits ul { display: grid; gap: 16px; margin-top: 20px; }
-.limits li { color: var(--text-2); padding-left: 22px; position: relative; }
-.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; background: var(--sage); }
+.limits { padding: 28px 30px; border-radius: 8px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line); }
+.limits h3 { font-size: var(--fs-h3); line-height: 1.25; letter-spacing: -0.015em; }
+.limits ul { display: grid; gap: 14px; margin-top: 18px; }
+.limits li { color: var(--text-2); padding-left: 20px; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--muted); }
 @media (max-width: 859px) {
   .arrays, .ev-more { grid-template-columns: minmax(0, 1fr); }
   .arrays > div { grid-template-rows: none; grid-row: auto; display: block; }
@@ -331,30 +352,29 @@ html.intro-done .intro { display: none; }
   .ev-more { margin-top: 72px; }
 }
 
-/* Privacy: one statement that comes into focus as it scrolls in */
+/* Privacy */
 .privacy { padding-top: var(--section); }
-.statement { font-size: clamp(64px, 11vw, 190px); line-height: 0.84; max-width: 7em; }
-.js .statement .w { opacity: var(--o, 0.14); filter: blur(calc((1 - var(--o, 0.14)) * 8px)); }
-.statement .w:last-child { color: var(--led); }
+.statement { font-size: clamp(54px, 8.6vw, 140px); line-height: 0.95; letter-spacing: -0.05em; max-width: 9em; }
+.js .statement .w { opacity: var(--o, 0.16); filter: blur(calc((1 - var(--o, 0.16)) * 10px)); }
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 72px; }
-.facts div { padding-top: 20px; border-top: 2px solid var(--text); }
-.facts dt { font: 800 48px/0.9 var(--font-display); font-stretch: 62%; }
-.facts dd { margin: 12px 0 0; color: var(--text-2); max-width: 22em; }
+.facts div { padding-top: 20px; border-top: 1px solid var(--line-2); }
+.facts dt { font-weight: 500; font-size: 32px; letter-spacing: -0.03em; }
+.facts dd { margin: 10px 0 0; color: var(--text-2); max-width: 22em; }
 .privacy .btn { margin-top: 56px; }
 @media (max-width: 760px) { .facts { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
 
 /* Team */
 .team { padding-top: var(--section); }
 .team-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: start; }
-.team .story { margin-top: 28px; color: var(--text-2); max-width: 30em; }
-.honors { display: grid; gap: 12px; margin-top: 32px; }
-.honors li { padding: 14px 18px; background: var(--raised); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
+.team .story { margin-top: 24px; color: var(--text-2); max-width: 30em; }
+.honors { display: grid; gap: 10px; margin-top: 32px; }
+.honors li { display: flex; align-items: center; gap: 12px; color: var(--text-2); font-size: 16px; }
+.honors li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
 .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-.people li { padding: 24px 0 32px; border-top: 2px solid var(--line-2); transition: border-color 300ms ease; }
-@media (hover: hover) { .people li:hover { border-top-color: var(--sage); } }
-.people b { display: block; font: 800 clamp(48px, 5vw, 80px)/0.9 var(--font-display); font-stretch: 62%; }
-.people .role { display: block; margin-top: 10px; font-weight: 600; color: var(--sage); }
-.people p { margin-top: 6px; font-size: 16px; color: var(--text-2); }
+.people li { padding: 22px 0 28px; border-top: 1px solid var(--line-2); }
+.people b { display: block; font-weight: 500; font-size: clamp(36px, 3.6vw, 52px); line-height: 1; letter-spacing: -0.04em; }
+.people .role { display: block; margin-top: 10px; color: var(--lime); font-size: 15px; }
+.people p { margin-top: 6px; font-size: 15px; color: var(--text-2); }
 @media (max-width: 899px) { .team-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 480px) { .people p { display: none; } }
 
@@ -362,140 +382,103 @@ html.intro-done .intro { display: none; }
 .pilot { padding-block: var(--section); }
 .pilot-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-areas: "head form" "faq form"; gap: 56px clamp(40px, 6vw, 96px); align-items: start; }
 .pilot-head { grid-area: head; }
-.pilot-head .lead { margin-top: 24px; }
-.form-card { grid-area: form; padding: clamp(24px, 3vw, 40px); background: var(--raised); clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%); }
+.pilot-head .lead { margin-top: 20px; }
+.form-card { grid-area: form; padding: clamp(24px, 3vw, 40px); border-radius: 10px; background: linear-gradient(180deg, #0C1316, #091013); box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(0, 0, 0, 0.8); }
 .faq { grid-area: faq; }
-.faq h3 { font-size: var(--fs-h3); line-height: 1.1; font-stretch: 70%; }
-.faq-list { margin-top: 16px; border-top: 1px solid var(--line-2); }
-details { border-bottom: 1px solid var(--line-2); }
-summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 14px 0; font-weight: 600; cursor: pointer; list-style: none; }
+.faq h3 { font-size: var(--fs-h3); letter-spacing: -0.015em; }
+.faq-list { margin-top: 12px; border-top: 1px solid var(--line-2); }
+details { border-bottom: 1px solid var(--line); }
+summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; padding: 14px 0; font-weight: 500; cursor: pointer; list-style: none; }
 summary::-webkit-details-marker { display: none; }
-.plus { position: relative; flex: none; width: 16px; height: 16px; }
-.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: var(--sage); transition: transform 200ms var(--ease-out); }
+.plus { position: relative; flex: none; width: 14px; height: 14px; }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: var(--text-2); transition: transform 200ms var(--ease); }
 .plus::after { transform: rotate(90deg); }
 details[open] .plus::after { transform: rotate(0deg); }
 details p { padding-bottom: 22px; color: var(--text-2); max-width: 34em; }
-details::details-content { block-size: 0; overflow: hidden; transition: block-size 240ms var(--ease-out), content-visibility 240ms allow-discrete; }
+details::details-content { block-size: 0; overflow: hidden; transition: block-size 240ms var(--ease), content-visibility 240ms allow-discrete; }
 details[open]::details-content { block-size: auto; }
 @media (max-width: 899px) { .pilot-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "form" "faq"; gap: 40px; } }
 
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
 .field-f { display: grid; gap: 8px; align-content: start; }
 .field-f.full { grid-column: 1 / -1; }
-.field-f label { font-weight: 600; font-size: 16px; }
+.field-f label { font-weight: 500; font-size: 15px; }
 .opt { font-weight: 400; color: var(--muted); }
-.field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 52px; padding: 0 14px; border: 0; border-radius: 0; background: var(--raised-2); box-shadow: inset 0 0 0 1px var(--edge); font-size: 17px; transition: box-shadow 150ms ease; }
-.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231B4FD8' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
-.field-f select option { background: var(--raised-2); color: var(--text); }
+.field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 16px; transition: box-shadow 150ms ease, background-color 150ms ease; }
+.field-f input::placeholder, .field-f textarea::placeholder { color: var(--muted); }
+.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A5B2B0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+.field-f select option { background: #0E161A; color: var(--text); }
 .field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
-.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--led); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--led); }
-.field-f.bad input, .field-f.bad select { box-shadow: inset 0 0 0 2px var(--urgent); }
+@media (hover: hover) { .field-f input:hover, .field-f select:hover, .field-f textarea:hover { box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.26); } }
+.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--lime); background: rgba(226, 240, 236, 0.06); }
+.field-f.bad input, .field-f.bad select { box-shadow: inset 0 0 0 1.5px var(--urgent); }
 .err { display: none; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--urgent); }
 .err svg { flex: none; }
 .field-f.bad .err { display: flex; }
 .help { font-size: var(--fs-small); color: var(--muted); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
-.btn[disabled] { cursor: progress; color: var(--text); }
-.btn[disabled]::after { --fill: var(--line); background-color: var(--line); }
-.btn[disabled] { color: var(--text); }
-.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: var(--text); animation: spin 700ms linear infinite; }
+.btn[disabled] { cursor: progress; background: #2A3432; color: var(--text-2); }
+.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 700ms linear infinite; }
 .btn.is-busy .spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width: 520px) { .form-grid { grid-template-columns: minmax(0, 1fr); } .form-foot .btn { width: 100%; } }
 .msg { grid-column: 1 / -1; display: flex; gap: 12px; align-items: flex-start; }
 .msg[hidden] { display: none; }
 .msg svg { flex: none; margin-top: 4px; color: var(--routine); }
-.msg-ok strong { color: var(--routine); }
+.msg-ok strong { color: var(--routine); font-weight: 500; }
 .msg-warn { flex-direction: column; }
-.msg-warn strong { color: var(--review); }
+.msg-warn strong { color: var(--review); font-weight: 500; }
 .msg-warn.is-fail strong { color: var(--urgent); }
-.msg textarea { width: 100%; min-height: 160px; padding: 12px; border: 0; background: var(--ground); box-shadow: inset 0 0 0 1px var(--edge); font-size: var(--fs-small); line-height: 1.5; resize: vertical; }
+.msg textarea { width: 100%; min-height: 160px; padding: 12px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2); font-size: var(--fs-small); line-height: 1.5; resize: vertical; }
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
-.js .msg.is-new { animation: rise 400ms var(--ease-out); }
-@keyframes rise { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
+.js .msg.is-new { animation: rise 400ms var(--ease); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
 
-/* Footer */
-.site-foot { border-top: 1px solid var(--line-2); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); }
-.foot-word { display: block; padding-top: 56px; font: 800 clamp(120px, 24vw, 380px)/0.78 var(--font-display); font-stretch: 62%; color: var(--ghost); letter-spacing: 0; user-select: none; }
+/* Footer: the wordmark set in scan characters, built from the evidence numbers */
+.site-foot { border-top: 1px solid var(--line); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); }
+.foot-word { position: relative; display: block; padding-top: 48px; font-weight: 600; font-size: clamp(120px, 24vw, 360px); line-height: 0.8; letter-spacing: -0.06em; color: #0E1517; user-select: none; }
+.foot-word canvas { position: absolute; left: 0; pointer-events: none; }
+.foot-word.is-ascii { color: transparent; }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: 32px 48px; padding-block: 40px 56px; }
 .site-foot .brand { align-self: start; }
 .site-foot p + p { margin-top: 12px; }
+kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; border-radius: 4px; background: rgba(226, 240, 236, 0.06); box-shadow: inset 0 0 0 1px var(--line-2), 0 1px 0 var(--line-2); }
 @media (max-width: 860px) { .foot-grid { grid-template-columns: minmax(0, 1fr); padding-block: 32px 40px; } }
 
-
-/* Specimens print as a 1-bit dither until you look closer */
-@property --d { syntax: "<length>"; inherits: false; initial-value: 0px; }
-.dith { position: absolute; inset: 7%; width: 86%; height: 86%; border-radius: 50%; image-rendering: pixelated; pointer-events: none;
-  -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--d), #000 calc(var(--d) + 1px));
-  mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent var(--d), #000 calc(var(--d) + 1px));
-  transition: --d 720ms var(--ease-out); }
-.spec.dev .dith { --d: 420px; }
-.js .spec-lens { cursor: zoom-in; }
-.spec-lens svg { pointer-events: none; }
-
-/* The model's input, as 17 cells */
-.vec { display: grid; gap: 8px; }
-.vec-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; font-size: var(--fs-small); color: var(--muted); }
-.vec-head span:first-child { color: var(--text); font-weight: 600; }
-.vec-now { font-variant-numeric: tabular-nums; }
-.vec-cells { display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: 3px; height: 28px; }
-.vec-cells i { position: relative; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
-.vec-cells i::after { content: ""; position: absolute; inset: 3px; background: var(--led); transform-origin: 50% 100%; transform: scaleY(var(--v, 0)); transition: transform 560ms var(--ease-in-out); }
-.vec-cells i.hit { box-shadow: inset 0 0 0 2px var(--text); }
-.vec-cells i:hover { box-shadow: inset 0 0 0 2px var(--led); }
-
-/* Rescoring: the LED sweeps once round the ring and a scan line passes over the spot */
-.scope .sweep { transform-origin: 50px 50px; opacity: 0; }
-.scan { position: absolute; left: 0; right: 0; top: 0; z-index: 1; height: 2px; background: var(--led); opacity: 0; pointer-events: none; }
-.b-arc { transform-box: view-box; transform-origin: 24px 24px; }
-
 /* Easter eggs */
-.foot-word { position: relative; }
-.foot-word canvas { position: absolute; left: 0; pointer-events: none; }
-.foot-word.is-ascii { color: transparent; }
-.psst { color: var(--muted); }
-kbd { font: inherit; font-weight: 600; color: var(--text); padding: 0 4px; box-shadow: inset 0 0 0 1px var(--line-2); }
-.toast { position: fixed; left: var(--side); bottom: 24px; z-index: 70; isolation: isolate; width: min(440px, calc(100vw - 2 * var(--side))); padding: 18px 22px 20px; color: var(--text); font-size: 16px; line-height: 1.5; filter: drop-shadow(4px 4px 0 var(--shadow)); visibility: hidden; opacity: 0; transform: translateY(14px); transition: opacity 180ms ease, transform 180ms var(--ease-out), visibility 0s 180ms; }
-.toast.on { visibility: visible; opacity: 1; transform: none; transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), visibility 0s; }
-.toast::before, .toast::after { content: ""; position: absolute; z-index: -1; }
-.toast::before { inset: 0; background: var(--edge); clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); }
-.toast::after { inset: 2px; background: var(--raised); clip-path: polygon(0 0, calc(100% - 16.83px) 0, 100% 16.83px, 100% 100%, 0 100%); }
-.toast b { display: block; margin-bottom: 4px; font: 800 30px/1 var(--font-display); font-stretch: 62%; color: var(--head-ink); }
-.toast b em { font-style: normal; color: var(--led); }
-.scope-cursor { position: fixed; left: 0; top: 0; z-index: 45; width: 150px; aspect-ratio: 1; pointer-events: none; display: none; transform: translate(var(--x, -999px), var(--y, -999px)) translate(-50%, -50%); }
-.scope-cursor svg { width: 100%; height: 100%; overflow: visible; }
-.scope-cursor .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
-html.scope-mode .scope-cursor { display: block; }
-html.scope-mode .hero-lens { opacity: 0; }
-html.scope-mode, html.scope-mode * { cursor: none !important; }
-html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor: auto !important; }
+.toast { position: fixed; left: var(--side); bottom: 24px; z-index: 70; width: min(440px, calc(100vw - 2 * var(--side))); padding: 18px 20px; border-radius: 10px; background: rgba(10, 16, 19, 0.94); box-shadow: inset 0 0 0 1px var(--line-2), 0 24px 60px -20px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 15px; color: var(--text-2); visibility: hidden; opacity: 0; transform: translateY(10px); transition: opacity 160ms ease, transform 160ms var(--ease), visibility 0s 160ms; }
+.toast.on { visibility: visible; opacity: 1; transform: none; transition: opacity 240ms var(--ease), transform 240ms var(--ease), visibility 0s; }
+.toast b { display: block; margin-bottom: 4px; font-weight: 500; font-size: 18px; color: var(--text); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation-duration: 0s !important; }
-  .js:not(.entered) .hero-in > *, .js:not(.entered) .hero-lens { opacity: 1; transform: none; filter: none; }
+  .js:not(.entered) .hero-top > * { opacity: 1; transform: none; filter: none; }
   .js .array:not(.is-in) i { opacity: 1; transform: none; }
   .js .statement .w { opacity: 1; filter: none; }
   .spinner { animation: none; }
 }
 </style>
 </head>
+
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="net" aria-hidden="true"></canvas>
+<canvas id="scan" aria-hidden="true"></canvas>
 <div class="intro" id="intro" aria-hidden="true">
   <div class="intro-bg"></div>
   <div class="intro-in">
-    <svg class="intro-mark" viewBox="0 0 48 48"><circle class="i-ring" cx="24" cy="24" r="19" pathLength="1"/><path class="i-arc" d="M24 5 A19 19 0 0 1 41.2 15.9" pathLength="1"/><path class="i-spot" d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z"/></svg>
-    <span class="intro-word"><span>n</span><span>e</span><span>v</span><span>i</span><span>o</span></span>
+    <svg class="intro-mark" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18.5" fill="none" stroke="#EAF0EE" stroke-width="3"/><path d="M10 28.5h28" stroke="#D7F25A" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" fill="#EAF0EE"/></svg>
+    <span class="intro-word">nevio</span>
+    <span class="intro-line"></span>
   </div>
 </div>
+<div class="ruler" aria-hidden="true"><div class="scale"></div><div class="mark" id="ruler-mark"><i></i><span id="ruler-read">0.00 mm</span></div></div>
 
 <header class="site-head" id="site-head">
   <div class="wrap head-in">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" style="stroke:var(--text)" stroke-width="3.5"/><path class="b-arc" d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" style="stroke:var(--led)" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" style="fill:var(--text)"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--lime)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
       <span>nevio</span>
     </a>
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -513,36 +496,43 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
 <main id="main">
 
 <section class="hero" id="top" aria-labelledby="hero-h">
-  <div class="hero-lens" id="hero-lens" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" style="stroke:var(--text)" stroke-opacity="0.7" stroke-width="0.5"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" style="stroke:var(--led)" stroke-width="1.6"/></g></svg></div>
-  <div class="wrap hero-in">
+  <div class="wrap hero-top">
     <h1 id="hero-h">Know which skin spots need a dermatologist first</h1>
-    <p class="hero-sub">Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer. The clinician decides.</p>
-    <div class="actions">
-      <a class="btn btn-led" href="#pilot">Request a pilot</a>
-      <a class="btn btn-ghost" href="#case">See the real case</a>
+    <div class="hero-row">
+      <p class="hero-sub">Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer. It runs on the clinic's own computer or phone. The clinician decides.</p>
+      <div class="actions">
+        <a class="btn btn-led" href="#pilot">Request a free pilot</a>
+        <a class="btn btn-ghost" href="#case">See a real case</a>
+      </div>
     </div>
-    <div class="hero-meta">
-      <p>Research stage. Not FDA-cleared.</p>
-      <p class="hover-only">Move your pointer to look through the lens.</p>
-    </div>
+  </div>
+  <div class="band" id="band" aria-hidden="true">
+    <div class="band-fallback"></div>
+    <span class="band-tag" style="left:var(--side);top:18px">Surface</span>
+    <span class="band-tag deep" style="left:var(--side);top:44%">Dermis</span>
+    <p class="band-hint">Research stage. Not FDA-cleared.</p>
+    <p class="band-note">Illustration of a skin cross-section</p>
   </div>
 </section>
 
-<section class="specimens" aria-labelledby="spec-h">
-  <div class="wrap spec-head">
+<section class="specimens" id="specimens" aria-labelledby="spec-h">
+  <div class="wrap sec-head">
     <h2 class="h2" id="spec-h">Every spot lands in one of three groups</h2>
-    <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Every photo here was confirmed by biopsy, and none was used to train the model.</p>
+    <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Each photo was confirmed by biopsy, and none was used to train the model.</p>
   </div>
-  <div class="wrap"><div class="spec-row" id="spec-row">
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec is-case"><div class="spec-lens"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/><path d="M50 5 A45 45 0 0 1 90.8 31" fill="none" style="stroke:var(--led)" stroke-width="2"/></svg></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-    <figure class="spec"><div class="spec-lens"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" style="stroke:var(--line-2)" stroke-width="0.8"/></svg></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-  </div></div>
+  <div class="wrap">
+    <div class="spec-grid" id="spec-grid">
+      <figure class="spec" data-id="3099700"><div class="spec-view"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec" data-id="1464567"><div class="spec-view"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="9178598"><div class="spec-view"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec is-case" data-id="5700648"><div class="spec-view"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
+      <figure class="spec" data-id="9154271"><div class="spec-view"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="8821098"><div class="spec-view"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec" data-id="6249262"><div class="spec-view"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="6991057"><div class="spec-view"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+    </div>
+    <p class="legend"><span class="ramp"><i></i>Where the model's image branch responds most</span><span>Computed by the research model from each photo. Point at a spot to see the photo itself.</span></p>
+  </div>
 </section>
 
 <section class="case" id="case" aria-labelledby="case-h">
@@ -550,29 +540,35 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
     <div class="case-stage">
       <div class="wrap case-grid">
         <div class="case-left">
-          <div class="case-head">
-            <h2 class="h2" id="case-h">What the patient's details change</h2>
-            <p class="lead">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. Scroll or pick a step, and watch the pigment network behind the page turn irregular as melanoma rises.</p>
-          </div>
           <figure class="scope" id="scope">
-            <div class="scope-clip"><span class="scan" aria-hidden="true"></span><img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ"></div>
-            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" style="stroke:var(--line-2)" stroke-width="0.6"/><g class="arc"><path d="M50 5.5 A44.5 44.5 0 0 1 90.33 31.2" fill="none" style="stroke:var(--led)" stroke-width="1.5"/></g><g class="sweep"><path d="M50 5.5 A44.5 44.5 0 0 1 94.5 50" fill="none" style="stroke:var(--led)" stroke-width="3"/></g></svg>
+            <div class="scope-clip">
+              <img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ">
+              <canvas class="scope-eye" id="scope-eye" width="520" height="520" aria-hidden="true"></canvas>
+              <span class="scope-sweep" id="scope-sweep"></span>
+            </div>
+            <svg viewBox="0 0 100 100" aria-hidden="true" data-ticks="44.5"><circle cx="50" cy="50" r="44.5" fill="none" style="stroke:var(--text)" stroke-opacity="0.25" stroke-width="0.4"/></svg>
           </figure>
+          <div class="scope-bar">
+            <button class="switch" type="button" id="eye-switch" aria-pressed="true"><i></i>Model's view</button>
+            <p class="case-note">The colored layer comes from the photo alone, so it stays the same at every step. The details change how the model weighs it.</p>
+          </div>
         </div>
 
         <div class="readout">
-          <div class="inputs" role="group" aria-label="Details given to the model">
-            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
-            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
-            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
-            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--ground)" stroke-width="3.5" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+          <div class="case-head">
+            <h2 class="h2" id="case-h">What the patient's details change</h2>
+            <p class="lead">One biopsy-confirmed melanoma, scored by the real research model as a clinician adds each detail. Scroll, or pick a step.</p>
           </div>
-
+          <div class="inputs" role="group" aria-label="Details given to the model">
+            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--lime-ink)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
+            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--lime-ink)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
+            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--lime-ink)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
+            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" style="stroke:var(--lime-ink)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+          </div>
           <div class="vec" aria-hidden="true">
-            <p class="vec-head"><span>The 17 numbers the model reads</span><span class="vec-now" id="vec-now">Blank details use neutral defaults</span></p>
+            <p class="vec-head"><span>The 17 numbers the model reads</span><span id="vec-now">Blank details use neutral defaults</span></p>
             <div class="vec-cells" id="vec-cells"></div>
           </div>
-
           <ul class="scores" aria-label="Nevio's scores">
             <li class="score" data-k="mel" data-tone="urgent">
               <span>Melanoma</span><span class="s-val"><span data-num>82</span>%</span>
@@ -588,13 +584,11 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
               <span class="track" aria-hidden="true"><span class="fill" style="--v:0.02"></span></span>
             </li>
           </ul>
-
           <div class="verdict" id="verdict" data-tone="urgent" aria-live="polite">
             <span class="shape" aria-hidden="true"></span>
             <p><strong class="v-word" id="v-word">Refer urgently</strong><span class="v-why" id="v-why">Melanoma 82%. The biopsy confirmed melanoma.</span></p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -613,7 +607,7 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
         </figure>
         <div>
           <h2 class="h2" id="how-h">It fits inside a normal visit</h2>
-          <p class="lead" style="margin-top:24px">Real screens from the research app, running the case above. All a clinic needs is a computer or phone it already has, and a clip-on dermatoscope.</p>
+          <p class="lead" style="margin-top:20px">Real screens from the research app, running the case above. All a clinic needs is a computer or phone it already has, and a clip-on dermatoscope.</p>
           <ol class="how-steps">
             <li class="on"><span class="n">1</span><h3>Photograph the spot</h3><p>Through a clip-on dermatoscope. The app checks focus, exposure and contrast before it scores.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-photo.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
             <li><span class="n">2</span><h3>Add the patient's details</h3><p>Age, sex, body site and a few short answers. Every field is optional, and each one can change the answer.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-details.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
@@ -627,9 +621,10 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
 
 <section class="evidence" id="evidence" aria-labelledby="evidence-h">
   <div class="wrap">
-    <h2 class="h2" id="evidence-h">Tested on 9,080 biopsy-confirmed images it never saw</h2>
-    <p class="lead" style="margin-top:28px">Each grid stands for 200 test images, in the same proportions as the full results. These come from a held-out test set, not a clinical study.</p>
-
+    <div class="sec-head">
+      <h2 class="h2" id="evidence-h">Tested on 9,080 biopsy-confirmed images it never saw</h2>
+      <p class="lead">Each grid stands for 200 test images, in the same proportions as the full results. These come from a held-out test set, not a clinical study.</p>
+    </div>
     <div class="arrays">
       <div>
         <p class="freq"><span class="cnt" data-count="180">180</span> <span class="of">of 200</span></p>
@@ -646,7 +641,6 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
         <p class="array-key"><span><i></i>Left alone</span><span><i class="miss"></i>Flagged anyway</span></p>
       </div>
     </div>
-
     <div class="ev-more">
       <dl class="sheet">
         <div><dt>Melanoma AUC</dt><dd>0.940</dd><dt class="note">How well the melanoma score ranks melanoma above everything else. 1.0 is perfect, 0.5 is a coin flip.</dt></div>
@@ -668,13 +662,13 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
 <section class="privacy" id="privacy" aria-labelledby="privacy-h">
   <div class="wrap">
     <h2 class="statement" id="privacy-h" data-words>Photos never leave the room</h2>
-    <p class="lead" style="margin-top:36px">The model runs in the browser on the clinic's own computer or phone. No photo or patient detail is uploaded, to us or anyone else.</p>
+    <p class="lead" style="margin-top:32px">The model runs in the browser on the clinic's own computer or phone. No photo or patient detail is uploaded, to us or anyone else.</p>
     <dl class="facts">
       <div><dt>21 MB</dt><dd>The whole model. Smaller than a few phone photos, so an ordinary browser can run it.</dd></div>
       <div><dt>Offline</dt><dd>After the first load, no internet is needed for a result.</dd></div>
       <div><dt>On the device</dt><dd>Patient details stay on the same device as the photo.</dd></div>
     </dl>
-    <a class="btn btn-led" href="#pilot">Request a pilot</a>
+    <a class="btn btn-led" href="#pilot">Request a free pilot</a>
   </div>
 </section>
 
@@ -745,6 +739,7 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
     </div>
   </div>
 </section>
+
 </main>
 
 <footer class="site-foot">
@@ -752,7 +747,7 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
     <span class="foot-word" aria-hidden="true">nevio</span>
     <div class="foot-grid">
       <a class="brand" href="#top" aria-label="Nevio, back to top">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" style="stroke:var(--text)" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" style="stroke:var(--led)" stroke-width="3.5"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" style="fill:var(--text)"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--lime)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
         <span>nevio</span>
       </a>
       <div>
@@ -762,13 +757,12 @@ html.scope-mode input, html.scope-mode textarea, html.scope-mode select { cursor
       <div>
         <p>Questions? Use the <a href="#pilot">pilot request form</a>.</p>
         <p>&copy; 2026 Nevio. Pennsylvania, USA.</p>
-        <p class="psst">Psst: type <kbd>scope</kbd> anywhere on the page.</p>
+        <p>Type <kbd>scan</kbd> or <kbd>abcde</kbd> anywhere on the page.</p>
       </div>
     </div>
   </div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="scope-cursor" id="scope-cursor" aria-hidden="true"><svg viewBox="0 0 100 100" data-ticks="44"><circle cx="50" cy="50" r="44" fill="none" style="stroke:var(--text)" stroke-width="0.8"/><g class="arc"><path d="M50 6 A44 44 0 0 1 89.88 31.4" fill="none" style="stroke:var(--led)" stroke-width="2.4"/></g></svg></div>
 
 <script>
 {
@@ -782,6 +776,7 @@ const CONTACT_EMAIL = "";
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -798,13 +793,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && head.class
 document.addEventListener('click', e => { if (head.classList.contains('is-open') && !e.target.closest('#site-head')) setMenu(false); });
 window.matchMedia('(min-width: 861px)').addEventListener?.('change', m => { if (m.matches) setMenu(false); });
 
-// ---- reticle ticks around each lens, like the scale on a dermatoscope ----
+// ---- reticle ticks around the case lens ----
 for (const svg of $$('svg[data-ticks]')) {
   const r = parseFloat(svg.dataset.ticks), g = document.createElementNS(NS, 'g');
   g.setAttribute('class', 'ticks');
-  for (let i = 0; i < 72; i++) {
-    const a = (i / 72) * Math.PI * 2, major = i % 6 === 0;
-    const r1 = r + (major ? 1.6 : 2.4), r2 = r + 4.2;
+  for (let i = 0; i < 120; i++) {
+    const a = (i / 120) * Math.PI * 2, major = i % 10 === 0;
+    const r1 = r + (major ? 1.4 : 2.4), r2 = r + 4;
     const l = document.createElementNS(NS, 'line');
     l.setAttribute('x1', (50 + r1 * Math.cos(a)).toFixed(2)); l.setAttribute('y1', (50 + r1 * Math.sin(a)).toFixed(2));
     l.setAttribute('x2', (50 + r2 * Math.cos(a)).toFixed(2)); l.setAttribute('y2', (50 + r2 * Math.sin(a)).toFixed(2));
@@ -814,21 +809,55 @@ for (const svg of $$('svg[data-ticks]')) {
   svg.insertBefore(g, svg.firstChild);
 }
 
-// ---- the lattice: still until the pointer touches it ----
-// A triangular lattice of dots (Stryde's ground). Near the pointer the dots swell and bulge like
-// glass, and struts light up between them; a click or tap sends a ripple through it. The hero lens
-// shows what a dermatoscope shows underneath: the pigment network. The case scene drives `atypia`
-// from the real melanoma score, so the lattice turns irregular, the way an atypical network does.
-const hero = $('.hero'), heroLens = $('#hero-lens'), scopeCursor = $('#scope-cursor');
-let scopeOn = false;
-const netState = { mx: -999, my: -999, tx: -999, ty: -999, light: 0, tlight: 0, atypia: 0, tatypia: 0,
-  lx: 0, ly: 0, ltx: 0, lty: 0, lensOn: 0, tlensOn: 0, drawing: false, ripples: [] };
-let lensR = heroLens.offsetWidth * 0.44;
-const hexRgb = h => { h = h.trim().replace('#', ''); if (h.length === 3) h = h.replace(/./g, c => c + c); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255); };
-const net = (() => {
-  const canvas = $('#net');
-  const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
-  if (!gl) { canvas.remove(); return null; }
+// ---- the attention ramp shared by the specimens and the case ----
+const RAMP = [[0, [11, 28, 51]], [0.2, [20, 94, 120]], [0.42, [34, 181, 160]], [0.62, [125, 214, 106]], [0.82, [215, 242, 90]], [1, [255, 251, 214]]];
+function ramp(t) {
+  t = clamp(t, 0, 1);
+  for (let i = 1; i < RAMP.length; i++) if (t <= RAMP[i][0]) {
+    const [a, ca] = RAMP[i - 1], [b, cb] = RAMP[i], f = (t - a) / (b - a);
+    return [ca[0] + (cb[0] - ca[0]) * f, ca[1] + (cb[1] - ca[1]) * f, ca[2] + (cb[2] - ca[2]) * f];
+  }
+  return RAMP[RAMP.length - 1][1];
+}
+// The research model's own 12 x 12 feature maps (final layer, weighted by its attention module),
+// one per photo, scaled to each photo's 97th percentile. W and H are the full photo the model saw;
+// the page shows its centre square, so the map is cropped the same way.
+const MAP_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const smooth = t => t * t * (3 - 2 * t);
+function mapSampler(id) {
+  const [W, H, s] = MAPS[id], raw = Array.from(s, ch => MAP_KEY.indexOf(ch) / 61), v = new Array(144).fill(0);
+  const K = [0.25, 0.5, 0.25];
+  for (let j = 0; j < 12; j++) for (let i = 0; i < 12; i++) {
+    let acc = 0, wsum = 0;
+    for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+      const y = j + dj, x = i + di; if (x < 0 || y < 0 || x > 11 || y > 11) continue;
+      const w = K[di + 1] * K[dj + 1]; acc += raw[y * 12 + x] * w; wsum += w;
+    }
+    v[j * 12 + i] = acc / wsum;
+  }
+  const hi = Math.max(...v) || 1; for (let k = 0; k < 144; k++) v[k] /= hi;
+  const S = Math.min(W, H), u0 = (W - S) / 2 / W, us = S / W, v0 = (H - S) / 2 / H, vs = S / H;
+  const at = (i, j) => v[clamp(j, 0, 11) * 12 + clamp(i, 0, 11)];
+  return (x, y) => { // x, y in 0..1 over the shown square
+    const fx = (u0 + x * us) * 12 - 0.5, fy = (v0 + y * vs) * 12 - 0.5;
+    const i = Math.floor(fx), j = Math.floor(fy), tx = smooth(fx - i), ty = smooth(fy - j);
+    const a = at(i, j) + (at(i + 1, j) - at(i, j)) * tx, b = at(i, j + 1) + (at(i + 1, j + 1) - at(i, j + 1)) * tx;
+    return a + (b - a) * ty;
+  };
+}
+
+const MAPS = {"5700648":[1200,1600,"Gree39qWtvZZixe956JNByVZrjj47evzGbgdqElpbttDld23nuBkmgsxii42eoomlpGwBha0esoxGZBSsub2bCoGKONrGppcouEpBImDyLvBvIwolsfpCDTYtqk74586fzTZsj8300248dnD"],"3099700":[1326,994,"a2001322221R311145bb65565568agxCk68aa9gFpADNFc5587QNZtBKvr212jDZzCqAHc617cZJMlAMAu427atZsKMTZq833adkDEPZJi9444a7foEwdd63gd6347755222jt9211222121"],"1464567":[1600,1600,"d3211101133Z2313125223433346aa561322357eskm72221468AFKzh722134eqZZZv7522248vOZVg9253226kzzje24ae1238c9b113cr32234a3302cg751023300146982012221124"],"9178598":[1600,1200,"a3011236ZZRZ330045eeZZJ322379qpwDFm19ggcqsSUxa10msosjADOB731dhmizjvvp65545aLAudg996711fJPpb8846611aEHukgffdc116fmgjplgif213655aff777433442398213"],"9154271":[1200,1600,"zc47ih413kKZdb36kk656hyw5525bea77bda557fktzqecb39bmCQZZNnfa3bctVZZZKpd8468mNPNwte840538vyqqf74313239fba954415435665448749c54313369bdegb300028gin"],"8821098":[960,720,"jea77erZZYCZ9b977eqZZJqh69858dfjfdba7879emjd6776766alAFn9443554eyNMz9422433eHLIk8422344dtzpb53224448cfc76332442386863433520024443221530012442111"],"6249262":[1200,1600,"ZwmGGaed7sRZvrwwvKgdkfPCcjbmFcRtaocd7ngPcSmkB6a2jeSkZskLam849rjZUuMfwk85djnCSTmJh5919cdebtqid711561ab5ha2380fb33cf51359gwq73bc743bEPNw7249612gSZ"],"6991057":[889,667,"42111212110B31123232110023b7b9451111234zyhp4a17121bxGZnH1a23255zZCZai552318bHZFZ2421132bmSZdb1310132bfef2723011236535221111112322121011111012210"]};
+
+// ---- the scan layer: one fixed WebGL canvas, still until the pointer lights it ----
+// Everywhere: a faint speckle field, lit teal where the pointer is. In the hero band: an
+// illustrated cross-section of skin (surface, epidermis, dermis), acquired left of a scan line
+// that follows the pointer. Nothing moves on its own; it redraws only when something changes.
+const band = $('#band'), hero = $('.hero');
+const scanState = { mx: -9999, my: -9999, tx: -9999, ty: -9999, light: 0, tlight: 0, sx: -40, tsx: -40, wide: 0, twide: 0, drawing: false, last: 0 };
+const gl = (() => {
+  const canvas = $('#scan');
+  const ctx = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+  if (!ctx) { canvas.remove(); return null; }
   const vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   const fs = `
 #ifdef GL_FRAGMENT_PRECISION_HIGH
@@ -836,167 +865,113 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform float uAtypia;
-uniform vec3 uLens; uniform float uLensOn; uniform vec3 uCol; uniform vec3 uHot; uniform float uBase;
-uniform vec4 uRip[4];
-const float S=28.;
-vec2 h2(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p)*43758.5453);}
-float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);float a=h2(i).x,b=h2(i+vec2(1.,0.)).x,c=h2(i+vec2(0.,1.)).x,d=h2(i+vec2(1.,1.)).x;return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
-float network(vec2 q){
-  vec2 p=q/18.,ip=floor(p),fp=fract(p);float f1=9.,f2=9.;
-  for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 g=vec2(float(i),float(j)),c=ip+g;
-    vec2 o=vec2(.25+.5*mod(c.y,2.),.5)+(h2(c)-.5)*(.42+.5*uAtypia);float d=length(g+o-fp);
-    if(d<f1){f2=f1;f1=d;}else if(d<f2){f2=d;}}
-  float w=.035+.05*n2(p*.8)+uAtypia*.12*n2(p*.45);return (1.-smoothstep(w,w+.07,f2-f1))*(.55+.45*n2(p*1.7+3.));
+uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform vec2 uBand; uniform float uScan; uniform float uWide;
+float h1(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+vec3 lut(float v){
+  vec3 c0=vec3(.02,.031,.039),c1=vec3(.031,.157,.173),c2=vec3(.071,.549,.502),c3=vec3(.184,.878,.776),c4=vec3(1.,.714,.282),c5=vec3(1.,.965,.894);
+  if(v<.22)return mix(c0,c1,v/.22); if(v<.45)return mix(c1,c2,(v-.22)/.23); if(v<.62)return mix(c2,c3,(v-.45)/.17);
+  if(v<.8)return mix(c3,c4,(v-.62)/.18); return mix(c4,c5,clamp((v-.8)/.2,0.,1.));
 }
 void main(){
   vec2 px=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;
+  vec2 cell=floor(px*uDpr);
+  float sp=h1(cell)*h1(cell+17.31);
   float dm=distance(px,uMouse);
-  float near=(1.-smoothstep(0.,200.,dm))*uLight;
-  vec2 q=mix(px,uMouse,near*near*.32);
-  float rip=0.;
-  for(int k=0;k<4;k++){vec4 r=uRip[k];if(r.w>0.){float d=distance(px,r.xy);float front=r.z*560.;
-    float band=exp(-pow((d-front)/46.,2.))*(1.-r.z/1.5)*r.w;rip+=band;q+=normalize(px-r.xy+.001)*band*9.;}}
-  float v=q.y/(S*.8660254),u=q.x/S-v*.5;vec2 b=floor(vec2(u,v));float dd=99.;
-  for(int j=0;j<2;j++)for(int i=0;i<2;i++){vec2 c=b+vec2(float(i),float(j));
-    vec2 pt=vec2((c.x+c.y*.5)*S,c.y*S*.8660254)+(h2(c)-.5)*S*.62*uAtypia;dd=min(dd,distance(q,pt));}
-  float r0=1.15+near*2.4+rip*1.6;
-  float dot_=1.-smoothstep(r0-.6,r0+.6,dd);
-  float h=S*.8660254;
-  float l1=abs(fract(q.y/h+.5)-.5)*h;
-  float l2=abs(fract(dot(q,vec2(.8660254,-.5))/h+.5)-.5)*h;
-  float l3=abs(fract(dot(q,vec2(.8660254,.5))/h+.5)-.5)*h;
-  float strut=(1.-smoothstep(.35,1.1,min(l1,min(l2,l3))))*(1.-uAtypia);
-  float ld=distance(px,uLens.xy);
-  float inL=(1.-smoothstep(uLens.z-1.5,uLens.z+1.5,ld))*uLensOn;
-  float mag=clamp(uLens.z/80.,1.2,2.2);
-  float netL=0.;
-  if(inL>0.){netL=network(uLens.xy+(px-uLens.xy)/mag);}
-  float hot=clamp(near*1.1+rip*.9,0.,1.);
-  vec3 col=mix(uCol,uHot,hot);
-  float a=clamp(dot_*(uBase+.55*near+.7*rip)+strut*(.32*near+.35*rip),0.,1.);
-  float rim=smoothstep(.72,1.,ld/max(uLens.z,1.));
-  vec3 lc=mix(mix(vec3(1.),uHot,netL*.9),uCol,rim*.18);
-  float la=inL*.94;
-  vec3 pre=lc*la+col*a*(1.-la);
-  float al=la+a*(1.-la);
-  float g=h2(floor(px*uDpr)+.5).x*.075;
-  gl_FragColor=vec4(pre+uCol*g*(1.-al),al+g*(1.-al));
-}`;
-  const sh = (type, src) => { const x = gl.createShader(type); gl.shaderSource(x, src); gl.compileShader(x); return gl.getShaderParameter(x, gl.COMPILE_STATUS) ? x : null; };
-  const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
-  if (!v || !f) { canvas.remove(); return null; }
-  const prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.remove(); return null; }
-  gl.useProgram(prog);
-  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-  const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  const u = n => gl.getUniformLocation(prog, n);
-  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), atypia: u('uAtypia'), lens: u('uLens'), lensOn: u('uLensOn'), col: u('uCol'), hot: u('uHot'), base: u('uBase'), rip: u('uRip') };
-  let dpr = 1, w = 0, h = 0, colors = null;
-  function theme() {
-    const cs = getComputedStyle(document.documentElement);
-    colors = { col: hexRgb(cs.getPropertyValue('--net')), hot: hexRgb(cs.getPropertyValue('--net-hot')), base: parseFloat(cs.getPropertyValue('--net-base')) || 0.1 };
+  float lit=(1.-smoothstep(0.,230.+uWide*220.,dm))*uLight;
+  vec3 col=mix(vec3(.85,.92,.9),vec3(.184,.878,.776),lit);
+  float fib=.5+.5*sin(px.x/38.+sin(px.y/57.)*2.4+sin(px.x/211.+px.y/97.)*3.);
+  fib=smoothstep(.62,1.,fib)*(.6+.4*sin(px.y/23.+px.x/301.));
+  float a=sp*(.05+.26*lit)+fib*sp*(.035+.2*lit);
+  vec3 pre=col*a;
+  if(px.y>uBand.x&&px.y<uBand.y){
+    float x=px.x, yb=px.y-uBand.x, H=uBand.y-uBand.x;
+    float y0=26.+9.*sin(x/95.)+5.*sin(x/33.);
+    float dej=y0+70.+14.*sin(x/21.)+5.*sin(x/9.);
+    float lx=uRes.x*.68; float les=smoothstep(0.,1.,1.-abs(x-lx)/190.);
+    float v=0.;
+    if(yb<y0)v=0.;
+    else if(yb<y0+6.)v=.95;
+    else if(yb<dej)v=.56-les*.22+.07*sin(yb/3.+x/40.);
+    else{float d=yb-dej;v=.6*exp(-d/170.)+.1*max(0.,sin(x/14.+yb/40.))*exp(-d/260.)-les*.25*exp(-d/90.);if(d<5.)v+=.16;}
+    if(les>.2&&yb>y0+16.&&yb<dej+26.){float cx=mod(x,56.)-28.;if(length(vec2(cx,yb-dej+8.))<13.*les)v*=.3;}
+    v*=.35+1.1*h1(cell+3.7)*h1(cell+9.1);
+    float acq=1.-smoothstep(uScan-26.,uScan+2.,x);
+    float vis=max(.2+.8*acq,lit*.95);
+    float fade=1.-smoothstep(H-110.,H,yb);
+    float ba=clamp(v*1.7,0.,1.)*vis*fade;
+    vec3 bc=lut(v);
+    float line=(1.-smoothstep(.0,1.6,abs(x-uScan)))*fade;
+    float trail=step(x,uScan)*(1.-smoothstep(0.,70.,uScan-x))*.10*fade;
+    vec3 lime=vec3(.843,.949,.353);
+    pre=bc*ba+pre*(1.-ba);
+    float al=ba+a*(1.-ba);
+    pre+=lime*(line*.95+trail); al=clamp(al+line*.95+trail,0.,1.);
+    gl_FragColor=vec4(pre,al);
+    return;
   }
+  gl_FragColor=vec4(pre,a);
+}`;
+  const sh = (t, s) => { const x = ctx.createShader(t); ctx.shaderSource(x, s); ctx.compileShader(x); return ctx.getShaderParameter(x, ctx.COMPILE_STATUS) ? x : null; };
+  const v = sh(ctx.VERTEX_SHADER, vs), f = sh(ctx.FRAGMENT_SHADER, fs);
+  if (!v || !f) { canvas.remove(); return null; }
+  const prog = ctx.createProgram(); ctx.attachShader(prog, v); ctx.attachShader(prog, f); ctx.linkProgram(prog);
+  if (!ctx.getProgramParameter(prog, ctx.LINK_STATUS)) { canvas.remove(); return null; }
+  ctx.useProgram(prog);
+  const buf = ctx.createBuffer(); ctx.bindBuffer(ctx.ARRAY_BUFFER, buf);
+  ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), ctx.STATIC_DRAW);
+  const loc = ctx.getAttribLocation(prog, 'p'); ctx.enableVertexAttribArray(loc); ctx.vertexAttribPointer(loc, 2, ctx.FLOAT, false, 0, 0);
+  const u = n => ctx.getUniformLocation(prog, n);
+  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), band: u('uBand'), scan: u('uScan'), wide: u('uWide') };
+  let dpr = 1, w = 0, h = 0;
   function size() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5); w = window.innerWidth; h = window.innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    ctx.viewport(0, 0, canvas.width, canvas.height);
   }
-  size(); theme();
-  document.documentElement.classList.add('has-net');
-  const rip = new Float32Array(16);
-  function draw(lensX, lensY, lensRad, lensOn, now) {
-    const s = netState;
-    gl.uniform2f(U.res, w, h); gl.uniform1f(U.dpr, dpr);
-    gl.uniform2f(U.mouse, s.mx, s.my); gl.uniform1f(U.light, s.light); gl.uniform1f(U.atypia, s.atypia);
-    gl.uniform3f(U.lens, lensX, lensY, lensRad); gl.uniform1f(U.lensOn, lensOn);
-    gl.uniform3fv(U.col, colors.col); gl.uniform3fv(U.hot, colors.hot); gl.uniform1f(U.base, colors.base);
-    rip.fill(0);
-    s.ripples.slice(-4).forEach((r, i) => { rip[i * 4] = r.x; rip[i * 4 + 1] = r.y; rip[i * 4 + 2] = (now - r.t) / 1000; rip[i * 4 + 3] = 1; });
-    gl.uniform4fv(U.rip, rip);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  size();
+  document.documentElement.classList.add('has-gl');
+  function draw() {
+    const s = scanState, br = band.getBoundingClientRect();
+    ctx.uniform2f(U.res, w, h); ctx.uniform1f(U.dpr, dpr);
+    ctx.uniform2f(U.mouse, s.mx, s.my); ctx.uniform1f(U.light, s.light);
+    ctx.uniform2f(U.band, br.top, br.bottom); ctx.uniform1f(U.scan, s.sx); ctx.uniform1f(U.wide, s.wide);
+    ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, 4);
   }
-  return { draw, size, theme };
+  return { draw, size };
 })();
-// Smoothing per 60 Hz frame, scaled by the real frame time so slow machines settle just as fast.
-let lastFrame = 0;
-function frame(now) {
-  const s = netState, dt = Math.min(100, lastFrame ? now - lastFrame : 16.7) / 16.7; lastFrame = now;
-  const ease = r => reduce.matches ? 1 : 1 - Math.pow(1 - r, dt), k = ease(0.14);
-  s.mx += (s.tx - s.mx) * k; s.my += (s.ty - s.my) * k;
-  s.lx += (s.ltx - s.lx) * k; s.ly += (s.lty - s.ly) * k;
-  s.light += (s.tlight - s.light) * ease(0.08);
-  s.atypia += (s.tatypia - s.atypia) * ease(0.06);
-  s.lensOn += (s.tlensOn - s.lensOn) * ease(0.07);
-  s.ripples = s.ripples.filter(r => now - r.t < 1500);
-  const hr = hero.getBoundingClientRect();
-  heroLens.style.setProperty('--x', s.lx.toFixed(1) + 'px');
-  heroLens.style.setProperty('--y', s.ly.toFixed(1) + 'px');
-  heroLens.style.setProperty('--turn', ((s.lx / Math.max(1, hr.width)) * 160 - 60).toFixed(1) + 'deg');
-  if (scopeOn) {
-    scopeCursor.style.setProperty('--x', s.mx.toFixed(1) + 'px');
-    scopeCursor.style.setProperty('--y', s.my.toFixed(1) + 'px');
-    scopeCursor.style.setProperty('--turn', ((s.mx / Math.max(1, window.innerWidth)) * 200 - 60).toFixed(1) + 'deg');
-  }
-  if (net) {
-    if (scopeOn) net.draw(s.mx, s.my, scopeCursor.offsetWidth * 0.44, 1, now);
-    else net.draw(hr.left + s.lx, hr.top + s.ly, lensR, s.lensOn, now);
-  }
-  const busy = s.ripples.length || Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.ltx - s.lx) > 0.3 || Math.abs(s.lty - s.ly) > 0.3
-    || Math.abs(s.tlight - s.light) > 0.002 || Math.abs(s.tatypia - s.atypia) > 0.002 || Math.abs(s.tlensOn - s.lensOn) > 0.002;
-  if (busy) requestAnimationFrame(frame); else { s.drawing = false; lastFrame = 0; }
+function scanFrame(now) {
+  const s = scanState, dt = Math.min(100, s.last ? now - s.last : 16.7) / 16.7; s.last = now;
+  const k = r => reduce.matches ? 1 : 1 - Math.pow(1 - r, dt);
+  s.mx += (s.tx - s.mx) * k(0.2); s.my += (s.ty - s.my) * k(0.2);
+  s.light += (s.tlight - s.light) * k(0.1);
+  s.sx += (s.tsx - s.sx) * k(s.sweep ? 0.045 : 0.12);
+  s.wide += (s.twide - s.wide) * k(0.08);
+  if (gl) gl.draw();
+  const busy = Math.abs(s.tx - s.mx) > 0.3 || Math.abs(s.ty - s.my) > 0.3 || Math.abs(s.tlight - s.light) > 0.003 || Math.abs(s.tsx - s.sx) > 0.3 || Math.abs(s.twide - s.wide) > 0.003;
+  if (busy) requestAnimationFrame(scanFrame); else { s.drawing = false; s.last = 0; s.sweep = false; }
 }
-function wake() { if (!netState.drawing) { netState.drawing = true; requestAnimationFrame(frame); } }
-// A click or tap on the page (not on a control) sends a ripple through the lattice.
-document.addEventListener('pointerdown', e => {
-  if (!net || reduce.matches || e.target.closest('a, button, input, select, textarea, label, summary, .form-card')) return;
-  netState.ripples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
-  wake();
-});
-
-// ---- hero: a lens over the lattice that follows the pointer and rests clear of the words ----
-function restPoint() {
-  const hr = hero.getBoundingClientRect(), w = hr.width, h = hr.height;
-  if (!window.matchMedia('(max-width: 640px)').matches) {
-    const h1 = $('.hero h1').getBoundingClientRect();
-    const x = clamp(Math.max(w * 0.76, h1.right - hr.left + lensR + 32), lensR + 24, w - lensR - 24);
-    return { x, y: h * 0.48 };
-  }
-  const top = $('.hero h1').getBoundingClientRect().bottom - hr.top + lensR + 18;
-  const bottom = $('.hero-sub').getBoundingClientRect().top - hr.top - lensR - 18;
-  return { x: w * 0.6, y: bottom > top ? (top + bottom) / 2 : top };
-}
-function restLens(jump) {
-  const p = restPoint(); netState.ltx = p.x; netState.lty = p.y;
-  if (jump) { netState.lx = p.x; netState.ly = p.y; }
-  wake();
-}
-restLens(true);
-document.fonts?.ready.then(() => restLens(true));
-window.addEventListener('resize', () => { if (net) net.size(); lensR = heroLens.offsetWidth * 0.44; restLens(true); });
+function wake() { if (!scanState.drawing) { scanState.drawing = true; requestAnimationFrame(scanFrame); } }
+const restScan = () => window.innerWidth * (window.innerWidth < 760 ? 0.82 : 0.64);
 window.addEventListener('pointermove', e => {
-  if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
-  if (netState.mx < -900) { netState.mx = e.clientX; netState.my = e.clientY; }
-  netState.tx = e.clientX; netState.ty = e.clientY; netState.tlight = 1;
+  if (e.pointerType === 'touch') return;
+  const s = scanState;
+  if (s.mx < -9000) { s.mx = e.clientX; s.my = e.clientY; }
+  s.tx = e.clientX; s.ty = e.clientY; s.tlight = 1;
   const hr = hero.getBoundingClientRect();
-  if (e.clientY >= hr.top && e.clientY <= hr.bottom) { netState.ltx = e.clientX - hr.left; netState.lty = e.clientY - hr.top; }
+  if (e.clientY > hr.top && e.clientY < hr.bottom && document.documentElement.classList.contains('entered')) s.tsx = e.clientX;
   wake();
 }, { passive: true });
-hero.addEventListener('pointerleave', () => restLens(false));
-hero.addEventListener('pointerdown', e => {
-  if (e.pointerType === 'mouse' || e.target.closest('a, button')) return;
-  const hr = hero.getBoundingClientRect();
-  netState.ltx = e.clientX - hr.left; netState.lty = e.clientY - hr.top; wake();
-});
-document.documentElement.addEventListener('pointerleave', () => { netState.tlight = 0; wake(); });
+document.documentElement.addEventListener('pointerleave', () => { scanState.tlight = 0; wake(); });
+band.addEventListener('pointerdown', e => { scanState.tsx = e.clientX; scanState.tx = e.clientX; scanState.ty = e.clientY; scanState.tlight = 1; wake(); });
+window.addEventListener('resize', () => { if (gl) gl.size(); if (scanState.tsx > window.innerWidth) scanState.tsx = restScan(); wake(); });
 
-// ---- intro, once a visit: the lens draws itself, the LED comes on, the spot comes into focus ----
+// ---- intro, once a visit: a scan line sweeps across and acquires the mark, which flies to the header ----
 const intro = $('#intro'), brandMark = $('.site-head .brand svg'), brandWord = $('.site-head .brand span');
 function enterHero() {
   document.documentElement.classList.add('entered');
-  netState.tlensOn = hero.getBoundingClientRect().bottom > 0 ? 1 : 0; wake();
+  // The one authored moment on the page: the hero's scan line sweeps in and acquires the cross-section.
+  scanState.sweep = !reduce.matches; scanState.tsx = restScan(); if (reduce.matches) scanState.sx = scanState.tsx;
+  wake();
 }
 function endIntro() {
   if (!intro.isConnected) return;
@@ -1006,15 +981,15 @@ function endIntro() {
 }
 let seen = false;
 try { seen = sessionStorage.getItem('nevio-intro') === '1'; sessionStorage.setItem('nevio-intro', '1'); } catch (err) { /* private mode */ }
+if (/[?&]intro=off\b/.test(location.search)) seen = true; // for screenshots and demos
 if (seen || reduce.matches || !intro.animate) endIntro();
 else {
   brandMark.style.opacity = '0'; brandWord.style.opacity = '0';
   const OUT = 'cubic-bezier(0.23, 1, 0.32, 1)', MOVE = 'cubic-bezier(0.77, 0, 0.175, 1)';
   const q = sel => intro.querySelector(sel), anims = [];
-  anims.push(q('.i-ring').animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 720, easing: MOVE, fill: 'forwards' }));
-  anims.push(q('.i-arc').animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 420, delay: 500, easing: OUT, fill: 'forwards' }));
-  anims.push(q('.i-spot').animate([{ opacity: 0, transform: 'scale(0.4)', filter: 'blur(3px)' }, { opacity: 1, transform: 'none', filter: 'blur(0px)' }], { duration: 420, delay: 660, easing: OUT, fill: 'forwards' }));
-  intro.querySelectorAll('.intro-word span').forEach((l, i) => anims.push(l.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], { duration: 560, delay: 540 + i * 50, easing: OUT, fill: 'forwards' })));
+  anims.push(q('.intro-in').animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)' }], { duration: 900, delay: 150, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' }));
+  const lineW = q('.intro-in').offsetWidth;
+  anims.push(q('.intro-line').animate([{ transform: 'translateX(-2px)', opacity: 1 }, { transform: `translateX(${lineW - 2}px)`, opacity: 1, offset: 0.92 }, { transform: `translateX(${lineW - 2}px)`, opacity: 0 }], { duration: 980, delay: 150, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' }));
   const fly = setTimeout(() => {
     const from = q('.intro-mark').getBoundingClientRect(), to = brandMark.getBoundingClientRect();
     const sc = to.width / from.width;
@@ -1022,13 +997,87 @@ else {
     const dx = to.left - (box.left + (from.left - box.left) * sc), dy = to.top - (box.top + (from.top - box.top) * sc);
     const move = q('.intro-in').animate([{ transform: 'none' }, { transform: `translate(${dx}px, ${dy}px) scale(${sc})` }], { duration: 720, easing: MOVE, fill: 'forwards' });
     anims.push(move);
-    anims.push(q('.intro-bg').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 560, delay: 160, easing: 'ease', fill: 'forwards' }));
-    setTimeout(enterHero, 300);
+    anims.push(q('.intro-bg').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 520, delay: 160, easing: 'ease', fill: 'forwards' }));
+    setTimeout(enterHero, 280);
     move.onfinish = endIntro;
-  }, 1420);
+  }, 1350);
   const skip = () => { clearTimeout(fly); anims.forEach(x => x.cancel()); endIntro(); };
   ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => window.addEventListener(ev, skip, { once: true, passive: true }));
   setTimeout(endIntro, 4200);
+}
+
+// ---- specimens: the model's view of each photo; the pointer develops the photo itself ----
+function paintEye(img, id, canvas, mode) {
+  const N = canvas.width, sample = mapSampler(id), ctx = canvas.getContext('2d');
+  let lum = null;
+  if (mode === 'tint') {
+    const off = document.createElement('canvas'); off.width = off.height = N;
+    const o = off.getContext('2d', { willReadFrequently: true });
+    o.drawImage(img, 0, 0, N, N);
+    try { lum = o.getImageData(0, 0, N, N).data; } catch (err) { lum = null; }
+  }
+  // Contrast stretch on the photo's own range: skin near its light end, pigment near its dark end.
+  let lo = 0.85, dk = 0.25;
+  if (lum) {
+    const L = []; for (let k = 0; k < lum.length; k += 16) L.push((0.2126 * lum[k] + 0.7152 * lum[k + 1] + 0.0722 * lum[k + 2]) / 255);
+    L.sort((x, y) => x - y); dk = L[Math.floor(L.length * 0.02)]; lo = L[Math.floor(L.length * 0.6)];
+  }
+  const out = ctx.createImageData(N, N), D = out.data, A = mode === 'tint' ? null : new Float32Array(N * N);
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const k = (y * N + x) * 4, a = sample(x / N, y / N);
+    if (mode === 'tint') {
+      const l = lum ? (0.2126 * lum[k] + 0.7152 * lum[k + 1] + 0.0722 * lum[k + 2]) / 255 : 0.5;
+      const d = clamp((lo - l) / Math.max(0.08, lo - dk), 0, 1) * (0.6 + 0.8 * rnd() * rnd() * 1.6);
+      const base = scanLut(d * 0.78);
+      const w = smooth(clamp((a - 0.3) / 0.7, 0, 1)) * 0.78, c = ramp(a);
+      D[k] = base[0] + (c[0] - base[0]) * w; D[k + 1] = base[1] + (c[1] - base[1]) * w; D[k + 2] = base[2] + (c[2] - base[2]) * w; D[k + 3] = 255;
+    } else {
+      // Light only, for screen blending over the photo: black where the model is quiet,
+      // a soft glow where it responds. Contour lines are added below.
+      const w = smooth(clamp((a - 0.2) / 0.8, 0, 1)) * 0.5, c = ramp(a);
+      D[k] = c[0] * w; D[k + 1] = c[1] * w; D[k + 2] = c[2] * w; D[k + 3] = 255;
+      if (A) A[y * N + x] = a;
+    }
+  }
+  if (A) {
+    // Thin contour lines where the response crosses 45, 65 and 85 percent.
+    for (let y = 0; y < N - 1; y++) for (let x = 0; x < N - 1; x++) {
+      const a = A[y * N + x], r = A[y * N + x + 1], d = A[(y + 1) * N + x];
+      for (const lv of [0.45, 0.65, 0.85]) {
+        if ((a - lv) * (r - lv) < 0 || (a - lv) * (d - lv) < 0) {
+          const k = (y * N + x) * 4, o = 0.72 + 0.25 * lv;
+          D[k] = D[k] + (215 - D[k]) * o; D[k + 1] = D[k + 1] + (242 - D[k + 1]) * o; D[k + 2] = D[k + 2] + (90 - D[k + 2]) * o;
+        }
+      }
+    }
+  }
+  ctx.putImageData(out, 0, 0);
+}
+function scanLut(v) {
+  const st = [[0, [5, 8, 10]], [0.3, [8, 40, 44]], [0.6, [18, 140, 128]], [0.85, [47, 224, 198]], [1, [255, 214, 150]]];
+  v = clamp(v, 0, 1);
+  for (let i = 1; i < st.length; i++) if (v <= st[i][0]) { const [a, ca] = st[i - 1], [b, cb] = st[i], f = (v - a) / (b - a); return [ca[0] + (cb[0] - ca[0]) * f, ca[1] + (cb[1] - ca[1]) * f, ca[2] + (cb[2] - ca[2]) * f]; }
+  return st[st.length - 1][1];
+}
+const specs = $$('.spec');
+for (const fig of specs) {
+  const view = fig.querySelector('.spec-view'), img = view.querySelector('img');
+  const cv = document.createElement('canvas'); cv.className = 'spec-eye'; cv.width = cv.height = 240; cv.setAttribute('aria-hidden', 'true');
+  view.append(cv);
+  const ready = () => paintEye(img, fig.dataset.id, cv, 'tint');
+  if (img.complete && img.naturalWidth) ready(); else img.addEventListener('load', ready, { once: true });
+  const aim = e => { const r = view.getBoundingClientRect(); cv.style.setProperty('--mx', (e.clientX - r.left) + 'px'); cv.style.setProperty('--my', (e.clientY - r.top) + 'px'); };
+  view.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { aim(e); fig.classList.add('is-lit'); } });
+  view.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') aim(e); });
+  view.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') fig.classList.remove('is-lit'); });
+  view.addEventListener('click', e => { if (!fine.matches) { aim(e); fig.classList.toggle('is-open'); } });
+}
+if ('IntersectionObserver' in window) {
+  // No pointer on touch screens: a spot develops while it sits in the middle of the screen.
+  const mid = new IntersectionObserver(es => es.forEach(e => { if (!fine.matches) e.target.classList.toggle('is-open', e.isIntersecting); }), { rootMargin: '-40% 0px -40% 0px' });
+  specs.forEach(f => mid.observe(f));
 }
 
 // ---- the case: real model outputs as details are added (ISIC_5700648) ----
@@ -1044,23 +1093,31 @@ const VECS = (() => {
   const v3 = v2.slice(); v3[7] = 1;
   return [v0, v1, v2, v3];
 })();
-const vecCells = $('#vec-cells'), vecNow = $('#vec-now'), VEC_REST = vecNow.textContent;
-vecCells.innerHTML = VEC_NAMES.map((n, i) => `<i data-i="${i}"></i>`).join('');
-const cells = [...vecCells.children];
-let vecHover = -1;
-function vecLabel(i) { return i < 0 ? VEC_REST : `${VEC_NAMES[i]}: ${VECS[Math.max(0, current)][i].toFixed(2)}`; }
-cells.forEach((c, i) => {
-  c.addEventListener('pointerenter', () => { vecHover = i; vecNow.textContent = vecLabel(i); });
-  c.addEventListener('pointerleave', () => { vecHover = -1; vecNow.textContent = VEC_REST; });
-});
 const STEPS = [
   { mel: 6,  ben: 18, oth: 75, lead: 'oth', tone: 'review', word: 'Refer for review', why: 'Melanoma 6% is under the 27.8% cutoff. Other skin cancer scores highest.' },
   { mel: 74, ben: 24, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 74%, over the 27.8% cutoff.' },
   { mel: 72, ben: 27, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 72%, still over the cutoff.' },
   { mel: 82, ben: 17, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 82%. The biopsy confirmed melanoma.' },
 ];
-const caseSection = $('#case'), caseTrack = $('[data-scene="case"]'), scope = $('#scope'), verdict = $('#verdict');
-const stepBtns = $$('.inputs button');
+const caseTrack = $('[data-scene="case"]'), scope = $('#scope'), verdict = $('#verdict'), sweep = $('#scope-sweep');
+const stepBtns = $$('.inputs button'), eyeSwitch = $('#eye-switch');
+const caseImg = scope.querySelector('img');
+const paintCase = () => paintEye(caseImg, '5700648', $('#scope-eye'), 'light');
+if (caseImg.complete && caseImg.naturalWidth) paintCase(); else caseImg.addEventListener('load', paintCase, { once: true });
+eyeSwitch.addEventListener('click', () => {
+  const on = eyeSwitch.getAttribute('aria-pressed') !== 'true';
+  eyeSwitch.setAttribute('aria-pressed', String(on));
+  scope.classList.toggle('no-eye', !on);
+});
+const vecCells = $('#vec-cells'), vecNow = $('#vec-now'), VEC_REST = vecNow.textContent;
+vecCells.innerHTML = VEC_NAMES.map(() => '<i></i>').join('');
+const cells = [...vecCells.children];
+let current = -1, prevStep = 0, vecHover = -1, swap = null;
+const vecLabel = i => i < 0 ? VEC_REST : `${VEC_NAMES[i]}: ${VECS[Math.max(0, current)][i].toFixed(2)}`;
+cells.forEach((c, i) => {
+  c.addEventListener('pointerenter', () => { vecHover = i; vecNow.textContent = vecLabel(i); });
+  c.addEventListener('pointerleave', () => { vecHover = -1; vecNow.textContent = VEC_REST; });
+});
 const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function tween(el, to, ms, from = Number(el.textContent)) {
   if (reduce.matches || from === to || !ms) { el.textContent = to; return; }
@@ -1073,7 +1130,6 @@ function tween(el, to, ms, from = Number(el.textContent)) {
   };
   requestAnimationFrame(tick);
 }
-let current = -1, stepPrev = 0, swap = null;
 function showStep(i) {
   if (i === current) return;
   const first = current === -1;
@@ -1089,6 +1145,14 @@ function showStep(i) {
     tween(li.querySelector('[data-num]'), c[k], first ? 0 : 600);
     if (k === c.lead) li.dataset.tone = c.tone; else delete li.dataset.tone;
   }
+  const vec = VECS[i], prev = first ? null : VECS[prevStep];
+  cells.forEach((cell, j) => { cell.style.setProperty('--v', vec[j]); cell.classList.toggle('hit', !!prev && prev[j] !== vec[j]); });
+  if (vecHover >= 0) vecNow.textContent = vecLabel(vecHover);
+  prevStep = i;
+  if (!first && !reduce.matches && sweep.animate) {
+    // The model rescores: a scan line passes over the photo.
+    sweep.animate([{ transform: 'translateX(0)', opacity: 1 }, { transform: `translateX(${scope.querySelector('.scope-clip').offsetWidth}px)`, opacity: 1, offset: 0.9 }, { opacity: 0 }], { duration: 640, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
+  }
   const apply = () => { verdict.dataset.tone = c.tone; $('#v-word').textContent = c.word; $('#v-why').textContent = c.why; };
   if (first || reduce.matches || !verdict.animate) apply();
   else {
@@ -1096,27 +1160,8 @@ function showStep(i) {
     swap = verdict.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(6px)' }], { duration: 120, easing: 'ease-in', fill: 'forwards' });
     swap.onfinish = () => { apply(); swap = verdict.animate([{ opacity: 0, filter: 'blur(6px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 260, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' }); };
   }
-  const vec = VECS[i], prev = first ? null : VECS[stepPrev];
-  cells.forEach((c, j) => {
-    c.style.setProperty('--v', vec[j]);
-    c.classList.toggle('hit', !!prev && prev[j] !== vec[j]);
-  });
-  if (vecHover >= 0) vecNow.textContent = vecLabel(vecHover);
-  stepPrev = i;
-  if (!first && !reduce.matches && scope.animate) {
-    scope.querySelector('.sweep').animate([{ transform: 'rotate(0deg)', opacity: 1 }, { transform: 'rotate(330deg)', opacity: 1, offset: 0.8 }, { transform: 'rotate(360deg)', opacity: 0 }], { duration: 760, easing: 'cubic-bezier(0.77, 0, 0.175, 1)' });
-    const h = scope.querySelector('.scope-clip').offsetHeight;
-    scope.querySelector('.scan').animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${h}px)`, opacity: 1, offset: 0.9 }, { transform: `translateY(${h}px)`, opacity: 0 }], { duration: 700, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' });
-  }
-  updateAtypia();
 }
-function updateAtypia() {
-  const r = caseSection.getBoundingClientRect(), vh = window.innerHeight;
-  const inCase = r.top < vh * 0.5 && r.bottom > vh * 0.5;
-  netState.tatypia = inCase && current >= 0 ? 0.9 * (STEPS[current].mel / 100) : 0;
-  wake();
-}
-const pinned = window.matchMedia('(min-width: 960px) and (min-height: 680px)');
+const pinned = window.matchMedia('(min-width: 960px) and (min-height: 700px)');
 function sceneProgress(el) {
   const r = el.getBoundingClientRect(), total = r.height - window.innerHeight;
   return total > 0 ? clamp(-r.top / total, 0, 1) : 0;
@@ -1146,31 +1191,38 @@ statement.setAttribute('aria-label', statement.textContent);
 statement.innerHTML = statement.textContent.split(' ').map(w => `<span class="w" aria-hidden="true">${w}</span>`).join(' ');
 const words = $$('.statement .w');
 
-// ---- one scroll loop for every scroll-linked scene ----
-const brandArc = $('.site-head .b-arc');
+// ---- one scroll loop: header, depth ruler, pinned scenes, statement ----
+const rulerMark = $('#ruler-mark'), rulerRead = $('#ruler-read');
+const navLinks = $$('#nav a'), navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
 let ticking = false;
 function onScroll() {
   ticking = false;
-  const vh = window.innerHeight;
+  const vh = window.innerHeight, max = Math.max(1, document.documentElement.scrollHeight - vh), p = clamp(window.scrollY / max, 0, 1);
   head.classList.toggle('is-solid', window.scrollY > 24);
-  brandArc.style.transform = `rotate(${(window.scrollY / Math.max(1, document.documentElement.scrollHeight - vh)) * 360}deg)`;
-  netState.tlensOn = document.documentElement.classList.contains('entered') && hero.getBoundingClientRect().bottom > 0 ? 1 : 0;
+  // Scroll is depth: the page reads from the surface down to 2 mm.
+  rulerMark.style.setProperty('--p', p.toFixed(4));
+  rulerRead.textContent = (p * 2).toFixed(2) + ' mm';
+  let on = -1;
+  navTargets.forEach((t, i) => { if (t && t.getBoundingClientRect().top < vh * 0.4) on = i; });
+  navLinks.forEach((a, i) => { if (i === on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
   if (pinned.matches) {
-    const p = sceneProgress(caseTrack);
-    showStep(Math.min(STEPS.length - 1, Math.floor(p * STEPS.length)));
+    const cp = sceneProgress(caseTrack);
+    showStep(Math.min(STEPS.length - 1, Math.floor(cp * STEPS.length)));
     if (!reduce.matches) {
-      scope.style.setProperty('--zoom', (1 + p * 0.18).toFixed(3));
-      scope.style.setProperty('--turn', (p * 300).toFixed(1) + 'deg');
-      scope.style.setProperty('--blur', (Math.max(0, 1 - p * 8) * 6).toFixed(2) + 'px');
+      scope.style.setProperty('--zoom', (1 + cp * 0.16).toFixed(3));
+      scope.style.setProperty('--blur', (Math.max(0, 1 - cp * 8) * 5).toFixed(2) + 'px');
     }
     showHow(Math.min(2, Math.floor(sceneProgress(howTrack) * 3)));
   }
   const r = statement.getBoundingClientRect();
   const sp = clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1);
-  words.forEach((w, i) => w.style.setProperty('--o', (0.14 + clamp(sp * words.length - i, 0, 1) * 0.86).toFixed(3)));
-  updateAtypia();
-  wake();
+  words.forEach((w, i) => w.style.setProperty('--o', (0.16 + clamp(sp * words.length - i, 0, 1) * 0.84).toFixed(3)));
+  // Redraw while the hero's band is on screen, and once more as it leaves, so it never lingers.
+  const bandOn = band.getBoundingClientRect().bottom > 0;
+  if (gl && (bandOn || bandShown)) wake();
+  bandShown = bandOn;
 }
+let bandShown = true;
 window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 window.addEventListener('resize', onScroll);
 onScroll();
@@ -1190,89 +1242,24 @@ if ('IntersectionObserver' in window) {
   watched.forEach(el => io.observe(el));
 } else watched.forEach(onSeen);
 
-
-// ---- specimens: printed as a 1-bit ordered dither; they develop where you look ----
-const BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22,
-  3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
-const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-function dither(fig) {
-  const lens = fig.querySelector('.spec-lens'), img = lens.querySelector('img');
-  const cv = document.createElement('canvas'); cv.className = 'dith'; cv.setAttribute('aria-hidden', 'true');
-  let px = null, n = 0, drawn = false;
-  function prepare() {
-    const size = img.getBoundingClientRect().width || 200, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    n = Math.max(32, Math.round(size / 3));
-    const off = document.createElement('canvas'); off.width = off.height = n;
-    const o = off.getContext('2d', { willReadFrequently: true });
-    o.drawImage(img, 0, 0, n, n);
-    let d; try { d = o.getImageData(0, 0, n, n).data; } catch (err) { return false; }
-    const lum = new Float32Array(n * n);
-    for (let i = 0; i < n * n; i++) lum[i] = (0.2126 * d[i * 4] + 0.7152 * d[i * 4 + 1] + 0.0722 * d[i * 4 + 2]) / 255;
-    const sorted = Float32Array.from(lum).sort(), lo = sorted[Math.floor(n * n * 0.03)], hi = sorted[Math.floor(n * n * 0.97)];
-    px = lum.map(v => clamp((v - lo) / Math.max(0.05, hi - lo), 0, 1));
-    cv.width = cv.height = Math.round(n * 3 * dpr);
-    lens.insertBefore(cv, lens.querySelector('svg'));
-    return true;
-  }
-  function paint(upto) {
-    const ctx = cv.getContext('2d'), c = cv.width / n, rows = Math.ceil(n * upto);
-    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, cv.width, Math.ceil(rows * c));
-    ctx.fillStyle = fig.classList.contains('is-case') ? '#1B4FD8' : '#14213D';
-    for (let y = 0; y < rows; y++) for (let x = 0; x < n; x++) {
-      if (px[y * n + x] < (BAYER[(y & 7) * 8 + (x & 7)] + 0.5) / 64) ctx.fillRect(Math.floor(x * c), Math.floor(y * c), Math.ceil(c), Math.ceil(c));
-    }
-  }
-  function print() {
-    if (drawn || !px) return; drawn = true;
-    if (reduce.matches) { paint(1); return; }
-    const t0 = performance.now();
-    const step = now => { const p = Math.min(1, (now - t0) / 900); paint(p); if (p < 1) requestAnimationFrame(step); };
-    requestAnimationFrame(step);
-  }
-  const aim = e => {
-    const r = cv.getBoundingClientRect();
-    cv.style.setProperty('--mx', (e ? e.clientX - r.left : r.width / 2) + 'px');
-    cv.style.setProperty('--my', (e ? e.clientY - r.top : r.height / 2) + 'px');
-  };
-  const ready = () => { if (!prepare()) return; fig._print = print; if (fig._seen) print(); };
-  if (img.complete && img.naturalWidth) ready(); else img.addEventListener('load', ready, { once: true });
-  lens.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { aim(e); fig.classList.add('dev'); } });
-  lens.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { aim(e); fig.classList.remove('dev'); } });
-  lens.addEventListener('click', e => { if (!fine.matches) { aim(e); fig.classList.toggle('dev'); } });
-}
-const specs = $$('.spec');
-specs.forEach(dither);
-if ('IntersectionObserver' in window) {
-  const sio = new IntersectionObserver(es => es.forEach(e => {
-    const fig = e.target;
-    if (e.isIntersecting) { fig._seen = true; fig._print?.(); }
-  }), { threshold: 0.3 });
-  specs.forEach(f => sio.observe(f));
-  // On touch screens there is no pointer to look with, so a spot develops while it sits mid-screen.
-  const mid = new IntersectionObserver(es => es.forEach(e => { if (!fine.matches) e.target.classList.toggle('dev', e.isIntersecting); }), { rootMargin: '-38% 0px -38% 0px' });
-  specs.forEach(f => mid.observe(f));
-} else specs.forEach(f => { f._seen = true; f._print?.(); });
-
-// ---- footer: the wordmark in ASCII, built from the evidence numbers; the pointer stirs it ----
+// ---- footer: the wordmark set in scan characters built from the evidence numbers; the pointer stirs it ----
 (() => {
   const box = $('.foot-word'); if (!box) return;
   const cv = document.createElement('canvas'); cv.setAttribute('aria-hidden', 'true');
   const ctx = cv.getContext('2d');
-  let CW = 9, CH = 13, FS = 12;
-  const NUMS = '0.940 93.2 78.6 90.0 81.5 27.8 9080 '.replace(/ /g, '·'), RAMP = ' .:-=+*#%@';
-  let cols = 0, rows = 0, cov = null, W = 0, H = 0, dpr = 1, mx = -999, my = -999, heat = 0, theat = 0, running = false, last = 0;
+  const NUMS = '0.940 93.2 78.6 90.0 81.5 27.8 9080 '.replace(/ /g, '·'), CHARS = ' .:-=+*#%@';
+  let CW = 9, CH = 13, FS = 12, cols = 0, rows = 0, cov = null, W = 0, H = 0, dpr = 1, mx = -999, my = -999, heat = 0, theat = 0, running = false, last = 0;
   function layout() {
     const cs = getComputedStyle(box), pad = parseFloat(cs.paddingTop);
     W = box.clientWidth; H = box.clientHeight - pad; dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const small = W < 700; CW = small ? 5 : 9; CH = small ? 7 : 13; FS = small ? 7 : 12;
     if (W < 40 || H < 20) return;
+    const small = W < 700; CW = small ? 5 : 9; CH = small ? 7 : 13; FS = small ? 7 : 12;
     cv.style.top = pad + 'px'; cv.style.width = W + 'px'; cv.style.height = H + 'px';
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     cols = Math.floor(W / CW); rows = Math.floor(H / CH);
     const off = document.createElement('canvas'); off.width = cols; off.height = rows;
     const o = off.getContext('2d', { willReadFrequently: true });
-    o.font = `800 ${parseFloat(cs.fontSize)}px Anybody, sans-serif`;
-    if ('fontStretch' in o) o.fontStretch = 'extra-condensed';
+    o.font = `600 ${parseFloat(cs.fontSize)}px "Host Grotesk", sans-serif`;
     const range = document.createRange(); range.selectNodeContents(box);
     const tr = range.getBoundingClientRect(), br = box.getBoundingClientRect();
     const m = o.measureText('nevio'), sx = m.width ? tr.width / m.width : 1;
@@ -1287,18 +1274,18 @@ if ('IntersectionObserver' in window) {
   }
   function draw(settle) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
-    ctx.font = `700 ${FS}px "Bricolage Grotesque", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    const R = CW > 6 ? 130 : 80;
+    ctx.font = `500 ${FS}px "Host Grotesk", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const R = CW > 6 ? 140 : 80;
     for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
       const i = y * cols + x, c = cov[i], cx = x * CW + CW / 2, cy = y * CH + CH / 2;
       const near = settle ? 0 : heat * Math.max(0, 1 - Math.hypot(cx - mx, cy - my) / R);
       if (c < 0.12 && near < 0.2) continue;
       let ch;
-      if (near > 0.05 && Math.random() < near * 0.7) ch = RAMP[1 + Math.floor(Math.random() * 9)];
+      if (near > 0.05 && Math.random() < near * 0.7) ch = CHARS[1 + Math.floor(Math.random() * 9)];
       else if (c > 0.8) ch = NUMS[i % NUMS.length];
-      else if (c >= 0.12) ch = RAMP[Math.min(9, 1 + Math.floor(c * 8))];
+      else if (c >= 0.12) ch = CHARS[Math.min(9, 1 + Math.floor(c * 8))];
       else ch = '.';
-      ctx.fillStyle = near > 0.06 ? `rgba(27, 79, 216, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(20, 33, 61, ${c > 0.8 ? 0.62 : 0.4})`;
+      ctx.fillStyle = near > 0.06 ? `rgba(215, 242, 90, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(47, 224, 198, ${c > 0.8 ? 0.42 : 0.26})`;
       ctx.fillText(ch, cx, cy);
     }
   }
@@ -1319,34 +1306,28 @@ if ('IntersectionObserver' in window) {
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(layout);
 })();
 
-// ---- easter eggs: type scope, or abcde; big numbers and names re-read themselves on hover ----
+// ---- easter eggs: type "scan" or "abcde"; numbers and names re-read themselves on hover ----
 const toastEl = $('#toast');
 let toastT;
-function toast(html, ms = 6000) {
+function toast(html, ms = 7000) {
   toastEl.innerHTML = html; toastEl.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), ms);
 }
-function setScope(on) {
-  scopeOn = on;
-  document.documentElement.classList.toggle('scope-mode', on);
-  toast(on ? '<b>Scope <em>on</em></b>The lens follows you around the page now. Type scope again to put it down.'
-    : '<b>Scope off</b>Back in its case.', on ? 6000 : 2400);
-  if (on && netState.mx < -900) { netState.mx = netState.tx = window.innerWidth / 2; netState.my = netState.ty = window.innerHeight / 2; }
-  netState.tlight = 1; wake();
-}
-let typed = '';
+let typed = '', wideOn = false;
 document.addEventListener('keydown', e => {
   if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1 || e.target.closest('input, textarea, select, [contenteditable]')) return;
   typed = (typed + e.key.toLowerCase()).slice(-8);
-  if (typed.endsWith('scope')) { typed = ''; setScope(!scopeOn); }
-  else if (typed.endsWith('abcde')) {
+  if (typed.endsWith('scan')) {
+    typed = ''; wideOn = !wideOn; scanState.twide = wideOn ? 1 : 0; scanState.tlight = 1; wake();
+    toast(wideOn ? '<b>Wide scan on</b>Your pointer lights a wider patch of the page. Type scan again to narrow it.' : '<b>Wide scan off</b>Back to the normal light.', wideOn ? 6000 : 2400);
+  } else if (typed.endsWith('abcde')) {
     typed = '';
-    toast('<b>You found <em>ABCDE</em></b>Asymmetry, Border, Color, Diameter over 6 mm, Evolving. The checklist many clinicians learn for spotting melanoma.', 9000);
+    toast('<b>You found ABCDE</b>Asymmetry, Border, Color, Diameter over 6 mm, Evolving. The checklist many clinicians learn for spotting melanoma.', 9000);
   }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (scopeOn) setScope(false); else toastEl.classList.remove('on'); } });
-const SCRAMBLE_D = '0123456789', SCRAMBLE_L = 'abcdefghijklmnopqrstuvwxyz';
-for (const el of $$('.sheet dd, .facts dt, .people b, .spec b')) {
+document.addEventListener('keydown', e => { if (e.key === 'Escape') toastEl.classList.remove('on'); });
+const DIGITS = '0123456789', LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+for (const el of $$('.sheet dd, .facts dt, .people b')) {
   const text = el.textContent;
   el.setAttribute('aria-label', text);
   let busy = false;
@@ -1357,7 +1338,7 @@ for (const el of $$('.sheet dd, .facts dt, .people b, .spec b')) {
       const p = Math.min(1, (now - t0) / 520), keep = Math.floor(p * text.length);
       el.textContent = [...text].map((ch, i) => {
         if (i < keep || !/[0-9a-z]/i.test(ch)) return ch;
-        const set = /[0-9]/.test(ch) ? SCRAMBLE_D : SCRAMBLE_L, r = set[Math.floor(Math.random() * set.length)];
+        const set = /[0-9]/.test(ch) ? DIGITS : LETTERS, r = set[Math.floor(Math.random() * set.length)];
         return ch === ch.toUpperCase() && /[a-z]/i.test(ch) ? r.toUpperCase() : r;
       }).join('');
       if (p < 1) requestAnimationFrame(tick); else { el.textContent = text; busy = false; }
@@ -1365,8 +1346,8 @@ for (const el of $$('.sheet dd, .facts dt, .people b, .spec b')) {
     requestAnimationFrame(tick);
   });
 }
-console.log('%c\n    .-\"\"\"\"-.\n   /  .--.  \\\n  |  ( ## )  |   nevio\n   \\  \'--\'  /    skin spot triage, research stage\n    \'-....-\'\n', 'color:#1B4FD8;font-weight:700');
-console.log('Looking under the hood? The model runs in the browser and photos never leave the device. Try typing scope or abcde on the page.');
+console.log('%c\n   .-""""""-.\n  /  .----.  \\\n |  (  ()  )  |   nevio\n |~~~~~~~~~~~~|   scan line\n  \\  \'----\'  /\n   \'-......-\'\n', 'color:#D7F25A');
+console.log('Looking under the hood? The model runs in the browser and photos never leave the device. Try typing scan or abcde on the page.');
 
 // ---- pilot form ----
 const form = $('#pilot-form');
