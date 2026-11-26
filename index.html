@@ -844,12 +844,12 @@ const MAP_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const smooth = t => t * t * (3 - 2 * t);
 function mapSampler(id) {
   const [W, H, s] = MAPS[id], raw = Array.from(s, ch => MAP_KEY.indexOf(ch) / 61), v = new Array(144).fill(0);
-  const K = [0.25, 0.5, 0.25];
+  const K = [1, 4, 6, 4, 1];
   for (let j = 0; j < 12; j++) for (let i = 0; i < 12; i++) {
     let acc = 0, wsum = 0;
-    for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+    for (let dj = -2; dj <= 2; dj++) for (let di = -2; di <= 2; di++) {
       const y = j + dj, x = i + di; if (x < 0 || y < 0 || x > 11 || y > 11) continue;
-      const w = K[di + 1] * K[dj + 1]; acc += raw[y * 12 + x] * w; wsum += w;
+      const w = K[di + 2] * K[dj + 2]; acc += raw[y * 12 + x] * w; wsum += w;
     }
     v[j * 12 + i] = acc / wsum;
   }
@@ -858,9 +858,9 @@ function mapSampler(id) {
   const at = (i, j) => v[clamp(j, 0, 11) * 12 + clamp(i, 0, 11)];
   return (x, y) => { // x, y in 0..1 over the shown square
     const fx = (u0 + x * us) * 12 - 0.5, fy = (v0 + y * vs) * 12 - 0.5;
-    const i = Math.floor(fx), j = Math.floor(fy), tx = smooth(fx - i), ty = smooth(fy - j);
+    const i = Math.floor(fx), j = Math.floor(fy), tx = fx - i, ty = fy - j;
     const a = at(i, j) + (at(i + 1, j) - at(i, j)) * tx, b = at(i, j + 1) + (at(i + 1, j + 1) - at(i, j + 1)) * tx;
-    const edge = smooth(clamp(Math.min(x, 1 - x, y, 1 - y) / 0.08, 0, 1)); // feather the crop edge
+    const edge = smooth(clamp(Math.min(x, 1 - x, y, 1 - y) / 0.12, 0, 1)); // feather the crop edge
     return (a + (b - a) * ty) * edge;
   };
 }

@@ -343,7 +343,7 @@ Text-tinted washes of the same hairline color make the control fills: 3 to 5% at
 
 Content sits in a centred column of up to 1280 px plus side padding that grows from 20 to 64 px. The fixed header is 72 px tall and anchors scroll padding. Each section opens with top padding of clamp 120 to 176 px; the pilot section also closes with it. Nothing else separates sections.
 
-The grid is asymmetric pairs. Section heads split 7 : 5 with the heading left and the lead aligned to the end of the right column. Content pairs (case, how it works, team, pilot, evidence details) split 5 : 6 with a gutter of clamp 40 to 96 px. The specimen grid is four columns with 40 px rows and 20 px columns, two columns below 860 px. The evidence arrays are two columns on a subgrid so their counts, labels and dot grids align row for row.
+The grid is asymmetric pairs. Section heads split 7 : 5 with the heading left and the lead aligned to the end of the right column. Text-and-instrument pairs (case, how it works, team, pilot) split 5 : 6, and the evidence details 6 : 5, with a gutter of clamp 40 to 96 px. The specimen grid is four columns with 40 px rows and 20 px columns, two columns below 860 px. The evidence arrays are two columns on a subgrid so their counts, labels and dot grids align row for row.
 
 Rhythm is built on 4 and 8: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64. Lists of facts, steps, people and FAQ entries are rows divided by hairlines with about 22 px of vertical padding, a strong hairline on top and a light one between.
 
@@ -354,7 +354,7 @@ Two scenes pin at 960 x 700 and above: the case (a 440vh track with a sticky ful
 At 860 px and below the nav collapses into a Menu button and a dropdown panel of 56 px rows. At 760 px and below the hero actions share the width equally. Specimens develop when they sit in the middle fifth of the screen on touch devices. The depth ruler shows from 1180 px; its millimetre readout from 1560 px.
 
 ### Named Rules
-**The Asymmetric Pair Rule.** Two-column layouts are 5 : 6 or 7 : 5, never 1 : 1 rows of equal cards.
+**The Asymmetric Pair Rule.** A heading or text column paired with an instrument is asymmetric (5 : 6, 6 : 5 or 7 : 5). Equal columns are only for like items compared side by side (the two evidence grids, the three privacy facts, the team, the specimens), and they are never boxed cards.
 
 ## Elevation & Depth
 
@@ -443,11 +443,16 @@ The exact inputs the model's patient branch reads, one cell each.
 ### Toast
 - **Style:** fixed at the bottom left on the side margin, up to 440 px wide, 10 px corners, 94% raised black with a 10 px blur, ring and overlay drop. A 18 px 500 title in white, 15 px body in secondary grey.
 - **Behavior:** rises 10 px and fades in over 240 ms, out in 160 ms; closes on Escape or after a few seconds. It is used only for the easter eggs.
+- **Easter eggs it serves:** typing "scan" widens the pointer's light, typing "abcde" shows the ABCDE checklist. Separately, metric values, privacy facts and team names re-read themselves on hover (a 520 ms scramble that resolves left to right, with the real text kept in an aria-label), and the console prints a small lime mark. Keep them truthful and small.
+
+### ASCII footer wordmark
+- **Style:** the lowercase wordmark set across the footer at clamp 110 to 520 px, redrawn on a canvas as a grid of Host Grotesk characters. Cells fully inside the letters spell the page's evidence figures; edge cells use a punctuation density ramp; all in teal at 50 to 78%. Cells are 9 by 13 px (5 by 7 under 700 px wide).
+- **Behavior:** within 140 px of the pointer (80 px on small screens) characters scramble and turn lime, then settle when the pointer leaves. Without JavaScript or before fonts load, the plain word shows in a barely visible dark teal-grey.
 
 ### The scan layer (signature)
 One fixed WebGL canvas behind all content, pointer-events off, device pixel ratio capped at 1.5.
 - **Everywhere:** a faint per-pixel speckle and a slow dermal-fibre pattern, nearly invisible at rest. Within about 230 px of the pointer the speckle brightens and shifts from cool white to teal. Typing "scan" widens the light by 220 px.
-- **Hero band:** an illustrated skin cross-section (an amber-bright surface line, epidermis, the junction, dermis falling off with depth, one lesion with nests) drawn on the scan LUT, ground to deep teal to teal to amber to near-white. Left of a 2 px lime scan line it is acquired at full strength with a short lime trail; right of it, a 20% ghost unless the pointer lights it. The line follows the pointer across the hero. Where the pointer rests for 300 ms, an attention bloom gathers on the attention ramp, inside the tissue only. The band fades out over its last 110 px. It is labelled "Illustration of a skin cross-section" with a ramp key, and carries the research-stage note.
+- **Hero band:** an illustrated skin cross-section (an amber-bright surface line, epidermis, the junction, dermis falling off with depth, one lesion with nests) drawn on the scan LUT, ground to deep teal to teal to amber to near-white. Left of a thin lime scan line it is acquired at full strength with a short lime trail; right of it, a 20% ghost unless the pointer lights it. The line follows the pointer across the hero. Where the pointer rests for 300 ms, an attention bloom gathers on the attention ramp, inside the tissue only. The band fades out over its last 110 px. It is labelled "Illustration of a skin cross-section" with a ramp key, and carries the research-stage note.
 - **Privacy band:** the same tissue drawn only up to a lime edge line at 62% of the width; nothing exists past it.
 - **Redraw:** still until something changes. The frame loop runs only while pointer, light, scan line, width or bloom are easing toward their targets, and stops when they settle. It wakes on pointer move, pointer leave, a tap on the band, resize, and scroll while a band is on screen (plus one frame as it leaves). Touch pointer moves are ignored; a tap sets the line and the bloom.
 - **Fallbacks:** without WebGL the canvas is removed and each band shows a static gradient of amber surface into teal. With reduced motion every value jumps to its target.
@@ -456,7 +461,7 @@ One fixed WebGL canvas behind all content, pointer-events off, device pixel rati
 The colored layers on the specimens and the case are the research model's own final 12 x 12 feature maps, weighted by its attention module, one per photo. They are not illustrations and are never retouched.
 - **Scaling:** each map is normalized to its own photo (per-photo percentile scaling, a light 3 x 3 smoothing, then divided by its maximum), so a ramp position means "high for this photo", not an absolute score.
 - **Cropping:** the page shows the centre square of each photo, so each map is cropped by the same offsets before it is sampled, then interpolated smoothly and feathered over the outer 8% of the square.
-- **Specimen tiles:** the photo's own luminance, contrast-stretched to its range, is drawn on the scan LUT as teal speckle, and the attention ramp is blended over it where the response passes 30%. The pointer develops the real photo through a radial mask (124 px, 36 px feather, 520 ms); on touch the tile in the middle of the screen opens to 460 px, and a tap toggles it. The case specimen's class name is the only one set apart.
+- **Specimen tiles:** the photo's own luminance, contrast-stretched to its range, is drawn on the scan LUT as teal speckle, and the attention ramp is blended over it where the response passes 30%. The pointer develops the real photo through a radial mask (124 px, 36 px feather, 520 ms); on touch the tile in the middle of the screen opens to 460 px, and a tap toggles it.
 - **Case lens:** the photo is shown dimmed and mostly desaturated, and the map is screen-blended over it as light on the attention ramp with thin lime contour lines at 45, 65 and 85% response. The Model's view switch removes it and returns the photo to full color. The page states that this layer comes from the photo alone and does not change between steps.
 - **Legend:** a 120 by 6 px ramp key with a plain label ("Where the model's image branch responds most", "Low to high response").
 
@@ -502,4 +507,4 @@ The case photo sits in a circular clip inside a ring of 120 ticks. As the pinned
 - **Don't** let anything move on its own after the intro: no loops, drifting backgrounds, autoplay or pulsing elements (the spinner while the form sends is the one exception).
 - **Don't** round controls into pills, cut corners, or use hard offset shadows; nothing above 10 px except the phone's physical body.
 - **Don't** put a lesion photo in the first viewport; the hero shows only the illustrated cross-section.
-- **Don't** build rows of equal cards or a white, clinical-blue medical template look.
+- **Don't** build rows of boxed, equal cards or a white, clinical-blue medical template look.
