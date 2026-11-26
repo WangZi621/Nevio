@@ -17,7 +17,8 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 - Images in `img/`. `og.jpg` is the 1200 x 630 share image. `mark.svg` is the logo mark and favicon.
 - `img/app-*.webp` are real screenshots of the research app (github.com/WangZi621/SkinCancer-AI, `docs/`), run locally at 390 px wide on sample ISIC_5700648 and cropped so the app's current Stryde name never shows. Retake them the same way if the app changes or is renamed.
 - `.nojekyll` so Pages serves files as they are.
-- Fonts from Google Fonts: Newsreader (headings, wordmark), Atkinson Hyperlegible Next (body and interface).
+- `img/case-wide.jpg` and `img/case-tall.jpg` are the full ISIC_5700648 photo (landscape is the original rotated 90 degrees) for the hero lens; `img/case-*-soft.jpg` are tiny pre-blurred, darkened copies for the out-of-focus field behind the hero text.
+- Fonts from Google Fonts: Archivo (display, set wide with `font-stretch: 112%`, and the wordmark), Atkinson Hyperlegible Next (body and interface).
 
 Keep it static and dependency-free unless Jason asks otherwise. It has to load fast on a clinic computer and a phone.
 
@@ -32,6 +33,8 @@ All results come from one held-out split of 9,080 biopsy-confirmed ISIC images (
 - Model: EfficientNet-B4 image branch plus a 17-feature patient branch, about 21 MB, runs in the browser with ONNX Runtime Web, offline after the first load.
 - Classes: melanoma; other skin cancer (basal and squamous cell carcinoma); benign. Use those names.
 - The case on the page is ISIC_5700648, a biopsy-confirmed melanoma from the ISIC Archive (MSK, CC BY). With patient details: 82% melanoma, 17% benign, 2% other skin cancer, Refer urgently. Photo only: 6% melanoma, 18% benign, 75% other skin cancer, Refer for review. Keep the CC BY credit in the footer.
+- The case scene adds details one at a time. These are real outputs of the research model (run locally on the app's `docs/` code, Nov 2026): photo only 6/18/75 Refer for review; plus looks like a mole 74/24/2 Refer urgently; plus age 65, female 72/27/2 Refer urgently; plus head or neck 82/17/2 Refer urgently. Order matters: adding age, sex and site before the mole answer gives 7% melanoma and Routine follow-up at that step. Don't present any step that wasn't actually run, and rerun all steps if the model changes.
+- The evidence grids are natural frequencies of the approved numbers: 180 of 200 melanomas flagged (90.0%), 163 of 200 other spots left unflagged (81.5%). Each grid stands for 200 images in those proportions, not 200 actual images.
 - Recognition: first place in Computer Science at the 2026 Delaware Valley Science Fair; paper accepted to IEEE HealthCom 2026.
 - Team roles: Jason (CEO and CTO), Daisy (CMO), Kenny (COO), James (CFO). First names only unless Jason says otherwise.
 
@@ -52,16 +55,15 @@ The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page scri
 
 The full design system (palette, type, layout, components, page plan, CSS tokens) is the private Google Doc "Nevio design system" in the hub's 4 Website folder. Ask Jason for it; where it differs from the notes below, it wins.
 
-The Nov 2026 rebuild follows the design system: porcelain ground, indigo, one Lamp accent (the LED arc on the lens and logo), the case card with the photo-only toggle in the hero, real app screenshots, one indigo band. It replaced a page that read as generated (eleven same-shaped bands, too many words, drawn mocks, no logo). Keep to these rules:
+On Nov 26, 2026 Jason asked for a bolder, less generic site than the light design-system version. The page now uses a "scope" system that departs from the Drive doc's light palette, type and motion rules (the doc still holds for voice, facts and components until it is updated):
 
-- Six or seven sections at most. Fewer words per section.
-- Keep the real case card and the photo-only versus photo-plus-details toggle. They are the memorable part.
-- Replace drawn mocks with real screenshots of the working research app (https://wangzi621.github.io/SkinCancer-AI/) using its sample images.
-- A real logo mark plus the wordmark.
-- Light, clinical, calm. The three triage colors (red #c8372d, amber #b7791f, teal #2a8277) appear only on results, always with their words.
-- Sentence case, no all-caps labels, no eyebrow labels over headings, no arrows appended to links, no em dashes in copy.
-- Motion only where it explains something.
-- Works at 375 px wide, keyboard accessible, visible focus, respects reduced motion.
+- The view through a dermatoscope: one dark ground (#0D0F13) for the whole page. Sections never change background color; they are separated by space and scale.
+- One accent, Lamp (#F3E3A0): the LED arc on the lens and logo, primary buttons, focus rings. Triage colors (urgent #F0675B, review #E9AA42, routine #5CC0B1 on dark) appear only on results, always with their words.
+- Archivo set wide for headlines, Atkinson Hyperlegible Next for everything else. Weights 400 to 700, no italics, no monospace.
+- The memorable parts: the hero's out-of-focus skin field with a lens that follows the pointer and brings the real case into focus; the pinned case scene where real model outputs change as details are added; the pinned phone scene with real app screenshots; the icon arrays.
+- Motion explains something: focus (blur to clear), the LED arc turning like a focus ring, scores moving to real values. Transform, opacity, clip-path and filter only. Everything still works and reads with reduced motion and without JavaScript.
+- Six or seven sections, few words, sentence case, no eyebrow labels, no arrows on links, no em dashes, no periods on headings.
+- Works at 375 px wide (the hero keeps a clear window for the lens between headline and buttons), keyboard accessible, visible focus, WCAG AA contrast including text over the photo.
 
 ## How to check your work
 

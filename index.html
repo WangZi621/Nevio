@@ -3,319 +3,367 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nevio | Skin spot triage for primary care</title>
-<meta name="description" content="Nevio reads one dermoscopic photo with a few patient details and suggests which skin spots a primary care clinic should refer first. It runs on the clinic's own device. Research stage, not FDA-cleared. Free research pilots in southeastern Pennsylvania from 2027.">
+<title>Nevio | Know which skin spots need a dermatologist first</title>
+<meta name="description" content="Nevio reads a dermoscopic photo together with the patient's details and suggests which skin spots a primary care clinic should refer first. It runs on the clinic's own device. Research stage, not FDA-cleared. Free research pilots in southeastern Pennsylvania from 2027.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Nevio | Skin spot triage for primary care">
-<meta property="og:description" content="One dermoscopic photo and a few patient details suggest who should see a dermatologist first. Runs on the clinic's device; photos never leave the room.">
+<meta property="og:title" content="Nevio | Know which skin spots need a dermatologist first">
+<meta property="og:description" content="A dermoscopic photo and a few patient details suggest who should see a dermatologist first. Runs on the clinic's device; photos never leave the room.">
 <meta property="og:url" content="https://wangzi621.github.io/Nevio/">
 <meta property="og:image" content="https://wangzi621.github.io/Nevio/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F7F7FA">
+<meta name="theme-color" content="#0D0F13">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="img/case-wide.jpg" media="(min-aspect-ratio: 4/5)" fetchpriority="high">
+<link rel="preload" as="image" href="img/case-tall.jpg" media="(max-aspect-ratio: 4/5)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700&family=Newsreader:opsz,wght@6..72,500..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=Atkinson+Hyperlegible+Next:wght@400;500;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
 <style>
 :root {
-  --porcelain: #F7F7FA;
-  --white: #FFFFFF;
-  --mist: #ECEBF3;
-  --line: #DCDAE6;
-  --indigo: #23215A;
-  --indigo-deep: #17163D;
-  --lilac: #BDB8EE;
+  --ground: #0D0F13;
+  --raised: #151820;
+  --raised-2: #1B1F28;
+  --line: #272C36;
+  --line-2: #3A404C;
+  --edge: #6A707C;
+  --text: #EDEBE6;
+  --text-2: #B3B6BF;
+  --muted: #8E929C;
   --lamp: #F3E3A0;
-  --ink: #1A1936;
-  --slate: #4C4A66;
-  --muted: #6B6985;
-  --focus: #3D6FE0;
-  --urgent: #C8372D;   --urgent-text: #C8372D;
-  --review: #B7791F;   --review-text: #94600F;
-  --routine: #2A8277;  --routine-text: #23766C;
+  --lamp-ink: #1C1806;
+  --urgent: #F0675B;
+  --review: #E9AA42;
+  --routine: #5CC0B1;
 
-  --font-display: "Newsreader", Georgia, serif;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
-  --fs-display: clamp(44px, 6vw, 72px);
-  --fs-h2: clamp(28px, 1.5vw + 22px, 44px);
-  --fs-h3: 28px;
-  --fs-lead: 22px;
-  --fs-body: 18px;
+  --fs-display: clamp(44px, 6.2vw, 96px);
+  --fs-h2: clamp(34px, 4.4vw, 68px);
+  --fs-h3: clamp(22px, 1.6vw, 26px);
+  --fs-lead: clamp(19px, 1.4vw, 22px);
   --fs-small: 15px;
 
-  --radius-control: 8px;
-  --radius-card: 16px;
-  --shadow-case: 0 24px 48px -24px rgba(35, 33, 90, 0.25);
-  --max: 1200px;
-  --side: 48px;
-  --section: 128px;
+  --max: 1280px;
+  --side: clamp(20px, 4.4vw, 64px);
   --head: 72px;
-
+  --section: clamp(96px, 12vw, 176px);
+  --radius: 10px;
+  --radius-lg: 20px;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
-@media (max-width: 640px) {
-  :root { --side: 24px; --section: 72px; --fs-lead: 20px; --fs-h3: 24px; --head: 64px; }
-}
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--head) + 16px); interpolate-size: allow-keywords; -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--porcelain); color: var(--ink); font: 400 var(--fs-body)/1.6 var(--font-body); -webkit-font-smoothing: antialiased; caret-color: var(--indigo); text-wrap: pretty; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--head); -webkit-text-size-adjust: 100%; interpolate-size: allow-keywords; }
+body { margin: 0; background: var(--ground); color: var(--text); font: 400 18px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--lamp); }
 img { display: block; max-width: 100%; height: auto; }
-h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 500; color: var(--indigo); text-wrap: balance; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-stretch: 112%; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
-a { color: var(--indigo); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-::selection { background: var(--lamp); color: var(--indigo); }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.on-dark :focus-visible { outline-color: var(--lamp); }
-.vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.num { font-variant-numeric: tabular-nums; }
-
-.wrap { max-width: calc(var(--max) + 2 * var(--side)); margin: 0 auto; padding: 0 var(--side); }
-.section { padding: var(--section) 0; }
-.lead { font-size: var(--fs-lead); line-height: 1.45; color: var(--slate); max-width: 34em; }
-.h2 { font-size: var(--fs-h2); line-height: 1.1; max-width: 16em; }
-
-.skip { position: absolute; left: 16px; top: -64px; z-index: 50; padding: 12px 16px; background: var(--white); color: var(--indigo); border-radius: var(--radius-control); }
+a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--line-2); transition: text-decoration-color 150ms ease; }
+@media (hover: hover) { a:hover { text-decoration-color: var(--text); } }
+::selection { background: var(--lamp); color: var(--lamp-ink); }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; }
+.vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.wrap { max-width: calc(var(--max) + 2 * var(--side)); margin: 0 auto; padding-inline: var(--side); }
+.h2 { font-size: var(--fs-h2); line-height: 1.02; }
+.lead { font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); max-width: 32em; }
+.skip { position: absolute; left: 16px; top: -64px; z-index: 60; padding: 12px 16px; background: var(--lamp); color: var(--lamp-ink); border-radius: var(--radius); }
 .skip:focus { top: 12px; }
 
 /* Buttons */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 20px; border: 0; border-radius: var(--radius-control); font: 500 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 150ms ease, transform 160ms var(--ease-out); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border: 0; border-radius: var(--radius); font: 600 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out); }
 .btn:active { transform: scale(0.97); }
-.btn-primary { background: var(--indigo); color: var(--white); }
-.btn-lamp { background: var(--lamp); color: var(--indigo); }
+.btn-lamp { background: var(--lamp); color: var(--lamp-ink); }
+.btn-ghost { color: var(--text); background: transparent; box-shadow: inset 0 0 0 1px var(--edge); }
 @media (hover: hover) and (pointer: fine) {
-  .btn-primary:hover { background: var(--indigo-deep); }
-  .btn-lamp:hover { background: var(--white); }
+  .btn-lamp:hover { background: #FFF3C4; }
+  .btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--text); }
 }
 
 /* Header */
-.site-head { position: sticky; top: 0; z-index: 30; background: var(--porcelain); border-bottom: 1px solid var(--line); }
+.site-head { position: fixed; inset: 0 0 auto; z-index: 40; border-bottom: 1px solid transparent; transition: background-color 300ms ease, border-color 300ms ease; }
+.site-head.is-solid, .site-head.is-open { background: var(--ground); border-color: var(--line); }
 .head-in { display: flex; align-items: center; gap: 24px; height: var(--head); }
-.brand { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--indigo); text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text); text-decoration: none; }
 .brand svg { width: 28px; height: 28px; flex: none; }
-.brand span { font: 600 26px/1 var(--font-display); letter-spacing: -0.01em; padding-bottom: 2px; }
+.brand span { font: 600 24px/1 var(--font-display); font-stretch: 118%; letter-spacing: 0; padding-bottom: 2px; }
 .nav { display: flex; gap: 4px; margin-left: auto; }
-.nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--slate); text-decoration: none; font-size: 16px; border-radius: var(--radius-control); transition: color 150ms ease; }
-@media (hover: hover) and (pointer: fine) { .nav a:hover { color: var(--indigo); } }
+.nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--text-2); text-decoration: none; font-size: 16px; transition: color 150ms ease; }
+@media (hover: hover) { .nav a:hover { color: var(--text); } }
 .menu-btn { display: none; }
-.head-cta { height: 44px; padding: 0 16px; font-size: 16px; }
-
+.head-cta { height: 44px; padding: 0 18px; font-size: 16px; }
 @media (max-width: 860px) {
   .head-in { gap: 12px; }
-  .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--white); color: var(--indigo); font-size: 16px; font-weight: 500; cursor: pointer; }
-  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 16px; background: var(--porcelain); border-bottom: 1px solid var(--line); }
-  .nav a { min-height: 48px; padding: 0; font-size: 18px; color: var(--indigo); border-bottom: 1px solid var(--line); border-radius: 0; }
+  .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 0; border-radius: var(--radius); background: transparent; box-shadow: inset 0 0 0 1px var(--edge); color: var(--text); font-size: 16px; font-weight: 500; cursor: pointer; }
+  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 20px; background: var(--ground); border-bottom: 1px solid var(--line); }
+  .nav a { min-height: 52px; padding: 0; font-size: 20px; color: var(--text); border-bottom: 1px solid var(--line); }
   .nav a:last-child { border-bottom: 0; }
-  .js .nav { opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 120ms ease, transform 120ms ease, visibility 0s 120ms; }
-  .js .site-head.is-open .nav { opacity: 1; visibility: visible; transform: none; transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out), visibility 0s; }
+  .js .nav { opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 120ms ease, transform 120ms ease, visibility 0s 120ms; }
+  .js .site-head.is-open .nav { opacity: 1; visibility: visible; transform: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
   html:not(.js) .nav { position: static; padding: 0; border: 0; flex-direction: row; flex-wrap: wrap; }
 }
-@media (max-width: 360px) { .head-cta { padding: 0 12px; } .menu-btn { padding: 0 12px; } }
+@media (max-width: 380px) { .head-cta { padding: 0 12px; } .menu-btn { padding: 0 12px; } .brand span { font-size: 21px; } }
 
-/* Hero */
-.hero { padding: 48px 0 96px; }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px 64px; align-items: center; min-height: calc(100svh - var(--head) - 160px); }
-.hero h1 { font-size: var(--fs-display); line-height: 1.05; max-width: 9em; }
-.hero .lead { margin-top: 24px; max-width: 24em; }
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 40px; }
-.actions .text-link { font-size: 17px; font-weight: 500; min-height: 44px; display: inline-flex; align-items: center; }
-.stage { margin-top: 32px; font-size: var(--fs-small); color: var(--muted); }
+/* Hero: the out-of-focus skin field with a lens that brings it into focus */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
+.field { --x: 62%; --y: 55%; --r: clamp(84px, 11vw, 176px); position: absolute; inset: 0; z-index: -1; touch-action: pan-y; }
+.field picture, .field img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.field img { object-fit: cover; object-position: 50% 50%; }
+.field-base img { filter: blur(2px); }
+@media (min-aspect-ratio: 4/5) and (min-width: 900px) { .field { right: -30%; } }
+.field-lens { position: absolute; inset: 0; clip-path: circle(var(--r) at var(--x) var(--y)); }
+.field-lens img { transform-origin: var(--x) var(--y); transform: scale(1.6); filter: contrast(1.04); }
+.lens-ring { position: absolute; left: 0; top: 0; width: calc(2 * var(--r) + 20px); aspect-ratio: 1; transform: translate(var(--x), var(--y)) translate(-50%, -50%); pointer-events: none; will-change: transform; }
+.lens-ring svg { width: 100%; height: 100%; overflow: visible; }
+.hero-in { position: relative; width: 100%; padding-top: calc(var(--head) + 48px); padding-bottom: clamp(56px, 9vh, 112px); }
+.hero h1 { font-size: var(--fs-display); line-height: 0.98; max-width: 9.6em; }
+.hero-sub { margin-top: 28px; max-width: 30em; font-size: var(--fs-lead); line-height: 1.5; color: var(--text-2); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 36px; }
+.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: var(--fs-small); color: var(--text-2); }
+.hover-only { display: none; }
+@media (hover: hover) and (pointer: fine) { .hover-only { display: inline; } }
+@media (max-width: 640px) {
+  /* Headline at the top, words and buttons at the bottom, and a clear window
+     between them where the lens rests on the lesion. */
+  .field { --r: 64px; }
+  .hero { align-items: stretch; }
+  .hero-in { padding-top: calc(var(--head) + 20px); padding-bottom: 20px; min-height: 100svh; display: flex; flex-direction: column; }
+  .hero h1 { font-size: clamp(38px, 11vw, 46px); }
+  .hero-sub { margin-top: auto; font-size: 17px; }
+  .actions { margin-top: 20px; gap: 10px; flex-wrap: nowrap; }
+  .actions .btn { flex: 1 1 auto; height: 48px; padding: 0 14px; font-size: 16px; }
+  .hero-meta { margin-top: 16px; padding-top: 14px; }
+  .hero-credit { display: none; }
+}
 
-/* The lens and the case card */
-.case { --lens: clamp(280px, 33vw, 480px); margin: 0; display: grid; justify-items: end; }
-.lens { position: relative; width: var(--lens); max-width: 100%; aspect-ratio: 1; }
-.lens img { position: absolute; inset: 3%; width: 94%; height: 94%; border-radius: 50%; object-fit: cover; }
-.lens svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.case-card { position: relative; justify-self: start; width: min(100%, 404px); margin-top: calc(var(--lens) * -0.36); padding: 24px; background: var(--white); border-radius: var(--radius-card); box-shadow: var(--shadow-case); }
-.case figcaption { justify-self: start; max-width: 404px; margin-top: 16px; font-size: var(--fs-small); line-height: 1.5; color: var(--muted); }
+/* Reveal on scroll: out of focus, then into focus */
+.js [data-reveal] { transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out), filter 900ms var(--ease-out); }
+.js [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(24px); filter: blur(8px); }
 
-.seg { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin: 0; padding: 4px; border: 0; border-radius: var(--radius-control); background: var(--mist); }
-.seg label { position: relative; z-index: 1; cursor: pointer; }
-.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
-.seg span { display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 8px; border-radius: 4px; font-size: 15px; font-weight: 500; line-height: 1.2; text-align: center; color: var(--slate); transition: color 160ms ease; }
-.seg input:checked + span { color: var(--indigo); }
-.seg input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 0; }
-.seg-thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 4px; background: var(--white); border: 1px solid var(--line); transform: translateX(100%); transition: transform 240ms var(--ease-in-out); }
-.case-card[data-mode="photo"] .seg-thumb { transform: translateX(0); }
-
-.inputs { min-height: 48px; margin-top: 12px; font-size: var(--fs-small); line-height: 1.6; color: var(--slate); }
-.scores { display: grid; gap: 16px; margin-top: 16px; }
-.score { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; font-size: 16px; }
-.score .s-val { font-weight: 500; font-variant-numeric: tabular-nums; }
-.track { grid-column: 1 / -1; position: relative; height: 8px; margin-top: 4px; border-radius: 4px; background: var(--mist); }
-.fill { position: absolute; inset: 0; border-radius: 4px; background: var(--muted); transform-origin: left center; transform: scaleX(var(--v)); transition: transform 500ms var(--ease-in-out), background-color 240ms ease; }
-.js .case:not(.is-in) .fill { transform: scaleX(0); }
-.js .case.is-filling .fill { transition: transform 600ms var(--ease-out), background-color 240ms ease; }
-.js .case.is-filling .score:nth-child(2) .fill { transition-delay: 60ms; }
-.js .case.is-filling .score:nth-child(3) .fill { transition-delay: 120ms; }
+/* The case, one detail at a time */
+.case { position: relative; padding-top: var(--section); }
+.case-stage { position: relative; }
+.case-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
+.case-left { display: grid; gap: 40px; }
+.case-head { display: grid; gap: 20px; }
+.case-head .lead { max-width: 24em; }
+.scope { position: relative; width: min(100%, 520px); aspect-ratio: 1; justify-self: center; margin: 0; }
+.scope img { position: absolute; inset: 5%; width: 90%; height: 90%; border-radius: 50%; object-fit: cover; transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); transition: filter 300ms ease; }
+.scope-clip { position: absolute; inset: 5%; border-radius: 50%; overflow: hidden; }
+.scope-clip img { inset: 0; width: 100%; height: 100%; }
+.scope svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.scope .arc { transform-origin: 50px 50px; transform: rotate(var(--turn, 0deg)); }
+.readout { display: grid; gap: 28px; }
+.inputs { border-top: 1px solid var(--line); }
+.inputs button { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 0; border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; cursor: pointer; color: var(--muted); transition: color 240ms ease; }
+.inputs .tick { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--line-2); display: grid; place-items: center; transition: background-color 240ms ease, box-shadow 240ms ease; }
+.inputs .tick svg { width: 12px; height: 12px; opacity: 0; transition: opacity 200ms ease; }
+.inputs .label { font-size: 17px; }
+.inputs .value { font-size: 17px; font-variant-numeric: tabular-nums; }
+.inputs button.is-given { color: var(--text); }
+.inputs button.is-given .tick { background: var(--text); box-shadow: none; }
+.inputs button.is-given .tick svg { opacity: 1; }
+.inputs button[aria-current="step"] .label { text-decoration: underline; text-decoration-color: var(--lamp); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+@media (hover: hover) { .inputs button:hover { color: var(--text); } }
+.scores { display: grid; gap: 18px; }
+.score { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; }
+.score .s-val { font: 600 22px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+.track { grid-column: 1 / -1; position: relative; height: 10px; border-radius: 5px; background: var(--raised-2); }
+.fill { position: absolute; inset: 0; border-radius: 5px; background: var(--line-2); transform-origin: left center; transform: scaleX(var(--v)); transition: transform 600ms var(--ease-in-out), background-color 300ms ease; }
 .score[data-tone="urgent"] .fill { background: var(--urgent); }
 .score[data-tone="review"] .fill { background: var(--review); }
-.cut { position: absolute; left: 27.8%; top: -4px; bottom: -8px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--indigo); }
-.cut-note { grid-column: 1 / -1; padding-left: calc(27.8% - 1px); margin-top: 4px; font-size: var(--fs-small); line-height: 1.4; color: var(--muted); }
-
-.verdict { display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
-.shape { flex: none; width: 14px; height: 14px; margin-top: 8px; border-radius: 50%; }
+.cut { position: absolute; left: 27.8%; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; background: var(--text); border-radius: 1px; }
+.cut-note { grid-column: 1 / -1; padding-left: calc(27.8% - 1px); font-size: var(--fs-small); color: var(--muted); }
+.verdict { display: flex; align-items: flex-start; gap: 14px; padding-top: 24px; border-top: 1px solid var(--line); }
+.shape { flex: none; width: 16px; height: 16px; margin-top: 10px; border-radius: 50%; }
 .verdict[data-tone="urgent"] .shape { background: var(--urgent); }
-.verdict[data-tone="review"] .shape { border: 2px solid var(--review); background: linear-gradient(90deg, var(--review) 50%, transparent 50%); }
-.v-word { display: block; font: 500 22px/1.3 var(--font-body); }
-.verdict[data-tone="urgent"] .v-word { color: var(--urgent-text); }
-.verdict[data-tone="review"] .v-word { color: var(--review-text); }
-.v-why { display: block; margin-top: 2px; font-size: var(--fs-small); line-height: 1.5; color: var(--slate); }
+.verdict[data-tone="review"] .shape { box-shadow: inset 0 0 0 2px var(--review); background: linear-gradient(90deg, var(--review) 50%, transparent 50%); }
+.v-word { display: block; font: 600 clamp(26px, 2.4vw, 34px)/1.15 var(--font-display); font-stretch: 112%; }
+.verdict[data-tone="urgent"] .v-word { color: var(--urgent); }
+.verdict[data-tone="review"] .v-word { color: var(--review); }
+.v-why { display: block; margin-top: 6px; color: var(--text-2); }
+.case-note { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); max-width: 56em; }
 
-@media (max-width: 999px) {
-  .hero { padding: 48px 0 72px; }
-  .hero-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .case { justify-items: center; max-width: 640px; }
-  .case-card { justify-self: stretch; width: auto; }
-  .case figcaption { justify-self: stretch; max-width: none; }
+@media (min-width: 960px) and (min-height: 680px) {
+  .js .case-track { height: 440vh; }
+  .js .case-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--head); }
+  .js .case { padding-top: calc(var(--section) - 100px); }
+  .js .case-grid { width: 100%; gap: 24px clamp(40px, 6vw, 96px); }
+  .js .case-left { gap: 28px; }
+  .js .case-head .h2 { font-size: clamp(34px, 3.4vw, 52px); }
+  .js .case-head .lead { font-size: 18px; }
+  .js .scope { width: min(100%, 44vh, 460px); justify-self: start; }
+  .js .readout { gap: 22px; }
 }
-@media (min-width: 600px) and (max-width: 999px) {
-  .case { --lens: 360px; justify-items: end; }
-  .case-card { justify-self: start; width: min(100%, 404px); }
-}
-@media (max-width: 599px) {
-  .case { --lens: min(100%, 272px); }
-  .case-card { margin-top: -56px; padding: 20px; }
-  .actions .btn { flex: 1 1 auto; }
+@media (max-width: 959px) {
+  .case-grid { grid-template-columns: minmax(0, 1fr); }
+  .scope { width: min(100%, 360px); }
 }
 
 /* How a visit works */
-.how { background: var(--mist); }
-.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 48px; }
-.sec-head .lead { max-width: 22em; }
-.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; margin-top: 64px; counter-reset: step; }
-.phone { margin: 0; padding: 8px; border-radius: 28px; background: var(--white); border: 1px solid var(--line); max-width: 320px; }
-.phone img { width: 100%; border-radius: 20px; }
-.step-text { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 0 12px; margin-top: 24px; max-width: 320px; }
-.step-n { font: 500 24px/1.2 var(--font-display); color: var(--slate); font-variant-numeric: tabular-nums; }
-.step-text h3 { font-size: 24px; line-height: 1.2; }
-.step-text p { grid-column: 2; margin-top: 8px; color: var(--slate); }
-.shot-note { margin-top: 48px; font-size: var(--fs-small); color: var(--slate); }
-@media (max-width: 859px) {
-  .steps { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(76%, 300px); gap: 24px; margin: 48px calc(-1 * var(--side)) 0; padding: 0 var(--side) 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--side); overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-  .steps > li { scroll-snap-align: start; }
+.how { padding-top: var(--section); }
+.how-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: center; }
+.phone { position: relative; width: min(100%, 320px); justify-self: center; margin: 0; padding: 10px; border-radius: 36px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
+.phone-screen { position: relative; aspect-ratio: 624 / 1152; border-radius: 26px; overflow: hidden; background: #f2f3f5; }
+.phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.03); transition: opacity 500ms var(--ease-out), transform 700ms var(--ease-out); }
+.phone-screen img.on { opacity: 1; transform: none; }
+.how-steps { display: grid; gap: 8px; margin-top: 48px; counter-reset: s; }
+.how-steps li { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 4px 16px; padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); transition: color 300ms ease; }
+.how-steps li.on { color: var(--text); }
+.how-steps .n { font: 600 22px/1.2 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+.how-steps h3 { font-size: var(--fs-h3); line-height: 1.2; color: inherit; }
+.how-steps p { grid-column: 2; color: var(--muted); max-width: 30em; }
+.how-steps li.on p { color: var(--text-2); }
+.step-shot { display: none; }
+.how-note { margin-top: 24px; font-size: var(--fs-small); color: var(--muted); }
+@media (min-width: 960px) and (min-height: 680px) {
+  .js .how-track { height: 320vh; }
+  .js .how-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--head); }
+  .js .how-grid { width: 100%; }
+  .js .phone { width: min(100%, 300px, 40vh); }
+}
+@media (max-width: 959px) {
+  .how-grid { grid-template-columns: minmax(0, 1fr); }
+  .how-grid > .phone { display: none; }
+  .how-steps li { color: var(--text); }
+  .how-steps p { color: var(--text-2); }
+  .step-shot { display: block; grid-column: 2; width: min(100%, 260px); margin-top: 20px; padding: 8px; border-radius: 30px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
+  .step-shot img { border-radius: 22px; }
 }
 
 /* Evidence */
-.ev-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 56px 96px; margin-top: 56px; align-items: start; }
-.ev-table { width: 100%; border-collapse: collapse; }
-.ev-table caption { text-align: left; padding-bottom: 12px; border-bottom: 1px solid var(--indigo); font-size: var(--fs-small); color: var(--slate); }
-.ev-table th, .ev-table td { padding: 20px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-.ev-table th { text-align: left; font-weight: 700; font-size: 18px; padding-right: 24px; }
-.ev-table th span { display: block; margin-top: 4px; font-weight: 400; font-size: var(--fs-small); line-height: 1.5; color: var(--slate); max-width: 30em; }
-.ev-table td { text-align: right; font: 500 var(--fs-h3)/1.1 var(--font-display); color: var(--indigo); font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
-.ev-lead { margin-top: 20px; }
-.limits h3 { font-size: 24px; line-height: 1.2; }
+.evidence { padding-top: var(--section); }
+.arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); margin-top: 72px; }
+.arrays > div { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
+.arrays > div > * { align-self: start; }
+.freq { font: 600 clamp(44px, 5.4vw, 80px)/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums lining-nums; }
+.freq span { color: var(--muted); }
+.freq-label { margin-top: 12px; font-size: var(--fs-lead); line-height: 1.45; max-width: 18em; }
+.freq-meta { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
+.array { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; margin-top: 32px; max-width: 420px; }
+.array i { aspect-ratio: 1; border-radius: 50%; background: var(--text); }
+.array i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.js .array i { transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out); transition-delay: calc(var(--i) * 4ms); }
+.js .array:not(.is-in) i { opacity: 0; transform: scale(0.3); }
+.array-key { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: var(--fs-small); color: var(--muted); }
+.array-key span { display: inline-flex; align-items: center; gap: 8px; }
+.array-key i { width: 10px; height: 10px; border-radius: 50%; background: var(--text); }
+.array-key i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.ev-more { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px clamp(40px, 6vw, 96px); margin-top: 96px; align-items: start; }
+.sheet { border-top: 1px solid var(--text); }
+.sheet div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.sheet dt { font-weight: 700; }
+.sheet dd { margin: 0; font: 600 28px/1.1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums lining-nums; text-align: right; }
+.sheet .note { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); font-weight: 400; }
+.limits h3 { font-size: var(--fs-h3); line-height: 1.2; }
 .limits ul { display: grid; gap: 16px; margin-top: 20px; }
-.limits li { color: var(--slate); padding-top: 16px; border-top: 1px solid var(--line); }
-.limits li:first-child { border-top: 0; padding-top: 0; }
-@media (max-width: 899px) { .ev-grid { grid-template-columns: minmax(0, 1fr); } }
+.limits li { color: var(--text-2); padding-left: 20px; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.75em; width: 8px; height: 2px; background: var(--muted); }
+@media (max-width: 859px) {
+  .arrays, .ev-more { grid-template-columns: minmax(0, 1fr); }
+  .arrays > div { grid-template-rows: none; grid-row: auto; display: block; }
+  .arrays > div + div { margin-top: 64px; }
+  .ev-more { margin-top: 72px; }
+}
 
-/* Privacy band */
-.privacy { background: var(--indigo); color: var(--white); }
-.privacy h2 { color: var(--white); font-size: clamp(40px, 5vw, 64px); line-height: 1.05; max-width: 10em; }
-.privacy .lead { color: var(--lilac); margin-top: 24px; max-width: 26em; }
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 64px 0 0; }
-.facts div { padding-top: 20px; border-top: 1px solid var(--lilac); }
-.facts dt { font: 500 var(--fs-h3)/1.2 var(--font-display); color: var(--white); }
-.facts dd { margin: 8px 0 0; color: var(--lilac); max-width: 22em; }
+/* Privacy: one statement that comes into focus as you scroll */
+.privacy { padding-top: var(--section); }
+.statement { font-size: clamp(48px, 8.4vw, 136px); line-height: 0.96; max-width: 8em; }
+.js .statement .w { opacity: var(--o, 0.16); filter: blur(calc((1 - var(--o, 0.16)) * 6px)); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 72px; }
+.facts div { padding-top: 20px; border-top: 1px solid var(--line-2); }
+.facts dt { font: 600 var(--fs-h3)/1.2 var(--font-display); font-stretch: 112%; }
+.facts dd { margin: 8px 0 0; color: var(--text-2); max-width: 22em; }
 .privacy .btn { margin-top: 56px; }
 @media (max-width: 760px) { .facts { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
 
 /* Team */
-.team-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px 96px; align-items: start; }
-.team-grid .story { margin-top: 24px; color: var(--slate); max-width: 30em; }
-.honors { display: grid; gap: 8px; margin-top: 32px; }
+.team { padding-top: var(--section); }
+.team-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 96px); align-items: start; }
+.team .story { margin-top: 24px; color: var(--text-2); max-width: 30em; }
+.honors { display: grid; gap: 8px; margin-top: 32px; color: var(--text); }
 .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-.people li { padding: 20px 0 28px; border-top: 1px solid var(--line); }
-.people b { display: block; font: 500 24px/1.2 var(--font-display); color: var(--indigo); }
-.people .role { display: block; margin-top: 4px; font-weight: 700; font-size: 16px; }
-.people p { margin-top: 8px; font-size: 16px; line-height: 1.5; color: var(--slate); }
+.people li { padding: 24px 0 32px; border-top: 1px solid var(--line); }
+.people b { display: block; font: 600 clamp(30px, 3vw, 44px)/1.05 var(--font-display); font-stretch: 112%; }
+.people .role { display: block; margin-top: 8px; font-weight: 700; }
+.people p { margin-top: 6px; font-size: 16px; color: var(--text-2); }
 @media (max-width: 899px) { .team-grid { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 480px) { .people { gap: 0 20px; } .people p { display: none; } }
+@media (max-width: 480px) { .people p { display: none; } }
 
 /* Pilot and FAQ */
-.pilot { padding-top: 0; }
-.pilot-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-areas: "head form" "faq form"; gap: 48px 96px; align-items: start; padding-top: var(--section); border-top: 1px solid var(--line); }
+.pilot { padding-block: var(--section); }
+.pilot-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-areas: "head form" "faq form"; gap: 56px clamp(40px, 6vw, 96px); align-items: start; }
 .pilot-head { grid-area: head; }
-.pilot-head .lead { margin-top: 20px; }
-.form-card { grid-area: form; padding: 32px; background: var(--white); border-radius: var(--radius-card); }
+.pilot-head .lead { margin-top: 24px; }
+.form-card { grid-area: form; padding: clamp(24px, 3vw, 40px); background: var(--raised); border-radius: var(--radius-lg); box-shadow: inset 0 0 0 1px var(--line); }
 .faq { grid-area: faq; }
-.faq h3 { font-size: 24px; line-height: 1.2; }
+.faq h3 { font-size: var(--fs-h3); line-height: 1.2; }
 .faq-list { margin-top: 16px; border-top: 1px solid var(--line); }
-@media (max-width: 899px) {
-  .pilot-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "form" "faq"; gap: 40px; }
-  .form-card { padding: 24px; }
-}
-
 details { border-bottom: 1px solid var(--line); }
-summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; padding: 12px 0; font-weight: 700; cursor: pointer; list-style: none; }
+summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 14px 0; font-weight: 700; cursor: pointer; list-style: none; }
 summary::-webkit-details-marker { display: none; }
 .plus { position: relative; flex: none; width: 16px; height: 16px; }
-.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; border-radius: 1px; background: var(--indigo); transition: transform 160ms var(--ease-out); }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; border-radius: 1px; background: var(--text); transition: transform 200ms var(--ease-out); }
 .plus::after { transform: rotate(90deg); }
 details[open] .plus::after { transform: rotate(0deg); }
-details p { padding-bottom: 20px; color: var(--slate); max-width: 34em; }
-details::details-content { block-size: 0; overflow: hidden; transition: block-size 160ms var(--ease-out), content-visibility 160ms allow-discrete; }
+details p { padding-bottom: 22px; color: var(--text-2); max-width: 34em; }
+details::details-content { block-size: 0; overflow: hidden; transition: block-size 240ms var(--ease-out), content-visibility 240ms allow-discrete; }
 details[open]::details-content { block-size: auto; }
+@media (max-width: 899px) { .pilot-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "form" "faq"; gap: 40px; } }
 
-/* Form */
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
-.field { display: grid; gap: 8px; align-content: start; }
-.field.full { grid-column: 1 / -1; }
-.field label { font-weight: 700; font-size: 16px; line-height: 1.3; }
+.field-f { display: grid; gap: 8px; align-content: start; }
+.field-f.full { grid-column: 1 / -1; }
+.field-f label { font-weight: 700; font-size: 16px; }
 .opt { font-weight: 400; color: var(--muted); }
-.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 0 12px; border: 1.5px solid var(--slate); border-radius: var(--radius-control); background: var(--white); font-size: 17px; transition: border-color 150ms ease; }
-.field select { appearance: none; padding-right: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2323215A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-.field textarea { min-height: 112px; padding: 12px; resize: vertical; line-height: 1.5; }
-.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--indigo); }
-.field.bad input, .field.bad select { border-color: var(--urgent); }
-.err { display: none; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--urgent-text); }
+.field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius); background: var(--raised-2); box-shadow: inset 0 0 0 1px var(--edge); font-size: 17px; transition: box-shadow 150ms ease; }
+.field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23EDEBE6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.field-f select option { background: var(--raised-2); color: var(--text); }
+.field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
+.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.field-f.bad input, .field-f.bad select { box-shadow: inset 0 0 0 1.5px var(--urgent); }
+.err { display: none; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--urgent); }
 .err svg { flex: none; }
-.field.bad .err { display: flex; }
+.field-f.bad .err { display: flex; }
 .help { font-size: var(--fs-small); color: var(--muted); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 4px; }
-.form-foot .help { max-width: 22em; }
-.btn[disabled] { cursor: progress; background: var(--slate); }
-.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--lilac); border-top-color: var(--white); animation: spin 700ms linear infinite; }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
+.btn[disabled] { cursor: progress; background: var(--line-2); color: var(--text); }
+.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); border-top-color: var(--text); animation: spin 700ms linear infinite; }
 .btn.is-busy .spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width: 520px) { .form-grid { grid-template-columns: minmax(0, 1fr); } .form-foot .btn { width: 100%; } }
-
 .msg { grid-column: 1 / -1; display: flex; gap: 12px; align-items: flex-start; }
 .msg[hidden] { display: none; }
-.msg svg { flex: none; margin-top: 4px; }
-.msg-ok { color: var(--ink); }
-.msg-ok svg { color: var(--routine-text); }
-.msg-ok strong { color: var(--routine-text); }
+.msg svg { flex: none; margin-top: 4px; color: var(--routine); }
+.msg-ok strong { color: var(--routine); }
 .msg-warn { flex-direction: column; }
-.msg-warn strong { color: var(--review-text); }
-.msg-warn.is-fail strong { color: var(--urgent-text); }
-.msg textarea { width: 100%; min-height: 160px; padding: 12px; border: 1.5px solid var(--slate); border-radius: var(--radius-control); background: var(--porcelain); font-size: var(--fs-small); line-height: 1.5; resize: vertical; }
+.msg-warn strong { color: var(--review); }
+.msg-warn.is-fail strong { color: var(--urgent); }
+.msg textarea { width: 100%; min-height: 160px; padding: 12px; border: 0; border-radius: var(--radius); background: var(--ground); box-shadow: inset 0 0 0 1px var(--line-2); font-size: var(--fs-small); line-height: 1.5; resize: vertical; }
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
-.btn-quiet { background: var(--white); color: var(--indigo); border: 1.5px solid var(--indigo); }
-.js .msg.is-new { animation: rise 300ms var(--ease-out); }
-@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+.js .msg.is-new { animation: rise 400ms var(--ease-out); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
 
 /* Footer */
-.site-foot { background: var(--indigo-deep); color: var(--lilac); font-size: var(--fs-small); line-height: 1.6; }
-.foot-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: 32px 48px; padding-block: 64px; }
-.site-foot .brand { color: var(--white); align-self: start; }
+.site-foot { border-top: 1px solid var(--line); font-size: var(--fs-small); line-height: 1.6; color: var(--muted); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: 32px 48px; padding-block: 56px; }
+.site-foot .brand { align-self: start; }
 .site-foot p + p { margin-top: 12px; }
-.site-foot a { color: var(--white); }
-@media (max-width: 860px) { .foot-grid { grid-template-columns: minmax(0, 1fr); padding-block: 48px; } }
+@media (max-width: 860px) { .foot-grid { grid-template-columns: minmax(0, 1fr); padding-block: 40px; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation-duration: 0s !important; }
-  .spinner { animation: none; border-top-color: var(--lilac); }
+  .js [data-reveal]:not(.is-in) { opacity: 1; transform: none; filter: none; }
+  .js .array:not(.is-in) i { opacity: 1; transform: none; }
+  .js .statement .w { opacity: 1; filter: none; }
+  .spinner { animation: none; }
 }
 </style>
 </head>
@@ -325,117 +373,153 @@ details[open]::details-content { block-size: auto; }
 <header class="site-head" id="site-head">
   <div class="wrap head-in">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#23215A" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F3E3A0" stroke-width="3.5" stroke-linecap="round"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#23215A"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#EDEBE6" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F3E3A0" stroke-width="3.5" stroke-linecap="round"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#EDEBE6"/></svg>
       <span>nevio</span>
     </a>
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
+      <a href="#case">The case</a>
       <a href="#how">How it works</a>
       <a href="#evidence">Evidence</a>
       <a href="#team">Team</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-primary head-cta" href="#pilot">Request a pilot</a>
+    <a class="btn btn-lamp head-cta" href="#pilot">Request a pilot</a>
   </div>
 </header>
 
 <main id="main">
 
 <section class="hero" id="top" aria-labelledby="hero-h">
-  <div class="wrap hero-grid">
-    <div>
-      <h1 id="hero-h">Skin spot triage for primary care</h1>
-      <p class="lead">Nevio reads one dermoscopic photo with a few patient details and suggests who should see a dermatologist first. The clinician decides.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="#pilot">Request a pilot</a>
-        <a class="text-link" href="#evidence">See the evidence</a>
-      </div>
-      <p class="stage">Research stage. Not FDA-cleared.</p>
+  <div class="field" id="field" aria-hidden="true">
+    <picture class="field-base"><source media="(max-aspect-ratio: 4/5)" srcset="img/case-tall-soft.jpg"><img src="img/case-wide-soft.jpg" alt="" width="480" height="360"></picture>
+    <div class="field-lens"><picture><source media="(max-aspect-ratio: 4/5)" srcset="img/case-tall.jpg"><img src="img/case-wide.jpg" alt="" width="1600" height="1200"></picture></div>
+    <div class="lens-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#EDEBE6" stroke-opacity="0.55" stroke-width="0.6"/><path d="M50 2 A48 48 0 0 1 93.5 29.7" fill="none" stroke="#F3E3A0" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+  </div>
+  <div class="wrap hero-in">
+    <h1 id="hero-h">Know which skin spots need a dermatologist first</h1>
+    <p class="hero-sub">Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer. The clinician decides.</p>
+    <div class="actions">
+      <a class="btn btn-lamp" href="#pilot">Request a pilot</a>
+      <a class="btn btn-ghost" href="#case">See the real case</a>
     </div>
+    <div class="hero-meta">
+      <p>Research stage. Not FDA-cleared.</p>
+      <p class="hero-credit">Behind this text: case ISIC_5700648, a biopsy-confirmed melanoma.<span class="hover-only"> Move your pointer to look closer.</span></p>
+    </div>
+  </div>
+</section>
 
-    <figure class="case" id="case" aria-labelledby="case-cap">
-      <div class="lens">
-        <img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of a faint pink and brown skin spot, later confirmed by biopsy as melanoma in situ">
-        <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="97" fill="none" stroke="#23215A" stroke-width="6"/><path d="M100 3 A97 97 0 0 1 187.9 59" fill="none" stroke="#F3E3A0" stroke-width="6" stroke-linecap="round"/></svg>
+<section class="case" id="case" aria-labelledby="case-h">
+  <div class="case-track" data-scene="case">
+    <div class="case-stage">
+      <div class="wrap case-grid">
+        <div class="case-left">
+        <div class="case-head">
+          <h2 class="h2" id="case-h" data-reveal>What the patient's details change</h2>
+          <p class="lead" data-reveal>The same photo, scored by the real model as a clinician adds each detail. Scroll, or pick a step.</p>
+        </div>
+
+        <figure class="scope" id="scope" style="margin:0">
+          <div class="scope-clip"><img src="img/mis-5700648.jpg" width="760" height="760" alt="Dermoscopic photo of the case: a faint pink and brown spot ringed by purple ink marks, later confirmed by biopsy as melanoma in situ"></div>
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47.5" fill="none" stroke="#3A404C" stroke-width="0.5"/><g class="arc"><path d="M50 2.5 A47.5 47.5 0 0 1 93.05 29.9" fill="none" stroke="#F3E3A0" stroke-width="1.4" stroke-linecap="round"/></g></svg>
+        </figure>
+        </div>
+
+        <div class="readout">
+          <div class="inputs" role="group" aria-label="Details given to the model">
+            <button type="button" data-step="0"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#0D0F13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Dermoscopic photo</span><span class="value">Added</span></button>
+            <button type="button" data-step="1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#0D0F13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Looks like a mole</span><span class="value">Yes</span></button>
+            <button type="button" data-step="2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#0D0F13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Age and sex</span><span class="value">65, female</span></button>
+            <button type="button" data-step="3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#0D0F13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Body site</span><span class="value">Head or neck</span></button>
+          </div>
+
+          <ul class="scores" aria-label="Nevio's scores">
+            <li class="score" data-k="mel" data-tone="urgent">
+              <span>Melanoma</span><span class="s-val"><span data-num>82</span>%</span>
+              <span class="track" aria-hidden="true"><span class="fill" style="--v:0.82"></span><span class="cut"></span></span>
+              <span class="cut-note" aria-hidden="true">27.8% cutoff</span>
+            </li>
+            <li class="score" data-k="ben">
+              <span>Benign</span><span class="s-val"><span data-num>17</span>%</span>
+              <span class="track" aria-hidden="true"><span class="fill" style="--v:0.17"></span></span>
+            </li>
+            <li class="score" data-k="oth">
+              <span>Other skin cancer</span><span class="s-val"><span data-num>2</span>%</span>
+              <span class="track" aria-hidden="true"><span class="fill" style="--v:0.02"></span></span>
+            </li>
+          </ul>
+
+          <div class="verdict" id="verdict" data-tone="urgent" aria-live="polite">
+            <span class="shape" aria-hidden="true"></span>
+            <p><strong class="v-word" id="v-word">Refer urgently</strong><span class="v-why" id="v-why">Melanoma 82%. The biopsy confirmed melanoma.</span></p>
+          </div>
+        </div>
+
+        <p class="case-note">Real outputs from Nevio's research model on this case, with details added one at a time. Photo ISIC_5700648: ISIC Archive, Memorial Sloan Kettering Cancer Center, CC BY.</p>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="case-card" id="case-card" data-mode="both">
-        <fieldset class="seg">
-          <legend class="vh">What Nevio sees</legend>
-          <label><input type="radio" name="mode" value="photo"><span>Photo only</span></label>
-          <label><input type="radio" name="mode" value="both" checked><span>Photo and details</span></label>
-          <span class="seg-thumb" aria-hidden="true"></span>
-        </fieldset>
-        <p class="inputs" id="inputs">The photo, plus age 65, female, head or neck, looks like a mole.</p>
-        <ul class="scores" aria-label="Nevio's scores">
-          <li class="score" data-k="mel" data-tone="urgent">
-            <span>Melanoma</span><span class="s-val"><span data-num>82</span>%</span>
-            <span class="track" aria-hidden="true"><span class="fill" style="--v:0.82"></span><span class="cut"></span></span>
-            <span class="cut-note" aria-hidden="true">27.8% cutoff</span>
-          </li>
-          <li class="score" data-k="ben">
-            <span>Benign</span><span class="s-val"><span data-num>17</span>%</span>
-            <span class="track" aria-hidden="true"><span class="fill" style="--v:0.17"></span></span>
-          </li>
-          <li class="score" data-k="oth">
-            <span>Other skin cancer</span><span class="s-val"><span data-num>2</span>%</span>
-            <span class="track" aria-hidden="true"><span class="fill" style="--v:0.02"></span></span>
-          </li>
-        </ul>
-        <div class="verdict" id="verdict" data-tone="urgent" aria-live="polite">
-          <span class="shape" aria-hidden="true"></span>
-          <p><strong class="v-word" id="v-word">Refer urgently</strong><span class="v-why" id="v-why">Melanoma 82%, over the 27.8% cutoff</span></p>
+<section class="how" id="how" aria-labelledby="how-h">
+  <div class="how-track" data-scene="how">
+    <div class="how-stage">
+      <div class="wrap how-grid">
+        <figure class="phone" style="margin:0">
+          <div class="phone-screen">
+            <img class="on" src="img/app-photo.webp" width="624" height="1152" loading="lazy" alt="Research app on a phone: the case photo in a round viewer and a photo check reading Good to analyze.">
+            <img src="img/app-details.webp" width="624" height="1152" loading="lazy" alt="Research app on a phone, Patient details step: age 65, sex female, head selected on a body figure.">
+            <img src="img/app-result.webp" width="624" height="1152" loading="lazy" alt="Research app on a phone, Result step: Refer urgently, melanoma 82% above the 27.8% cutoff.">
+          </div>
+        </figure>
+        <div>
+          <h2 class="h2" id="how-h" data-reveal>It fits inside a normal visit</h2>
+          <p class="lead" style="margin-top:24px" data-reveal>A computer or phone the clinic already has, and a clip-on dermatoscope.</p>
+          <ol class="how-steps">
+            <li class="on"><span class="n">1</span><h3>Photograph the spot</h3><p>Through a clip-on dermatoscope. The app checks focus, exposure and contrast before it scores.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-photo.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
+            <li><span class="n">2</span><h3>Add the patient's details</h3><p>Age, sex, body site and a few short answers. Every field is optional, and each one can change the answer.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-details.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
+            <li><span class="n">3</span><h3>Read the suggestion</h3><p>Three scores, one suggestion and a referral note to print. The clinician makes the call.</p><figure class="step-shot" style="margin:20px 0 0"><img src="img/app-result.webp" width="624" height="1152" loading="lazy" alt=""></figure></li>
+          </ol>
+          <p class="how-note">Screens from Nevio's research app on a phone, running the case above.</p>
         </div>
       </div>
-
-      <figcaption id="case-cap">Real scores from Nevio's research model on a biopsy-confirmed melanoma it never saw in training. Photo ISIC_5700648: ISIC Archive, Memorial Sloan Kettering Cancer Center, CC BY.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="section how" id="how" aria-labelledby="how-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="h2" id="how-h">It fits inside a normal visit</h2>
-      <p class="lead">A computer or phone the clinic already has, and a clip-on dermatoscope.</p>
     </div>
-    <ol class="steps">
-      <li>
-        <figure class="phone"><img src="img/app-photo.webp" width="624" height="1152" loading="lazy" alt="Phone screen of the research app: the case photo in a round viewer, Upload and Camera buttons, and a photo check reading Good to analyze: in focus, exposure, contrast, resolution."></figure>
-        <div class="step-text"><span class="step-n">1</span><div><h3>Photograph the spot</h3><p>Through a clip-on dermatoscope. The app checks focus, exposure and contrast first.</p></div></div>
-      </li>
-      <li>
-        <figure class="phone"><img src="img/app-details.webp" width="624" height="1152" loading="lazy" alt="Phone screen of the research app on the Patient details step: age 65, sex female, and the head selected on a body figure."></figure>
-        <div class="step-text"><span class="step-n">2</span><div><h3>Add patient details</h3><p>Age, sex, body site and a few short answers. Every field is optional.</p></div></div>
-      </li>
-      <li>
-        <figure class="phone"><img src="img/app-result.webp" width="624" height="1152" loading="lazy" alt="Phone screen of the research app on the Result step: Refer urgently, melanoma 82% above the 27.8% cutoff, benign 17%, other skin cancer 2%, and a note that without patient details the same photo scores melanoma 6%."></figure>
-        <div class="step-text"><span class="step-n">3</span><div><h3>Read the suggestion</h3><p>Three scores, one suggestion and a referral note to print. The clinician makes the call.</p></div></div>
-      </li>
-    </ol>
-    <p class="shot-note">Screens from Nevio's research app on a phone, running the case above.</p>
   </div>
 </section>
 
-<section class="section" id="evidence" aria-labelledby="evidence-h">
+<section class="evidence" id="evidence" aria-labelledby="evidence-h">
   <div class="wrap">
-    <h2 class="h2" id="evidence-h">The numbers, and their limits</h2>
-    <p class="lead ev-lead">Every number here comes from 9,080 biopsy-confirmed images the model never saw in training.</p>
-    <div class="ev-grid">
-      <table class="ev-table">
-        <caption>Held-out test, 9,080 ISIC Archive images</caption>
-        <tbody>
-          <tr><th scope="row">Melanoma AUC<span>How well the melanoma score ranks melanoma above everything else. 1.0 is perfect, 0.5 is a coin flip.</span></th><td>0.940</td></tr>
-          <tr><th scope="row">Melanoma sensitivity<span>Melanomas that scored above the 27.8% cutoff, so Nevio suggested an urgent referral</span></th><td>90.0%</td></tr>
-          <tr><th scope="row">Melanoma specificity<span>Other spots that scored below the cutoff and were not flagged for melanoma</span></th><td>81.5%</td></tr>
-          <tr><th scope="row">Three-class AUC<span>Across all three classes: melanoma, other skin cancer and benign</span></th><td>93.2%</td></tr>
-          <tr><th scope="row">Three-class accuracy<span>The top score matched the biopsy. Nevio is tuned to flag borderline spots rather than miss a cancer.</span></th><td>78.6%</td></tr>
-        </tbody>
-      </table>
+    <h2 class="h2" id="evidence-h" data-reveal>Tested on 9,080 biopsy-confirmed images it never saw</h2>
+    <p class="lead" style="margin-top:24px" data-reveal>Each grid stands for 200 test images, in the same proportions as the full results. These come from a held-out test set, not a clinical study.</p>
+
+    <div class="arrays">
+      <div>
+        <p class="freq" data-reveal>180 <span>of 200</span></p>
+        <p class="freq-label">melanomas scored above the 27.8% cutoff, so Nevio suggested an urgent referral</p>
+        <p class="freq-meta">Melanoma sensitivity 90.0%</p>
+        <div class="array" data-array data-total="200" data-hit="180" aria-hidden="true"></div>
+        <p class="array-key"><span><i></i>Flagged</span><span><i class="miss"></i>Missed</span></p>
+      </div>
+      <div>
+        <p class="freq" data-reveal>163 <span>of 200</span></p>
+        <p class="freq-label">other spots scored below the cutoff and were not flagged for melanoma</p>
+        <p class="freq-meta">Melanoma specificity 81.5%</p>
+        <div class="array" data-array data-total="200" data-hit="163" aria-hidden="true"></div>
+        <p class="array-key"><span><i></i>Left alone</span><span><i class="miss"></i>Flagged anyway</span></p>
+      </div>
+    </div>
+
+    <div class="ev-more">
+      <dl class="sheet">
+        <div><dt>Melanoma AUC</dt><dd>0.940</dd><dt class="note">How well the melanoma score ranks melanoma above everything else. 1.0 is perfect, 0.5 is a coin flip.</dt></div>
+        <div><dt>Three-class AUC</dt><dd>93.2%</dd><dt class="note">Across melanoma, other skin cancer and benign</dt></div>
+        <div><dt>Three-class accuracy</dt><dd>78.6%</dd><dt class="note">The top score matched the biopsy. Nevio is tuned to flag borderline spots rather than miss a cancer.</dt></div>
+      </dl>
       <div class="limits">
         <h3>What these numbers don't show</h3>
         <ul>
-          <li>It was one 80/20 split of ISIC Archive images, with 36,320 used for training and 9,080 held out for testing. That is a research result, not a clinical study.</li>
+          <li>It was one 80/20 split of ISIC Archive images, with 36,320 used for training and 9,080 held out for testing.</li>
           <li>The cutoff was set on those same test images, so a fully separate test set comes next, followed by testing in clinics.</li>
           <li>Public skin image collections have few images of darker skin, so ours does too. Fixing that is a main goal of the pilots.</li>
         </ul>
@@ -444,12 +528,12 @@ details[open]::details-content { block-size: auto; }
   </div>
 </section>
 
-<section class="section privacy on-dark" id="privacy" aria-labelledby="privacy-h">
+<section class="privacy" id="privacy" aria-labelledby="privacy-h">
   <div class="wrap">
-    <h2 id="privacy-h">Photos never leave the room</h2>
-    <p class="lead">The model runs in the browser on the clinic's own computer or phone. No photo or patient detail is uploaded.</p>
+    <h2 class="statement" id="privacy-h" data-words>Photos never leave the room</h2>
+    <p class="lead" style="margin-top:32px">The model runs in the browser on the clinic's own computer or phone. No photo or patient detail is uploaded, to us or anyone else.</p>
     <dl class="facts">
-      <div><dt class="num">21 MB</dt><dd>The whole model. Smaller than a few phone photos, so an ordinary browser can run it.</dd></div>
+      <div><dt>21 MB</dt><dd>The whole model. Smaller than a few phone photos, so an ordinary browser can run it.</dd></div>
       <div><dt>Offline</dt><dd>After the first load, no internet is needed for a result.</dd></div>
       <div><dt>On the device</dt><dd>Patient details stay on the same device as the photo.</dd></div>
     </dl>
@@ -457,10 +541,10 @@ details[open]::details-content { block-size: auto; }
   </div>
 </section>
 
-<section class="section" id="team" aria-labelledby="team-h">
+<section class="team" id="team" aria-labelledby="team-h">
   <div class="wrap team-grid">
     <div>
-      <h2 class="h2" id="team-h">Who is building it</h2>
+      <h2 class="h2" id="team-h" data-reveal>Who is building it</h2>
       <p class="story">For years, Jason's mom waited, even with good insurance, to learn whether a growth on her leg was dangerous. Nevio started as his research project to shorten that wait. The four of us met at a summer camp and build it together.</p>
       <ul class="honors">
         <li>First place, Computer Science, 2026 Delaware Valley Science Fair</li>
@@ -476,27 +560,27 @@ details[open]::details-content { block-size: auto; }
   </div>
 </section>
 
-<section class="section pilot" id="pilot" aria-labelledby="pilot-h">
-  <div class="wrap"><div class="pilot-grid">
+<section class="pilot" id="pilot" aria-labelledby="pilot-h">
+  <div class="wrap pilot-grid">
     <div class="pilot-head">
-      <h2 class="h2" id="pilot-h">Request a free research pilot</h2>
+      <h2 class="h2" id="pilot-h" data-reveal>Request a free research pilot</h2>
       <p class="lead">For primary care practices and community health centers in southeastern Pennsylvania, starting 2027. No cost and no commitment.</p>
     </div>
 
     <div class="form-card">
       <form id="pilot-form" class="form-grid" novalidate>
-        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required maxlength="120"><span class="err" id="e-name"></span></div>
-        <div class="field"><label for="f-role">Role</label>
+        <div class="field-f"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required maxlength="120"><span class="err" id="e-name"></span></div>
+        <div class="field-f"><label for="f-role">Role</label>
           <select id="f-role" name="role" required>
             <option value="">Choose one</option><option>Physician</option><option>Nurse practitioner</option><option>Physician assistant</option><option>Nurse</option><option>Practice manager</option><option>Medical director</option><option>Researcher</option><option>Other</option>
           </select><span class="err" id="e-role"></span></div>
-        <div class="field full"><label for="f-org">Clinic or organization</label><input id="f-org" name="organization" autocomplete="organization" required maxlength="160"><span class="err" id="e-org"></span></div>
-        <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" spellcheck="false"><span class="err" id="e-email"></span></div>
-        <div class="field"><label for="f-loc">City and state</label><input id="f-loc" name="location" autocomplete="address-level2" required maxlength="120"><span class="err" id="e-loc"></span></div>
-        <div class="field full"><label for="f-msg">Anything we should know <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" maxlength="2000" aria-describedby="h-msg"></textarea><span class="help" id="h-msg">Please don't include any patient information.</span></div>
+        <div class="field-f full"><label for="f-org">Clinic or organization</label><input id="f-org" name="organization" autocomplete="organization" required maxlength="160"><span class="err" id="e-org"></span></div>
+        <div class="field-f"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" spellcheck="false"><span class="err" id="e-email"></span></div>
+        <div class="field-f"><label for="f-loc">City and state</label><input id="f-loc" name="location" autocomplete="address-level2" required maxlength="120"><span class="err" id="e-loc"></span></div>
+        <div class="field-f full"><label for="f-msg">Anything we should know <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" maxlength="2000" aria-describedby="h-msg"></textarea><span class="help" id="h-msg">Please don't include any patient information.</span></div>
         <div class="hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
         <div class="form-foot">
-          <button class="btn btn-primary" type="submit" id="f-submit"><span class="spinner" aria-hidden="true"></span><span id="f-submit-label">Send pilot request</span></button>
+          <button class="btn btn-lamp" type="submit" id="f-submit"><span class="spinner" aria-hidden="true"></span><span id="f-submit-label">Send pilot request</span></button>
           <p class="help">We reply by email to set up a short call.</p>
         </div>
         <div class="msg msg-ok" id="s-ok" role="status" tabindex="-1" hidden>
@@ -506,7 +590,7 @@ details[open]::details-content { block-size: auto; }
         <div class="msg msg-warn" id="s-fallback" role="status" tabindex="-1" hidden>
           <p><strong id="fb-title">Your request didn't send.</strong> <span id="fb-mail"></span></p>
           <textarea id="fb-text" readonly aria-label="Your pilot request, ready to copy"></textarea>
-          <div class="copy-row"><button class="btn btn-quiet" type="button" id="fb-copy">Copy request</button><span class="help" id="fb-copied" aria-live="polite"></span></div>
+          <div class="copy-row"><button class="btn btn-ghost" type="button" id="fb-copy">Copy request</button><span class="help" id="fb-copied" aria-live="polite"></span></div>
         </div>
       </form>
     </div>
@@ -522,14 +606,14 @@ details[open]::details-content { block-size: auto; }
         <details><summary>What does a pilot involve?<span class="plus" aria-hidden="true"></span></summary><p>Nevio at no cost for the study, in-person setup and staff training, and a summary comparing Nevio's suggestions with dermatologists' decisions and biopsy results.</p></details>
       </div>
     </div>
-  </div></div>
+  </div>
 </section>
 </main>
 
-<footer class="site-foot on-dark">
+<footer class="site-foot">
   <div class="wrap foot-grid">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#FFFFFF" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F3E3A0" stroke-width="3.5" stroke-linecap="round"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#FFFFFF"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="none" stroke="#EDEBE6" stroke-width="3.5"/><path d="M24 5 A19 19 0 0 1 41.2 15.9" fill="none" stroke="#F3E3A0" stroke-width="3.5" stroke-linecap="round"/><path d="M19.2 20.4c1.6-2.6 5.4-3.2 7.6-1.4 2.3 1.9 2.4 5.6.4 7.6-1.9 2-5.4 2.4-7.4.6-1.8-1.6-2-4.6-.6-6.8z" fill="#EDEBE6"/></svg>
       <span>nevio</span>
     </a>
     <div>
@@ -553,9 +637,11 @@ const FORM_ENDPOINT = "https://formsubmit.co/ajax/jasonxiao421@gmail.com";
 const CONTACT_EMAIL = "";
 
 const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-// ---- mobile menu ----
+// ---- header and mobile menu ----
 const head = $('#site-head'), menuBtn = $('#menu-btn'), nav = $('#nav');
 function setMenu(open) {
   head.classList.toggle('is-open', open);
@@ -568,63 +654,169 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && head.class
 document.addEventListener('click', e => { if (head.classList.contains('is-open') && !e.target.closest('#site-head')) setMenu(false); });
 window.matchMedia('(min-width: 861px)').addEventListener?.('change', m => { if (m.matches) setMenu(false); });
 
-// ---- the case: photo only vs photo + patient details (real outputs for ISIC_5700648) ----
-const CASES = {
-  both:  { mel: 82, ben: 17, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 82%, over the 27.8% cutoff', inputs: 'The photo, plus age 65, female, head or neck, looks like a mole.' },
-  photo: { mel: 6,  ben: 18, oth: 75, lead: 'oth', tone: 'review', word: 'Refer for review', why: 'Melanoma 6%, under the cutoff. Other skin cancer scores highest at 75%.', inputs: 'The photo alone, with no patient details. The same melanoma now falls under the cutoff.' },
-};
-const caseFig = $('#case'), card = $('#case-card'), verdict = $('#verdict');
+// ---- hero: a lens that brings the out-of-focus skin into focus ----
+// The lens rests on the lesion and follows the pointer, easing like a hand-held scope.
+const hero = $('.hero'), field = $('#field');
+const LESION = { wide: [0.619, 0.592], tall: [0.408, 0.619] }; // lesion centre in each image, as a fraction
+const lens = { x: 0, y: 0, tx: 0, ty: 0, running: false };
+function lesionPoint() {
+  const r = field.getBoundingClientRect();
+  const tall = window.matchMedia('(max-aspect-ratio: 4/5)').matches;
+  const [iw, ih] = tall ? [1200, 1600] : [1600, 1200];
+  const [fx, fy] = tall ? LESION.tall : LESION.wide;
+  const s = Math.max(r.width / iw, r.height / ih);
+  return { x: (r.width - iw * s) / 2 + fx * iw * s, y: (r.height - ih * s) / 2 + fy * ih * s };
+}
+function paintLens() {
+  field.style.setProperty('--x', lens.x.toFixed(1) + 'px');
+  field.style.setProperty('--y', lens.y.toFixed(1) + 'px');
+}
+function stepLens() {
+  const k = reduce.matches ? 1 : 0.14;
+  lens.x += (lens.tx - lens.x) * k; lens.y += (lens.ty - lens.y) * k;
+  paintLens();
+  if (Math.abs(lens.tx - lens.x) > 0.3 || Math.abs(lens.ty - lens.y) > 0.3) requestAnimationFrame(stepLens);
+  else { lens.x = lens.tx; lens.y = lens.ty; paintLens(); lens.running = false; }
+}
+function aimLens(x, y) { lens.tx = x; lens.ty = y; if (!lens.running) { lens.running = true; requestAnimationFrame(stepLens); } }
+// Where the lens rests: on the lesion, kept inside the clear window between the
+// headline and the words below it when the layout stacks (phones).
+function restPoint() {
+  const p = lesionPoint();
+  if (!window.matchMedia('(max-width: 640px)').matches) return p;
+  const fr = field.getBoundingClientRect();
+  const r = parseFloat(getComputedStyle(field).getPropertyValue('--r')) || 64;
+  const top = $('.hero h1').getBoundingClientRect().bottom - fr.top + r + 12;
+  const bottom = $('.hero-sub').getBoundingClientRect().top - fr.top - r - 12;
+  if (bottom > top) p.y = clamp(p.y, top, bottom);
+  return p;
+}
+function restLens(jump) { const p = restPoint(); if (jump) { lens.x = lens.tx = p.x; lens.y = lens.ty = p.y; paintLens(); } else aimLens(p.x, p.y); }
+restLens(true);
+document.fonts?.ready.then(() => restLens(true));
+window.addEventListener('resize', () => restLens(true));
+hero.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
+  const r = field.getBoundingClientRect();
+  aimLens(e.clientX - r.left, e.clientY - r.top);
+});
+hero.addEventListener('pointerleave', () => restLens(false));
+hero.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'mouse' || e.target.closest('a, button')) return;
+  const r = field.getBoundingClientRect();
+  aimLens(e.clientX - r.left, e.clientY - r.top);
+});
+
+// ---- the case: real model outputs as details are added (ISIC_5700648) ----
+const STEPS = [
+  { mel: 6,  ben: 18, oth: 75, lead: 'oth', tone: 'review', word: 'Refer for review', why: 'Melanoma 6% is under the 27.8% cutoff. Other skin cancer scores highest.' },
+  { mel: 74, ben: 24, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 74%, over the 27.8% cutoff.' },
+  { mel: 72, ben: 27, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 72%, still over the cutoff.' },
+  { mel: 82, ben: 17, oth: 2,  lead: 'mel', tone: 'urgent', word: 'Refer urgently',   why: 'Melanoma 82%. The biopsy confirmed melanoma.' },
+];
+const caseTrack = $('[data-scene="case"]'), scope = $('#scope'), verdict = $('#verdict');
+const stepBtns = $$('.inputs button');
 const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function tween(el, to, ms) {
   const from = Number(el.textContent);
   if (reduce.matches || from === to) { el.textContent = to; return; }
   const t0 = performance.now(), id = (el._tw = (el._tw || 0) + 1);
-  const step = now => {
+  const tick = now => {
     if (el._tw !== id) return;
     const p = Math.min(1, (now - t0) / ms);
     el.textContent = Math.round(from + (to - from) * ease(p));
-    if (p < 1) requestAnimationFrame(step);
+    if (p < 1) requestAnimationFrame(tick);
   };
-  requestAnimationFrame(step);
+  requestAnimationFrame(tick);
 }
-let swapAnim = null;
-function showCase(key) {
-  const c = CASES[key];
-  card.dataset.mode = key;
-  $('#inputs').textContent = c.inputs;
-  for (const li of card.querySelectorAll('.score')) {
+let current = -1, swap = null;
+function showStep(i) {
+  if (i === current) return;
+  const first = current === -1;
+  current = i;
+  const c = STEPS[i];
+  stepBtns.forEach((b, j) => {
+    b.classList.toggle('is-given', j <= i);
+    if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+  });
+  for (const li of $$('.score')) {
     const k = li.dataset.k;
     li.querySelector('.fill').style.setProperty('--v', c[k] / 100);
-    tween(li.querySelector('[data-num]'), c[k], 500);
+    tween(li.querySelector('[data-num]'), c[k], first ? 0 : 600);
     if (k === c.lead) li.dataset.tone = c.tone; else delete li.dataset.tone;
   }
-  const apply = () => {
-    verdict.dataset.tone = c.tone;
-    $('#v-word').textContent = c.word;
-    $('#v-why').textContent = c.why;
-  };
-  if (reduce.matches || !verdict.animate) { apply(); return; }
-  if (swapAnim) swapAnim.cancel();
-  swapAnim = verdict.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(2px)' }], { duration: 100, easing: 'ease-in', fill: 'forwards' });
-  swapAnim.onfinish = () => {
-    apply();
-    swapAnim = verdict.animate([{ opacity: 0, filter: 'blur(2px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' });
-  };
+  const apply = () => { verdict.dataset.tone = c.tone; $('#v-word').textContent = c.word; $('#v-why').textContent = c.why; };
+  if (first || reduce.matches || !verdict.animate) { apply(); return; }
+  if (swap) swap.cancel();
+  swap = verdict.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(4px)' }], { duration: 120, easing: 'ease-in', fill: 'forwards' });
+  swap.onfinish = () => { apply(); swap = verdict.animate([{ opacity: 0, filter: 'blur(4px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 260, easing: 'cubic-bezier(0.23, 1, 0.32, 1)', fill: 'forwards' }); };
 }
-for (const r of card.querySelectorAll('input[name="mode"]')) r.addEventListener('change', () => showCase(r.value));
+const pinned = window.matchMedia('(min-width: 960px) and (min-height: 680px)');
+function sceneProgress(el) {
+  const r = el.getBoundingClientRect(), total = r.height - window.innerHeight;
+  return total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+}
+stepBtns.forEach((b, j) => b.addEventListener('click', () => {
+  if (pinned.matches) {
+    const r = caseTrack.getBoundingClientRect(), total = r.height - window.innerHeight;
+    window.scrollTo({ top: window.scrollY + r.top + total * ((j + 0.5) / STEPS.length), behavior: reduce.matches ? 'auto' : 'smooth' });
+  }
+  showStep(j);
+}));
+showStep(0);
 
-// Score bars fill once when the case comes into view.
-function fillBars() {
-  if (caseFig.classList.contains('is-in')) return;
-  if (reduce.matches) { caseFig.classList.add('is-in'); return; }
-  caseFig.classList.add('is-filling');
-  requestAnimationFrame(() => requestAnimationFrame(() => caseFig.classList.add('is-in')));
-  setTimeout(() => caseFig.classList.remove('is-filling'), 900);
+// ---- how a visit works: the phone steps through the app ----
+const howTrack = $('[data-scene="how"]'), shots = $$('.phone-screen img'), howSteps = $$('.how-steps li');
+let howCurrent = 0;
+function showHow(i) {
+  if (i === howCurrent) return;
+  howCurrent = i;
+  shots.forEach((s, j) => s.classList.toggle('on', j === i));
+  howSteps.forEach((s, j) => s.classList.toggle('on', j === i));
 }
+
+// ---- privacy statement: words come into focus as it scrolls up ----
+const statement = $('[data-words]');
+statement.innerHTML = statement.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+statement.setAttribute('aria-label', statement.textContent);
+const words = $$('.statement .w');
+
+// ---- one scroll loop for every scroll-linked scene ----
+let ticking = false;
+function onScroll() {
+  ticking = false;
+  head.classList.toggle('is-solid', window.scrollY > 24);
+  if (pinned.matches) {
+    const p = sceneProgress(caseTrack);
+    showStep(Math.min(STEPS.length - 1, Math.floor(p * STEPS.length)));
+    if (!reduce.matches) {
+      scope.style.setProperty('--zoom', (1 + p * 0.18).toFixed(3));
+      scope.style.setProperty('--turn', (p * 300).toFixed(1) + 'deg');
+      scope.style.setProperty('--blur', (Math.max(0, 1 - p * 8) * 6).toFixed(2) + 'px');
+    }
+    showHow(Math.min(2, Math.floor(sceneProgress(howTrack) * 3)));
+  }
+  const r = statement.getBoundingClientRect(), vh = window.innerHeight;
+  const sp = clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1);
+  words.forEach((w, i) => {
+    const o = clamp(sp * words.length - i, 0, 1);
+    w.style.setProperty('--o', (0.16 + o * 0.84).toFixed(3));
+  });
+}
+window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
+
+// ---- reveals and icon arrays ----
+for (const a of $$('[data-array]')) {
+  const total = +a.dataset.total, hit = +a.dataset.hit;
+  a.innerHTML = Array.from({ length: total }, (_, i) => `<i${i >= hit ? ' class="miss"' : ''} style="--i:${i}"></i>`).join('');
+}
+const revealables = $$('[data-reveal], [data-array]');
 if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { fillBars(); io.disconnect(); } }, { threshold: 0.35 });
-  io.observe(card);
-} else fillBars();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  revealables.forEach(el => io.observe(el));
+} else revealables.forEach(el => el.classList.add('is-in'));
 
 // ---- pilot form ----
 const form = $('#pilot-form');
@@ -641,7 +833,7 @@ function check(id, eid, msg, trim = true) {
   if (trim && el.tagName !== 'SELECT') el.value = el.value.trim();
   const ok = el.checkValidity();
   e.innerHTML = ok ? '' : errIcon + '<span>' + msg + '</span>';
-  el.closest('.field').classList.toggle('bad', !ok);
+  el.closest('.field-f').classList.toggle('bad', !ok);
   el.setAttribute('aria-invalid', ok ? 'false' : 'true');
   if (!ok) el.setAttribute('aria-describedby', eid); else el.removeAttribute('aria-describedby');
   return ok;
