@@ -197,7 +197,6 @@ html.intro-done .intro { display: none; }
 .spec figcaption { display: grid; gap: 2px; margin-top: 14px; }
 .spec b { font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
 .spec span { font-size: var(--fs-small); color: var(--muted); }
-.spec.is-case b { color: var(--lime); }
 .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; margin-top: 40px; font-size: var(--fs-small); color: var(--muted); }
 .ramp { display: inline-flex; align-items: center; gap: 10px; }
 .ramp i { width: 120px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--att-0), var(--att-1), var(--att-2), var(--att-3), var(--att-4), var(--att-5)); box-shadow: inset 0 0 0 1px var(--line); }
@@ -380,11 +379,11 @@ html.intro-done .intro { display: none; }
 .team .story { margin-top: 24px; color: var(--text-2); max-width: 30em; }
 .honors { display: grid; gap: 10px; margin-top: 32px; }
 .honors li { display: flex; align-items: center; gap: 12px; color: var(--text-2); font-size: 16px; }
-.honors li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+.honors li::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
 .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
 .people li { padding: 22px 0 28px; border-top: 1px solid var(--line-2); }
 .people b { display: block; font-weight: 500; font-size: clamp(36px, 3.6vw, 52px); line-height: 1; letter-spacing: -0.04em; }
-.people .role { display: block; margin-top: 10px; color: var(--lime); font-size: 15px; }
+.people .role { display: block; margin-top: 10px; color: var(--text-2); font-size: 15px; }
 .people p { margin-top: 6px; font-size: 15px; color: var(--text-2); }
 @media (max-width: 899px) { .team-grid { grid-template-columns: minmax(0, 1fr); } }
 

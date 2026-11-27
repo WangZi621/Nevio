@@ -1,0 +1,853 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-26T18:53:29+00:00",
+  "title": "Design System: Nevio",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Scan Black",
+        "purpose": "The page and every section; the header when solid; the intro.",
+        "canonical": "#05080A",
+        "oklch": "oklch(13.1% 0.008 232.1)",
+        "tonalRamp": [
+          "#0A0B0C",
+          "#232527",
+          "#3E4346",
+          "#5D6265",
+          "#7E8386",
+          "#A0A6A9",
+          "#C6CACB",
+          "#EEEEEF"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised Black",
+        "purpose": "One tonal step up: specimen tiles, the lens interior, the limits panel.",
+        "canonical": "#0A1013",
+        "oklch": "oklch(16.8% 0.011 229.9)",
+        "tonalRamp": [
+          "#0A0B0C",
+          "#222628",
+          "#3C4347",
+          "#5B6366",
+          "#7C8488",
+          "#9EA6AB",
+          "#C5CACC",
+          "#EDEFEF"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "purpose": "Text color at 8%: row dividers and resting inset rings.",
+        "canonical": "rgba(226, 240, 236, 0.08)",
+        "baseColor": "#E2F0EC",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202725",
+          "#394542",
+          "#586461",
+          "#798682",
+          "#9CA8A5",
+          "#C4CBC9",
+          "#EDEFEE"
+        ]
+      },
+      "line-2": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "purpose": "Text color at 15%: control rings, list tops, ruler minor ticks.",
+        "canonical": "rgba(226, 240, 236, 0.15)",
+        "baseColor": "#E2F0EC",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202725",
+          "#394542",
+          "#586461",
+          "#798682",
+          "#9CA8A5",
+          "#C4CBC9",
+          "#EDEFEE"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Instrument White",
+        "purpose": "Headings, body, figures, icon array dots.",
+        "canonical": "#EAF0EE",
+        "oklch": "oklch(95.0% 0.007 174.4)",
+        "tonalRamp": [
+          "#0A0B0B",
+          "#232625",
+          "#3E4342",
+          "#5D6361",
+          "#7E8482",
+          "#A1A6A5",
+          "#C7CAC9",
+          "#EEEFEE"
+        ]
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Secondary Grey",
+        "purpose": "Leads, descriptions, nav at rest, scan tags.",
+        "canonical": "#A5B2B0",
+        "oklch": "oklch(75.3% 0.015 185.8)",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202726",
+          "#3A4543",
+          "#586462",
+          "#798583",
+          "#9CA8A6",
+          "#C4CBCA",
+          "#EDEFEF"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Grey",
+        "purpose": "Metadata, hints, unfilled states; 5.6:1 on ground.",
+        "canonical": "#7D8A88",
+        "oklch": "oklch(62.2% 0.015 185.7)",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202726",
+          "#394543",
+          "#586462",
+          "#798584",
+          "#9BA8A6",
+          "#C3CBCA",
+          "#EDEFEF"
+        ]
+      },
+      "lime": {
+        "role": "primary",
+        "displayName": "Signal Lime",
+        "purpose": "The one color that acts or is live: actions, focus, selection, scan line, ruler mark, current step, lead evidence figure.",
+        "canonical": "#D7F25A",
+        "oklch": "oklch(91.3% 0.176 118.6)",
+        "tonalRamp": [
+          "#0A0D00",
+          "#222900",
+          "#3E4800",
+          "#5B6900",
+          "#7A8D00",
+          "#9BB200",
+          "#C2D289",
+          "#ECF1DE"
+        ]
+      },
+      "lime-hi": {
+        "role": "primary",
+        "displayName": "Lime Lift",
+        "purpose": "Primary button hover.",
+        "canonical": "#E6FA86",
+        "oklch": "oklch(94.6% 0.143 117.3)",
+        "tonalRamp": [
+          "#0A0D00",
+          "#232900",
+          "#3F4700",
+          "#5D6900",
+          "#7D8C00",
+          "#9FB040",
+          "#C5D096",
+          "#EDF1E1"
+        ]
+      },
+      "lime-ink": {
+        "role": "primary",
+        "displayName": "Lime Ink",
+        "purpose": "Text and marks on lime.",
+        "canonical": "#10160A",
+        "oklch": "oklch(19.0% 0.025 130.1)",
+        "tonalRamp": [
+          "#0A0C09",
+          "#23271F",
+          "#3E4537",
+          "#5D6456",
+          "#7D8676",
+          "#A0A899",
+          "#C6CBC2",
+          "#EEEFEC"
+        ]
+      },
+      "teal": {
+        "role": "secondary",
+        "displayName": "Scan Teal",
+        "purpose": "Scan material: lit speckle, cross-sections, specimen tint, 17-number bars, ASCII footer.",
+        "canonical": "#2FE0C6",
+        "oklch": "oklch(81.6% 0.140 179.8)",
+        "tonalRamp": [
+          "#000F0C",
+          "#002C26",
+          "#004E43",
+          "#007163",
+          "#009785",
+          "#00BFA8",
+          "#90DACB",
+          "#E1F3EF"
+        ]
+      },
+      "teal-deep": {
+        "role": "secondary",
+        "displayName": "Deep Scan Teal",
+        "purpose": "Dark end of the scan material; no-WebGL fallback band.",
+        "canonical": "#0E4A4F",
+        "oklch": "oklch(37.5% 0.058 203.4)",
+        "tonalRamp": [
+          "#050D0E",
+          "#0C2A2D",
+          "#104B50",
+          "#346B70",
+          "#568D92",
+          "#7BB0B5",
+          "#B2D0D3",
+          "#E8F0F1"
+        ]
+      },
+      "amber": {
+        "role": "tertiary",
+        "displayName": "Surface Amber",
+        "purpose": "The reflective skin surface line in the scan. Scan material only.",
+        "canonical": "#FFB648",
+        "oklch": "oklch(82.6% 0.148 73.8)",
+        "tonalRamp": [
+          "#130900",
+          "#352000",
+          "#5B3A00",
+          "#845600",
+          "#B07400",
+          "#D99526",
+          "#EAC28E",
+          "#F7EDDF"
+        ]
+      },
+      "att-0": {
+        "role": "attention",
+        "displayName": "Deep Field",
+        "purpose": "Attention ramp stop 0 (lowest response).",
+        "canonical": "#0B1C33",
+        "oklch": "oklch(22.6% 0.051 256.5)",
+        "tonalRamp": [
+          "#080B10",
+          "#1B2634",
+          "#30435D",
+          "#4F637E",
+          "#6F84A1",
+          "#92A7C4",
+          "#BECADC",
+          "#EBEFF3"
+        ]
+      },
+      "att-1": {
+        "role": "attention",
+        "displayName": "Cold Response",
+        "purpose": "Attention ramp stop 1.",
+        "canonical": "#145E78",
+        "oklch": "oklch(45.1% 0.080 227.2)",
+        "tonalRamp": [
+          "#040D11",
+          "#022937",
+          "#004960",
+          "#246A84",
+          "#498CA8",
+          "#6FAFCB",
+          "#ACD0E0",
+          "#E7F0F4"
+        ]
+      },
+      "att-2": {
+        "role": "attention",
+        "displayName": "Teal Response",
+        "purpose": "Attention ramp stop 2.",
+        "canonical": "#22B5A0",
+        "oklch": "oklch(69.6% 0.120 180.1)",
+        "tonalRamp": [
+          "#000F0C",
+          "#002C26",
+          "#004E43",
+          "#007163",
+          "#009785",
+          "#3BBCA8",
+          "#9AD8CB",
+          "#E3F2EF"
+        ]
+      },
+      "att-3": {
+        "role": "attention",
+        "displayName": "Green Response",
+        "purpose": "Attention ramp stop 3.",
+        "canonical": "#7DD66A",
+        "oklch": "oklch(79.6% 0.168 140.2)",
+        "tonalRamp": [
+          "#030F02",
+          "#072E00",
+          "#135000",
+          "#1F7500",
+          "#41992C",
+          "#69BD57",
+          "#A9D99F",
+          "#E6F3E4"
+        ]
+      },
+      "att-4": {
+        "role": "attention",
+        "displayName": "Lime Response",
+        "purpose": "Attention ramp stop 4; shares the lime value on purpose.",
+        "canonical": "#D7F25A",
+        "oklch": "oklch(91.3% 0.176 118.6)",
+        "tonalRamp": [
+          "#0A0D00",
+          "#222900",
+          "#3E4800",
+          "#5B6900",
+          "#7A8D00",
+          "#9BB200",
+          "#C2D289",
+          "#ECF1DE"
+        ]
+      },
+      "att-5": {
+        "role": "attention",
+        "displayName": "Bone Peak",
+        "purpose": "Attention ramp stop 5 (highest response).",
+        "canonical": "#FFFBD6",
+        "oklch": "oklch(98.2% 0.048 102.2)",
+        "tonalRamp": [
+          "#0C0B06",
+          "#282614",
+          "#474324",
+          "#666342",
+          "#888462",
+          "#AAA785",
+          "#CCCAB7",
+          "#EFEFE9"
+        ]
+      },
+      "urgent": {
+        "role": "triage",
+        "displayName": "Urgent Coral",
+        "purpose": "Refer urgently, its leading score fill, form errors, failed send. Always with its words.",
+        "canonical": "#FF6B5E",
+        "oklch": "oklch(70.9% 0.183 27.7)",
+        "tonalRamp": [
+          "#1A0403",
+          "#4D0002",
+          "#810006",
+          "#B21E1C",
+          "#DA493F",
+          "#FF7366",
+          "#FFB3A9",
+          "#FFE9E5"
+        ]
+      },
+      "review": {
+        "role": "triage",
+        "displayName": "Review Amber",
+        "purpose": "Refer for review, its leading score fill, the probably-sent state. Always with its words.",
+        "canonical": "#F5B342",
+        "oklch": "oklch(80.9% 0.146 77.0)",
+        "tonalRamp": [
+          "#120900",
+          "#342100",
+          "#593B00",
+          "#825800",
+          "#AC7600",
+          "#D69827",
+          "#E7C38E",
+          "#F7EDDF"
+        ]
+      },
+      "routine": {
+        "role": "triage",
+        "displayName": "Routine Green",
+        "purpose": "Routine follow-up and the sent confirmation. Always with its words.",
+        "canonical": "#4CC9A0",
+        "oklch": "oklch(75.5% 0.126 167.9)",
+        "tonalRamp": [
+          "#000F09",
+          "#002D20",
+          "#004F3A",
+          "#007356",
+          "#009974",
+          "#46BD96",
+          "#9DD8C0",
+          "#E4F3EC"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only. clamp(40px, 11.4vw, 56px) at line height 1 on phones."
+      },
+      "display-statement": {
+        "displayName": "Display statement",
+        "purpose": "The privacy statement; words come into focus with scroll."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Evidence counts; the denominator in muted grey."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings; clamp(34px, 3vw, 46px) inside the pinned case scene."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Metric values. Siblings: team names clamp(36px, 3.6vw, 52px), facts and score values 32px (26px pinned)."
+      },
+      "verdict": {
+        "displayName": "Verdict",
+        "purpose": "The triage suggestion, in its triage color."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Step titles, panel and FAQ headings."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Paragraph under a heading, secondary grey, max about 34em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text; tabular figures are on page-wide."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "All buttons."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Header links; field labels use the same size at 500."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Metadata, legends, help text in muted grey."
+      },
+      "annotation": {
+        "displayName": "Annotation",
+        "purpose": "Scan tags, ruler readout, band notes; 13px for the cutoff note and keycaps."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Lowercase \"nevio\" beside the mark; the only 600 weight."
+      }
+    },
+    "scanMaterial": {
+      "shaderLut": [
+        {
+          "at": 0.0,
+          "value": "#05080A"
+        },
+        {
+          "at": 0.22,
+          "value": "#08282C"
+        },
+        {
+          "at": 0.45,
+          "value": "#128C80"
+        },
+        {
+          "at": 0.62,
+          "value": "#2FE0C6"
+        },
+        {
+          "at": 0.8,
+          "value": "#FFB648"
+        },
+        {
+          "at": 1.0,
+          "value": "#FFF6E4"
+        }
+      ],
+      "specimenLut": [
+        {
+          "at": 0.0,
+          "value": "#05080A"
+        },
+        {
+          "at": 0.3,
+          "value": "#08282C"
+        },
+        {
+          "at": 0.6,
+          "value": "#128C80"
+        },
+        {
+          "at": 0.85,
+          "value": "#2FE0C6"
+        },
+        {
+          "at": 1.0,
+          "value": "#FFD696"
+        }
+      ],
+      "attentionRamp": [
+        {
+          "at": 0.0,
+          "token": "att-0"
+        },
+        {
+          "at": 0.2,
+          "token": "att-1"
+        },
+        {
+          "at": 0.42,
+          "token": "att-2"
+        },
+        {
+          "at": 0.62,
+          "token": "att-3"
+        },
+        {
+          "at": 0.82,
+          "token": "att-4"
+        },
+        {
+          "at": 1.0,
+          "token": "att-5"
+        }
+      ],
+      "restingSpeckle": "#D9EBE6 at very low alpha, mixing to teal within about 230px of the pointer (plus 220px with the scan easter egg)",
+      "note": "Literal copies of these values live in the fragment shader, the RAMP array, scanLut, the ASCII footer and the inline logo SVGs; change them with the tokens."
+    },
+    "shadows": [
+      {
+        "name": "hairline-ring",
+        "value": "inset 0 0 0 1px rgba(226, 240, 236, 0.08)",
+        "purpose": "Resting edge of tiles, panels, tags, strip cells."
+      },
+      {
+        "name": "hairline-ring-strong",
+        "value": "inset 0 0 0 1px rgba(226, 240, 236, 0.15)",
+        "purpose": "Edge of controls (ghost button, switch, fields, menu button)."
+      },
+      {
+        "name": "device-drop",
+        "value": "inset 0 0 0 1px rgba(226, 240, 236, 0.15), 0 40px 80px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.6)",
+        "purpose": "The phone."
+      },
+      {
+        "name": "card-drop",
+        "value": "inset 0 0 0 1px rgba(226, 240, 236, 0.15), 0 40px 80px -40px rgba(0, 0, 0, 0.8)",
+        "purpose": "The pilot form card."
+      },
+      {
+        "name": "overlay-drop",
+        "value": "inset 0 0 0 1px rgba(226, 240, 236, 0.15), 0 24px 60px -20px rgba(0, 0, 0, 0.9)",
+        "purpose": "The toast (with 10px backdrop blur)."
+      },
+      {
+        "name": "header-glass",
+        "value": "background rgba(5, 8, 10, 0.9); backdrop-filter saturate(140%) blur(12px); border-bottom 1px hairline",
+        "purpose": "Header after 24px of scroll and when the mobile menu is open."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Arrivals and settles: hero entrance, develop mask, switch knob, toast, menu, verdict blur-in, phone screens, icon array dots."
+      },
+      {
+        "name": "ease-io",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Values and sweeps between two known states: score fills, 17-number bars, lens sweep, intro reveal and line; JS number tweens use the matching cubic in-out."
+      },
+      {
+        "name": "ease-intro-move",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "One-off: the intro lockup flying into the header."
+      },
+      {
+        "name": "duration-press",
+        "value": "120ms",
+        "purpose": "Button press (translateY 1px, scale 0.99); menu close; verdict blur-out."
+      },
+      {
+        "name": "duration-hover",
+        "value": "150-160ms",
+        "purpose": "Color and ring changes on hover."
+      },
+      {
+        "name": "duration-state",
+        "value": "200-240ms",
+        "purpose": "Switch, menu open, toast in, FAQ disclosure, tick fills."
+      },
+      {
+        "name": "duration-develop",
+        "value": "520ms",
+        "purpose": "Specimen develop mask; hover scramble."
+      },
+      {
+        "name": "duration-value",
+        "value": "560-640ms",
+        "purpose": "17-number bars (560), score fills and number tweens (600), lens sweep (640)."
+      },
+      {
+        "name": "duration-entrance",
+        "value": "700ms",
+        "purpose": "Hero text rise 18px out of 6px blur, 90ms stagger."
+      },
+      {
+        "name": "duration-intro",
+        "value": "900ms reveal, 720ms flight",
+        "purpose": "Once per visit; skipped by any input and by reduced motion."
+      },
+      {
+        "name": "duration-count",
+        "value": "1400ms",
+        "purpose": "Evidence counters from 0."
+      },
+      {
+        "name": "scan-approach",
+        "value": "per-frame exponential approach, frame-rate normalized (pointer 0.2, light 0.1, scan line 0.12, intro sweep 0.045, bloom about 0.08)",
+        "purpose": "The WebGL scan eases toward targets and stops drawing when settled; reduced motion jumps."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "400px",
+        "purpose": "Header CTA and menu button tighten."
+      },
+      {
+        "name": "form-1col",
+        "value": "520px",
+        "purpose": "Form fields stack; submit goes full width."
+      },
+      {
+        "name": "intro-sm",
+        "value": "640px",
+        "purpose": "Intro lockup shrinks."
+      },
+      {
+        "name": "sm",
+        "value": "760px",
+        "purpose": "Hero type steps down, actions share width, privacy facts stack, scan rest point moves right."
+      },
+      {
+        "name": "nav",
+        "value": "860px",
+        "purpose": "Nav collapses to Menu; specimens two columns; evidence stacks; footer one column."
+      },
+      {
+        "name": "md",
+        "value": "900px",
+        "purpose": "Section heads, team and pilot stack."
+      },
+      {
+        "name": "pinned",
+        "value": "960px wide and 700px tall",
+        "purpose": "Case and how-it-works scenes pin; below 960 they stack."
+      },
+      {
+        "name": "pinned-short",
+        "value": "max-height 1000px / 800px",
+        "purpose": "Case lead shortens below 1000; 17-number strip hides below 800."
+      },
+      {
+        "name": "ruler",
+        "value": "1180px",
+        "purpose": "Depth ruler appears."
+      },
+      {
+        "name": "ruler-readout",
+        "value": "1560px",
+        "purpose": "Ruler millimetre readout appears."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Lime action key for requesting a pilot and sending the form.",
+      "html": "<a class=\"ds-btn-led\" href=\"#\">Request a free pilot</a>",
+      "css": ".ds-btn-led { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border: 0; border-radius: var(--radius, 6px); background: var(--lime, #D7F25A); color: var(--lime-ink, #10160A); font: 500 16px/1 var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-led:hover { background: var(--lime-hi, #E6FA86); } .ds-btn-led:focus-visible { outline: 2px solid var(--lime, #D7F25A); outline-offset: 3px; } .ds-btn-led:active { transform: translateY(1px) scale(0.99); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary key: a faint wash with a strong hairline ring.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">See a real case</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 24px; border: 0; border-radius: var(--radius, 6px); background: rgba(226, 240, 236, 0.03); box-shadow: inset 0 0 0 1px var(--line-2, rgba(226, 240, 236, 0.15)); color: var(--text, #EAF0EE); font: 500 16px/1 var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); text-decoration: none; cursor: pointer; transition: background-color 160ms ease, box-shadow 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-ghost:hover { background: rgba(226, 240, 236, 0.07); box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.28); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--lime, #D7F25A); outline-offset: 3px; } .ds-btn-ghost:active { transform: translateY(1px) scale(0.99); }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Mark and lowercase wordmark, five quiet links, lime call to action.",
+      "html": "<header class=\"ds-head\"><a class=\"ds-brand\" href=\"#\"><svg viewBox=\"0 0 48 48\" width=\"26\" height=\"26\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"18.5\" fill=\"none\" stroke=\"#EAF0EE\" stroke-width=\"3\"/><path d=\"M10 28.5h28\" stroke=\"#D7F25A\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"24\" cy=\"19.5\" r=\"4\" fill=\"#EAF0EE\"/></svg><span>nevio</span></a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"true\">The case</a><a href=\"#\">How it works</a><a href=\"#\">Evidence</a><a href=\"#\">Team</a><a href=\"#\">FAQ</a></nav><a class=\"ds-head-cta\" href=\"#\">Request a pilot</a></header>",
+      "css": ".ds-head { display: flex; align-items: center; gap: 24px; height: 72px; padding: 0 24px; background: rgba(5, 8, 10, 0.9); border-bottom: 1px solid var(--line, rgba(226, 240, 236, 0.08)); font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); } .ds-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text, #EAF0EE); text-decoration: none; } .ds-brand span { font-weight: 600; font-size: 23px; letter-spacing: -0.03em; } .ds-nav { display: flex; gap: 2px; margin-left: auto; } .ds-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--text-2, #A5B2B0); text-decoration: none; font-size: 15px; transition: color 150ms ease; } .ds-nav a:hover, .ds-nav a[aria-current=\"true\"] { color: var(--text, #EAF0EE); } .ds-nav a:focus-visible, .ds-head-cta:focus-visible { outline: 2px solid var(--lime, #D7F25A); outline-offset: 3px; border-radius: 2px; } .ds-head-cta { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: var(--radius, 6px); background: var(--lime, #D7F25A); color: var(--lime-ink, #10160A); font-weight: 500; font-size: 15px; text-decoration: none; transition: background-color 160ms ease; } .ds-head-cta:hover { background: var(--lime-hi, #E6FA86); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Pilot form field: wash, hairline ring, lime focus, urgent error with words.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-f1\">Clinic or organization</label><input id=\"ds-f1\" placeholder=\"\"><span class=\"ds-err\">Enter your clinic or organization.</span></div>",
+      "css": ".ds-field { display: grid; gap: 8px; font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); color: var(--text, #EAF0EE); max-width: 420px; } .ds-field label { font-weight: 500; font-size: 15px; } .ds-field input { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius, 6px); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2, rgba(226, 240, 236, 0.15)); color: inherit; font: 400 16px var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); transition: box-shadow 150ms ease, background-color 150ms ease; } .ds-field input:hover { box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.26); } .ds-field input:focus-visible { outline: 2px solid var(--lime, #D7F25A); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--lime, #D7F25A); background: rgba(226, 240, 236, 0.06); } .ds-err { font-size: 14px; color: var(--urgent, #FF6B5E); }"
+    },
+    {
+      "name": "Scan Tag",
+      "kind": "chip",
+      "refersTo": "scan-tag",
+      "description": "Annotation chip placed on a drawn scan; never above a heading.",
+      "html": "<span class=\"ds-tag\">Surface</span> <span class=\"ds-tag\">Nothing crosses this line</span>",
+      "css": ".ds-tag { display: inline-block; padding: 4px 9px; border-radius: 4px; background: rgba(5, 8, 10, 0.72); box-shadow: inset 0 0 0 1px var(--line, rgba(226, 240, 236, 0.08)); font: 400 12px var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); color: var(--text-2, #A5B2B0); }"
+    },
+    {
+      "name": "Limits Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Raised panel with one job, edged by a hairline ring.",
+      "html": "<div class=\"ds-panel\"><h3>What these numbers don't show</h3><ul><li>One held-out split, not a clinical study.</li><li>A fully separate test set comes next.</li></ul></div>",
+      "css": ".ds-panel { max-width: 460px; padding: 28px 30px; border-radius: 8px; background: var(--raised, #0A1013); box-shadow: inset 0 0 0 1px var(--line, rgba(226, 240, 236, 0.08)); font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); color: var(--text, #EAF0EE); } .ds-panel h3 { margin: 0; font-weight: 500; font-size: 22px; line-height: 1.25; letter-spacing: -0.015em; } .ds-panel ul { display: grid; gap: 14px; margin: 18px 0 0; padding: 0; list-style: none; } .ds-panel li { position: relative; padding-left: 20px; color: var(--text-2, #A5B2B0); } .ds-panel li::before { content: \"\"; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--muted, #7D8A88); }"
+    },
+    {
+      "name": "Model's View Switch",
+      "kind": "custom",
+      "refersTo": "switch",
+      "description": "Toggle with a squared track and knob; lime when on.",
+      "html": "<button class=\"ds-switch\" type=\"button\" aria-pressed=\"true\" onclick=\"this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')\"><i></i>Model's view</button>",
+      "css": ".ds-switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 8px; border: 0; border-radius: var(--radius, 6px); background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2, rgba(226, 240, 236, 0.15)); color: var(--text, #EAF0EE); font: 400 15px var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: background-color 160ms ease; } .ds-switch:hover { background: rgba(226, 240, 236, 0.09); } .ds-switch:focus-visible { outline: 2px solid var(--lime, #D7F25A); outline-offset: 3px; } .ds-switch i { position: relative; width: 34px; height: 20px; border-radius: 4px; background: #26302F; transition: background-color 200ms ease; } .ds-switch i::after { content: \"\"; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 2px; background: var(--text, #EAF0EE); transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-switch[aria-pressed=\"true\"] i { background: var(--lime, #D7F25A); } .ds-switch[aria-pressed=\"true\"] i::after { transform: translateX(14px); background: var(--lime-ink, #10160A); }"
+    },
+    {
+      "name": "Result Readout",
+      "kind": "custom",
+      "refersTo": "score-track",
+      "description": "Score tracks with the cutoff tick and the verdict; only the leading score takes the triage color.",
+      "html": "<div class=\"ds-readout\"><div class=\"ds-score\"><span>Melanoma</span><b>82%</b><span class=\"ds-track\"><span class=\"ds-fill ds-urgent\" style=\"--v:0.82\"></span><span class=\"ds-cut\"></span></span></div><div class=\"ds-score\"><span>Benign</span><b>17%</b><span class=\"ds-track\"><span class=\"ds-fill\" style=\"--v:0.17\"></span></span></div><div class=\"ds-verdict\"><span class=\"ds-shape\"></span><p><strong>Refer urgently</strong><span>Melanoma 82%, over the cutoff.</span></p></div></div>",
+      "css": ".ds-readout { display: grid; gap: 16px; max-width: 520px; font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); color: var(--text, #EAF0EE); font-variant-numeric: tabular-nums; } .ds-score { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; } .ds-score b { font-weight: 500; font-size: 32px; letter-spacing: -0.03em; } .ds-track { grid-column: 1 / -1; position: relative; height: 6px; border-radius: 3px; background: rgba(226, 240, 236, 0.06); } .ds-fill { position: absolute; inset: 0; border-radius: 3px; background: rgba(226, 240, 236, 0.28); transform-origin: left center; transform: scaleX(var(--v)); transition: transform 600ms cubic-bezier(0.65, 0, 0.35, 1); } .ds-fill.ds-urgent { background: var(--urgent, #FF6B5E); } .ds-cut { position: absolute; left: 27.8%; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--text, #EAF0EE); } .ds-verdict { display: flex; align-items: flex-start; gap: 14px; padding-top: 22px; border-top: 1px solid var(--line-2, rgba(226, 240, 236, 0.15)); } .ds-verdict p { margin: 0; } .ds-shape { flex: none; width: 12px; height: 12px; margin-top: 14px; border-radius: 50%; background: var(--urgent, #FF6B5E); } .ds-verdict strong { display: block; font-weight: 500; font-size: clamp(30px, 2.6vw, 40px); line-height: 1.1; letter-spacing: -0.03em; color: var(--urgent, #FF6B5E); } .ds-verdict p > span { display: block; margin-top: 6px; color: var(--text-2, #A5B2B0); }"
+    },
+    {
+      "name": "17-Number Strip",
+      "kind": "custom",
+      "refersTo": "vector-cell",
+      "description": "The patient-branch inputs as 17 cells; changed cells ring and fill in lime.",
+      "html": "<div class=\"ds-vec\"><p><span>The 17 numbers the model reads</span><span>Blank details use neutral defaults</span></p><div class=\"ds-cells\"><i style=\"--v:0\"></i><i style=\"--v:0.39\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0\" class=\"hit\"></i><i style=\"--v:1\" class=\"hit\"></i><i style=\"--v:0\"></i><i style=\"--v:1\" class=\"hit\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0\"></i><i style=\"--v:0.12\"></i><i style=\"--v:0.5\"></i><i style=\"--v:1\"></i></div></div>",
+      "css": ".ds-vec { display: grid; gap: 8px; max-width: 640px; font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); } .ds-vec p { display: flex; justify-content: space-between; gap: 16px; margin: 0; font-size: 14px; color: var(--muted, #7D8A88); } .ds-vec p span:first-child { color: var(--text-2, #A5B2B0); } .ds-cells { display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: 3px; height: 26px; } .ds-cells i { position: relative; border-radius: 2px; background: rgba(226, 240, 236, 0.03); box-shadow: inset 0 0 0 1px var(--line, rgba(226, 240, 236, 0.08)); } .ds-cells i::after { content: \"\"; position: absolute; inset: 3px; border-radius: 1px; background: var(--teal, #2FE0C6); transform-origin: 50% 100%; transform: scaleY(var(--v, 0)); transition: transform 560ms cubic-bezier(0.65, 0, 0.35, 1); } .ds-cells i.hit { box-shadow: inset 0 0 0 1px var(--lime, #D7F25A); } .ds-cells i.hit::after { background: var(--lime, #D7F25A); } .ds-cells i:hover { box-shadow: inset 0 0 0 1px var(--line-2, rgba(226, 240, 236, 0.15)); }"
+    },
+    {
+      "name": "Icon Array",
+      "kind": "custom",
+      "refersTo": "array-dot",
+      "description": "Natural-frequency grid: filled dots for hits, 1.5px rings for misses.",
+      "html": "<div class=\"ds-array-wrap\"><p class=\"ds-freq\">180 <span>of 200</span></p><div class=\"ds-array\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i><i class=\"miss\"></i></div></div>",
+      "css": ".ds-array-wrap { font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); } .ds-freq { margin: 0 0 24px; font-weight: 500; font-size: 72px; line-height: 0.92; letter-spacing: -0.04em; color: var(--lime, #D7F25A); font-variant-numeric: tabular-nums; } .ds-freq span { color: var(--muted, #7D8A88); } .ds-array { display: grid; grid-template-columns: repeat(20, 1fr); gap: 5px; max-width: 440px; } .ds-array i { aspect-ratio: 1; border-radius: 50%; background: var(--text, #EAF0EE); } .ds-array i.miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted, #7D8A88); }"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "Easter-egg message, bottom left, glass over the scan.",
+      "html": "<div class=\"ds-toast\" role=\"status\"><b>Wide scan on</b>Your pointer lights a wider patch of the page. Type scan again to narrow it.</div>",
+      "css": ".ds-toast { width: min(440px, 100%); padding: 18px 20px; border-radius: 10px; background: rgba(10, 16, 19, 0.94); box-shadow: inset 0 0 0 1px var(--line-2, rgba(226, 240, 236, 0.15)), 0 24px 60px -20px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font: 400 15px/1.6 var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); color: var(--text-2, #A5B2B0); } .ds-toast b { display: block; margin-bottom: 4px; font-weight: 500; font-size: 18px; color: var(--text, #EAF0EE); }"
+    },
+    {
+      "name": "Depth Ruler",
+      "kind": "custom",
+      "refersTo": "ruler-mark",
+      "description": "Signature: a millimetre scale at the left edge whose lime mark follows scroll as depth.",
+      "html": "<div class=\"ds-ruler\" style=\"--p:0.36\"><div class=\"ds-scale\"></div><div class=\"ds-mark\"><i></i><span>0.72 mm</span></div></div>",
+      "css": ".ds-ruler { position: relative; width: 120px; height: 320px; container-type: size; font-family: var(--font, \"Host Grotesk\", ui-sans-serif, system-ui, sans-serif); } .ds-scale { position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: repeating-linear-gradient(to bottom, var(--line-2, rgba(226, 240, 236, 0.15)) 0 1px, transparent 1px 5%); } .ds-scale::before { content: \"\"; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: repeating-linear-gradient(to bottom, rgba(226, 240, 236, 0.32) 0 1px, transparent 1px 25%); } .ds-mark { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; transform: translateY(calc(var(--p, 0) * (100cqh - 1px))); transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-ruler:hover .ds-mark { transform: translateY(calc(0.8 * (100cqh - 1px))); } .ds-mark i { width: 18px; height: 2px; background: var(--lime, #D7F25A); } .ds-mark span { font-size: 12px; color: var(--text-2, #A5B2B0); white-space: nowrap; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lit Cross-Section",
+    "overview": "The page is an instrument, not a brochure. Everything sits on one scan-black ground, and the only light in the room is the visitor's pointer: where it moves, a faint speckle field lights up in teal; in the hero, an illustrated cross-section of skin is acquired left of a lime scan line that follows it. Below the fold the light stops being illustration and becomes evidence. Real biopsy-confirmed specimens are shown first as the research model sees them, its own feature maps on the attention ramp, and develop into the photo where the pointer looks. Scrolling reads as depth: a millimetre ruler at the left edge goes from the surface down to 2 mm.\n\nDensity is low and deliberate. Big Host Grotesk headlines with tight tracking, a lead paragraph, then one instrument per section: the specimen grid, the case lens and its readout, the phone, the icon arrays, the statement over the device edge, the form. Sections are separated by space and hairlines, never by a change of ground. Color is rationed by role: lime acts, teal and amber are scan material, the attention ramp is the model's, and the triage colors speak only when a result does.\n\nThe world refuses two things by name: the medical template (white ground, clinical blue, stock clinicians) and the generic AI page (purple glow, rows of equal cards). Light here is always caused by something, the pointer or the model, and nothing moves on its own after the intro.",
+    "keyCharacteristics": [
+      "One scan-black ground on every section; depth from light, tonal steps and hairlines, not from shadows or glows.",
+      "The pointer is the light: the WebGL scan layer is still until the pointer lights it.",
+      "Real model internals as imagery: 12 x 12 feature maps on a six-stop attention ramp, cropped and scaled exactly like the photo they sit on.",
+      "Lime is the one color that acts; triage colors appear only with their words.",
+      "Host Grotesk alone, 400 and 500, tight display tracking, tabular figures everywhere.",
+      "6 px control corners, 4 px tags and tiles, circles only for lenses and dots.",
+      "One authored motion moment (the intro and the hero sweep); everything after that answers the pointer, the scroll or a new value."
+    ],
+    "rules": [
+      {
+        "name": "The One Light Rule",
+        "body": "Lime marks what acts or what is live right now. It is never a second brand color, never a large fill, and never emphasis on static text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Words Attached Rule",
+        "body": "Urgent, review and routine appear only where a result or a status is stated, always beside the words that name it. Only the leading score's fill takes the verdict's color; the others stay neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Same Ground Rule",
+        "body": "Every section sits on scan-black. The cross-section bands are light drawn on that ground, not colored panels.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mirror Rule",
+        "body": "The :root tokens are normative, but the WebGL shader, the attention ramp array, the specimen scan LUT, the ASCII footer and the inline logo marks carry literal copies of these values. Change a token and its copies together.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Host Grotesk only. Hierarchy comes from size, weight (400 against 500) and tracking, never from a second face, italics or all caps.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tight at Scale Rule",
+        "body": "Tracking tightens as size grows: -0.015em at 22 px, -0.03em around 32 to 40 px, -0.035 to -0.04em at headline and display sizes. Body text is never tracked.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "Every heading, label, button and tag is in sentence case with no period on headings, no eyebrow above a heading, and no arrow after a link.",
+        "section": "typography"
+      },
+      {
+        "name": "The Asymmetric Pair Rule",
+        "body": "A heading or text column paired with an instrument is asymmetric (5 : 6, 6 : 5 or 7 : 5). Equal columns are only for like items compared side by side (the two evidence grids, the three privacy facts, the team, the specimens), and they are never boxed cards.",
+        "section": "layout"
+      },
+      {
+        "name": "The Light Is Depth Rule",
+        "body": "Things come forward because they are lit, not because they cast shadows. No colored shadow, no glow, no text shadow; drop shadows are black and only under the phone, the form card and the toast.",
+        "section": "elevation"
+      },
+      {
+        "name": "The 6 px Rule",
+        "body": "Every pressable thing has 6 px corners. No pills, no cut corners, nothing above 10 px except the phone's physical body.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** keep every section on scan-black (#05080A) and separate sections with section padding (clamp 120 to 176 px) and hairlines.",
+      "**Do** reserve lime for what acts or is live: buttons, focus, selection, link hover, the scan line, the ruler mark, the current step, given ticks, changed cells and the lead evidence figure.",
+      "**Do** put urgent, review and routine only beside the words they stand for, and give the verdict a shape that differs by tone (solid dot, half-filled ring).",
+      "**Do** draw edges as 1 px inset rings at 8% or 15% of the text color, and use raised black (#0A1013) for wells and panels.",
+      "**Do** label any drawn scan that is not data as an illustration, and say plainly when a layer is computed by the research model.",
+      "**Do** crop and scale each model map exactly like the photo under it, normalized per photo, and recompute the maps if the model changes.",
+      "**Do** set everything in Host Grotesk at 400 and 500 (600 only for the wordmark), sentence case, tabular figures, tightening tracking as size grows.",
+      "**Do** keep the scan still until the pointer lights it, and redraw only on pointer, scroll and resize.",
+      "**Do** give every motion a reason (acquire, develop, rescore, settle) and a reduced-motion state that shows the final frame.",
+      "**Do** keep pressable targets at least 44 px tall on touch layouts, and keep muted text at or above 4.5:1 on the surface it sits on."
+    ],
+    "donts": [
+      "**Don't** use violet, lavender, indigo or purple anywhere in the system; real photos keep their own color.",
+      "**Don't** change a section's background color or add colored bands; the cross-sections are light drawn on the same ground.",
+      "**Don't** set labels in all caps or letterspaced caps, and don't put eyebrow labels over headings.",
+      "**Don't** use italics or any monospace face; the ASCII footer draws Host Grotesk characters on a grid.",
+      "**Don't** add glows as decoration: no colored box-shadow halos, text shadows, neon outlines or blurred color blobs. Light appears only where the pointer is or where the model responds.",
+      "**Don't** use lime as a second brand color, a large fill, or emphasis on static text such as role labels or bullets.",
+      "**Don't** use teal, amber or the attention ramp for UI chrome; they are scan material and model data.",
+      "**Don't** let anything move on its own after the intro: no loops, drifting backgrounds, autoplay or pulsing elements (the spinner while the form sends is the one exception).",
+      "**Don't** round controls into pills, cut corners, or use hard offset shadows; nothing above 10 px except the phone's physical body.",
+      "**Don't** put a lesion photo in the first viewport; the hero shows only the illustrated cross-section.",
+      "**Don't** build rows of boxed, equal cards or a white, clinical-blue medical template look."
+    ]
+  }
+}

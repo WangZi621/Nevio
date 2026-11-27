@@ -459,8 +459,8 @@ One fixed WebGL canvas behind all content, pointer-events off, device pixel rati
 
 ### Model maps
 The colored layers on the specimens and the case are the research model's own final 12 x 12 feature maps, weighted by its attention module, one per photo. They are not illustrations and are never retouched.
-- **Scaling:** each map is normalized to its own photo (per-photo percentile scaling, a light 3 x 3 smoothing, then divided by its maximum), so a ramp position means "high for this photo", not an absolute score.
-- **Cropping:** the page shows the centre square of each photo, so each map is cropped by the same offsets before it is sampled, then interpolated smoothly and feathered over the outer 8% of the square.
+- **Scaling:** each map is normalized to its own photo (per-photo percentile scaling, a 5 x 5 binomial smoothing, then divided by its maximum), so a ramp position means "high for this photo", not an absolute score.
+- **Cropping:** the page shows the centre square of each photo, so each map is cropped by the same offsets before it is sampled, then sampled bilinearly and feathered over the outer 12% of the square.
 - **Specimen tiles:** the photo's own luminance, contrast-stretched to its range, is drawn on the scan LUT as teal speckle, and the attention ramp is blended over it where the response passes 30%. The pointer develops the real photo through a radial mask (124 px, 36 px feather, 520 ms); on touch the tile in the middle of the screen opens to 460 px, and a tap toggles it.
 - **Case lens:** the photo is shown dimmed and mostly desaturated, and the map is screen-blended over it as light on the attention ramp with thin lime contour lines at 45, 65 and 85% response. The Model's view switch removes it and returns the photo to full color. The page states that this layer comes from the photo alone and does not change between steps.
 - **Legend:** a 120 by 6 px ramp key with a plain label ("Where the model's image branch responds most", "Low to high response").
