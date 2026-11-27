@@ -14,10 +14,10 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#05080A">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="dark light">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/host-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
+<script>try{var t=localStorage.getItem('nevio-theme');if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
 <style>
 @font-face { font-family: "Host Grotesk"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("assets/fonts/host-grotesk-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -50,6 +50,21 @@
   --urgent: #FF6B5E;
   --review: #F5B342;
   --routine: #4CC9A0;
+  --accent-text: #D7F25A;
+  --focus: #D7F25A;
+  --btn-ring: transparent;
+  --head-bg: rgba(5, 8, 10, 0.9);
+  --menu-bg: rgba(5, 8, 10, 0.97);
+  --tag-bg: rgba(5, 8, 10, 0.72);
+  --toast-bg: rgba(10, 16, 19, 0.94);
+  --card-a: #0C1316;
+  --card-b: #091013;
+  --track-off: #26302F;
+  --option-bg: #0E161A;
+  --disabled: #2A3432;
+  --ascii: 47, 224, 198;
+  --ascii-hot: 215, 242, 90;
+  --display: #05080A;
 
   --font: "Host Grotesk", ui-sans-serif, system-ui, sans-serif;
   --fs-display: clamp(48px, 6.2vw, 92px);
@@ -66,6 +81,39 @@
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+/* Light mode: lab paper. Cool white ground, ink type, the scan printed as dark speckle,
+   lime kept as a highlighter fill on actions; figures and focus move to ink and deep olive. */
+html[data-theme="light"] {
+  --ground: #EDF1EF;
+  --raised: #FFFFFF;
+  --raised-2: #F5F7F6;
+  --line: rgba(10, 22, 20, 0.1);
+  --line-2: rgba(10, 22, 20, 0.2);
+  --text: #0A1412;
+  --text-2: #36443F;
+  --muted: #56635F;
+  --lime-hi: #CBE84A;
+  --teal: #138A7D;
+  --teal-deep: #9FD3CB;
+  --amber: #A85E00;
+  --urgent: #C0291E;
+  --review: #8F5E00;
+  --routine: #0B7A57;
+  --accent-text: #3F5A00;
+  --focus: #0A1412;
+  --btn-ring: rgba(10, 22, 20, 0.45);
+  --head-bg: rgba(237, 241, 239, 0.9);
+  --menu-bg: rgba(237, 241, 239, 0.98);
+  --tag-bg: rgba(237, 241, 239, 0.82);
+  --toast-bg: rgba(255, 255, 255, 0.95);
+  --card-a: #FFFFFF;
+  --card-b: #FAFBFA;
+  --track-off: #C9D2CF;
+  --option-bg: #FFFFFF;
+  --disabled: #C9D2CF;
+  --ascii: 19, 138, 125;
+  --ascii-hot: 63, 90, 0;
+}
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--head) + 8px); -webkit-text-size-adjust: 100%; background: var(--ground); scrollbar-color: #24302F var(--ground); }
 body { margin: 0; background: var(--ground); color: var(--text); font: 400 18px/1.6 var(--font); -webkit-font-smoothing: antialiased; text-wrap: pretty; caret-color: var(--lime); overflow-x: clip; font-variant-numeric: tabular-nums; }
@@ -75,9 +123,9 @@ p { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 a { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(226, 240, 236, 0.35); transition: text-decoration-color 150ms ease; }
-@media (hover: hover) { a:hover { text-decoration-color: var(--lime); } }
+@media (hover: hover) { a:hover { text-decoration-color: var(--accent-text); } }
 ::selection { background: var(--lime); color: var(--lime-ink); }
-:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
 .vh { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .wrap { max-width: calc(var(--max) + 2 * var(--side)); margin: 0 auto; padding-inline: var(--side); }
 .h2 { font-size: var(--fs-h2); line-height: 1.02; letter-spacing: -0.035em; }
@@ -93,7 +141,7 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 /* Buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border: 0; border-radius: var(--radius); font-weight: 500; font-size: 16px; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 120ms var(--ease); }
 .btn:active { transform: translateY(1px) scale(0.99); }
-.btn-led { background: var(--lime); color: var(--lime-ink); }
+.btn-led { background: var(--lime); color: var(--lime-ink); box-shadow: inset 0 0 0 1px var(--btn-ring); }
 .btn-ghost { background: rgba(226, 240, 236, 0.03); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
 @media (hover: hover) and (pointer: fine) {
   .btn-led:hover { background: var(--lime-hi); }
@@ -102,7 +150,7 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 
 /* Header */
 .site-head { position: fixed; inset: 0 0 auto; z-index: 40; border-bottom: 1px solid transparent; transition: background-color 300ms ease, border-color 300ms ease; }
-.site-head.is-solid, .site-head.is-open { background: rgba(5, 8, 10, 0.9); border-color: var(--line); -webkit-backdrop-filter: saturate(140%) blur(12px); backdrop-filter: saturate(140%) blur(12px); }
+.site-head.is-solid, .site-head.is-open { background: var(--head-bg); border-color: var(--line); -webkit-backdrop-filter: saturate(140%) blur(12px); backdrop-filter: saturate(140%) blur(12px); }
 .head-in { display: flex; align-items: center; gap: 24px; height: var(--head); }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text); text-decoration: none; }
 .brand svg { width: 26px; height: 26px; flex: none; overflow: visible; }
@@ -112,12 +160,20 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 @media (hover: hover) { .nav a:hover { color: var(--text); } }
 .nav a[aria-current="true"] { color: var(--text); }
 .menu-btn { display: none; }
+.theme-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border: 0; border-radius: var(--radius); background: transparent; color: var(--text-2); cursor: pointer; transition: color 150ms ease, background-color 150ms ease; }
+@media (hover: hover) { .theme-btn:hover { color: var(--text); background: rgba(127, 140, 137, 0.12); } }
+html[data-theme="light"] .theme-btn svg { transform: scaleX(-1); }
+.nav-theme { display: none; }
+@media (max-width: 860px) {
+  .theme-btn { display: none; }
+  .nav-theme { display: flex; align-items: center; min-height: 56px; padding: 0; border: 0; background: none; color: var(--text-2); font-size: 18px; text-align: left; cursor: pointer; }
+}
 .head-cta { height: 40px; padding: 0 16px; font-size: 15px; }
 @media (max-width: 860px) {
   .head-in { gap: 12px; }
   .menu-btn { display: inline-flex; align-items: center; height: 44px; margin-left: auto; padding: 0 16px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; font-weight: 500; cursor: pointer; }
   .head-cta { height: 44px; }
-  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 20px; background: rgba(5, 8, 10, 0.97); border-bottom: 1px solid var(--line); }
+  .nav { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 8px var(--side) 20px; background: var(--menu-bg); border-bottom: 1px solid var(--line); }
   .nav a { min-height: 56px; padding: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; color: var(--text); border-bottom: 1px solid var(--line); }
   .nav a:last-child { border-bottom: 0; }
   .js .nav { opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 120ms ease, transform 120ms ease, visibility 0s 120ms; }
@@ -148,7 +204,7 @@ main, .site-foot, .site-head { position: relative; z-index: 1; }
 .band { position: relative; min-height: 280px; margin-top: clamp(28px, 4vh, 48px); border-top: 1px solid var(--line); }
 .band-fallback { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 182, 72, 0.35) 0 1%, rgba(47, 224, 198, 0.22) 2% 24%, rgba(14, 74, 79, 0.35) 30%, transparent 92%); }
 html.has-gl .band-fallback { display: none; }
-.band-tag { position: absolute; z-index: 2; padding: 4px 9px; border-radius: 4px; background: rgba(5, 8, 10, 0.72); box-shadow: inset 0 0 0 1px var(--line); font-size: 12px; color: var(--text-2); }
+.band-tag { position: absolute; z-index: 2; padding: 4px 9px; border-radius: 4px; background: var(--tag-bg); box-shadow: inset 0 0 0 1px var(--line); font-size: 12px; color: var(--text-2); }
 .band-note { position: absolute; right: var(--side); bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--muted); }
 .band-note .ramp i { width: 64px; height: 4px; }
 .band-hint { position: absolute; left: var(--side); bottom: 16px; z-index: 2; font-size: 12px; color: var(--muted); }
@@ -176,7 +232,7 @@ html.intro-done .intro { display: none; }
 .intro-in { position: relative; display: flex; align-items: center; gap: 20px; transform-origin: 0 0; clip-path: inset(0 100% 0 0); }
 .intro-mark { width: 92px; height: 92px; overflow: visible; }
 .intro-word { font-weight: 600; font-size: 96px; line-height: 1; letter-spacing: -0.045em; color: var(--text); padding-bottom: 8px; }
-.intro-line { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--lime); opacity: 0; transform: translateX(-2px); }
+.intro-line { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--accent-text); opacity: 0; transform: translateX(-2px); }
 @media (max-width: 640px) { .intro-mark { width: 64px; height: 64px; } .intro-word { font-size: 64px; } .intro-in { gap: 12px; } }
 
 /* Section heads */
@@ -188,7 +244,7 @@ html.intro-done .intro { display: none; }
 .specimens { padding-top: var(--section); }
 .spec-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 20px; margin-top: 64px; }
 .spec { margin: 0; }
-.spec-view { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: var(--raised); box-shadow: 0 0 0 1px var(--line); }
+.spec-view { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: var(--display); box-shadow: 0 0 0 1px var(--line); }
 .spec-view img, .spec-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .spec-eye { --r: 0px; -webkit-mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent calc(var(--r) - 36px), #000 var(--r)); mask: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), transparent calc(var(--r) - 36px), #000 var(--r)); transition: --r 520ms var(--ease); }
 @property --r { syntax: "<length>"; inherits: false; initial-value: 0px; }
@@ -207,7 +263,7 @@ html.intro-done .intro { display: none; }
 .case-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px clamp(40px, 6vw, 104px); align-items: center; }
 .case-left { display: grid; gap: 32px; }
 .scope { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0; justify-self: center; }
-.scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; background: var(--raised); }
+.scope-clip { position: absolute; inset: 7%; border-radius: 50%; overflow: hidden; background: var(--display); }
 .scope-clip img, .scope-clip canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .scope-clip img { transform: scale(var(--zoom, 1)); filter: blur(var(--blur, 0px)); transition: filter 400ms var(--ease); }
 .scope:not(.no-eye) .scope-clip img { filter: grayscale(0.75) brightness(0.65) contrast(1.1) blur(var(--blur, 0px)); }
@@ -222,7 +278,7 @@ html.intro-done .intro { display: none; }
 .scope-bar .ramp { font-size: var(--fs-small); color: var(--muted); }
 .scope-bar .case-note { flex-basis: 100%; }
 .switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 8px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.05); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--text); font-size: 15px; cursor: pointer; transition: background-color 160ms ease; }
-.switch i { position: relative; width: 34px; height: 20px; border-radius: 4px; background: #26302F; transition: background-color 200ms ease; }
+.switch i { position: relative; width: 34px; height: 20px; border-radius: 4px; background: var(--track-off); transition: background-color 200ms ease; }
 .switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 2px; background: var(--text); transition: transform 220ms var(--ease); }
 .switch[aria-pressed="true"] i { background: var(--lime); }
 .switch[aria-pressed="true"] i::after { transform: translateX(14px); background: var(--lime-ink); }
@@ -246,7 +302,7 @@ html.intro-done .intro { display: none; }
 .vec-cells { display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: 3px; height: 26px; }
 .vec-cells i { position: relative; border-radius: 2px; background: rgba(226, 240, 236, 0.03); box-shadow: inset 0 0 0 1px var(--line); }
 .vec-cells i::after { content: ""; position: absolute; inset: 3px; border-radius: 1px; background: var(--teal); transform-origin: 50% 100%; transform: scaleY(var(--v, 0)); transition: transform 560ms var(--ease-io); }
-.vec-cells i.hit { box-shadow: inset 0 0 0 1px var(--lime); }
+.vec-cells i.hit { box-shadow: inset 0 0 0 1px var(--accent-text); }
 .vec-cells i.hit::after { background: var(--lime); }
 .scores { display: grid; gap: 16px; }
 .score { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; }
@@ -302,7 +358,7 @@ html.intro-done .intro { display: none; }
 .how-steps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 16px; padding: 22px 0; border-top: 1px solid var(--line); color: var(--muted); transition: color 300ms ease; }
 .how-steps li.on { color: var(--text); }
 .how-steps .n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 500; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-2); transition: color 300ms ease, background-color 300ms ease, box-shadow 300ms ease; }
-.how-steps li.on .n { color: var(--lime-ink); background: var(--lime); box-shadow: none; }
+.how-steps li.on .n { color: var(--lime-ink); background: var(--lime); box-shadow: inset 0 0 0 1px var(--btn-ring); }
 .how-steps h3 { font-size: var(--fs-h3); line-height: 1.25; letter-spacing: -0.015em; color: inherit; }
 .how-steps p { grid-column: 2; color: var(--muted); max-width: 32em; }
 .how-steps li.on p { color: var(--text-2); }
@@ -328,7 +384,7 @@ html.intro-done .intro { display: none; }
 .arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(40px, 6vw, 96px); margin-top: 72px; }
 .arrays > div { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
 .arrays > div > * { align-self: start; }
-.freq { font-weight: 500; font-size: clamp(60px, 6.6vw, 96px); line-height: 0.92; letter-spacing: -0.04em; color: var(--lime); }
+.freq { font-weight: 500; font-size: clamp(60px, 6.6vw, 96px); line-height: 0.92; letter-spacing: -0.04em; color: var(--accent-text); }
 .freq .of { color: var(--muted); }
 .freq-label { margin-top: 18px; font-size: var(--fs-lead); line-height: 1.45; max-width: 19em; }
 .freq-meta { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
@@ -392,7 +448,7 @@ html.intro-done .intro { display: none; }
 .pilot-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); grid-template-areas: "head form" "faq form"; gap: 56px clamp(40px, 6vw, 96px); align-items: start; }
 .pilot-head { grid-area: head; }
 .pilot-head .lead { margin-top: 20px; }
-.form-card { grid-area: form; padding: clamp(24px, 3vw, 40px); border-radius: 10px; background: linear-gradient(180deg, #0C1316, #091013); box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(0, 0, 0, 0.8); }
+.form-card { grid-area: form; padding: clamp(24px, 3vw, 40px); border-radius: 10px; background: linear-gradient(180deg, var(--card-a), var(--card-b)); box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 80px -40px rgba(0, 0, 0, 0.8); }
 .faq { grid-area: faq; }
 .faq h3 { font-size: var(--fs-h3); letter-spacing: -0.015em; }
 .faq-list { margin-top: 12px; border-top: 1px solid var(--line-2); }
@@ -416,10 +472,10 @@ details[open]::details-content { block-size: auto; }
 .field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 16px; transition: box-shadow 150ms ease, background-color 150ms ease; }
 .field-f input::placeholder, .field-f textarea::placeholder { color: var(--muted); }
 .field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A5B2B0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-.field-f select option { background: #0E161A; color: var(--text); }
+.field-f select option { background: var(--option-bg); color: var(--text); }
 .field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
 @media (hover: hover) { .field-f input:hover, .field-f select:hover, .field-f textarea:hover { box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.26); } }
-.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--lime); background: rgba(226, 240, 236, 0.06); }
+.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--focus); background: rgba(226, 240, 236, 0.06); }
 .field-f.bad input, .field-f.bad select { box-shadow: inset 0 0 0 1.5px var(--urgent); }
 .err { display: none; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--urgent); }
 .err svg { flex: none; }
@@ -427,7 +483,7 @@ details[open]::details-content { block-size: auto; }
 .help { font-size: var(--fs-small); color: var(--muted); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
-.btn[disabled] { cursor: progress; background: #2A3432; color: var(--text-2); }
+.btn[disabled] { cursor: progress; background: var(--disabled); color: var(--text-2); }
 .spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 700ms linear infinite; }
 .btn.is-busy .spinner { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -456,9 +512,95 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
 @media (max-width: 860px) { .foot-grid { grid-template-columns: minmax(0, 1fr); padding-block: 32px 40px; } }
 
 /* Easter eggs */
-.toast { position: fixed; left: var(--side); bottom: 24px; z-index: 70; width: min(440px, calc(100vw - 2 * var(--side))); padding: 18px 20px; border-radius: 10px; background: rgba(10, 16, 19, 0.94); box-shadow: inset 0 0 0 1px var(--line-2), 0 24px 60px -20px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 15px; color: var(--text-2); visibility: hidden; opacity: 0; transform: translateY(10px); transition: opacity 160ms ease, transform 160ms var(--ease), visibility 0s 160ms; }
+.toast { position: fixed; left: var(--side); bottom: 24px; z-index: 70; width: min(440px, calc(100vw - 2 * var(--side))); padding: 18px 20px; border-radius: 10px; background: var(--toast-bg); box-shadow: inset 0 0 0 1px var(--line-2), 0 24px 60px -20px rgba(0, 0, 0, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 15px; color: var(--text-2); visibility: hidden; opacity: 0; transform: translateY(10px); transition: opacity 160ms ease, transform 160ms var(--ease), visibility 0s 160ms; }
 .toast.on { visibility: visible; opacity: 1; transform: none; transition: opacity 240ms var(--ease), transform 240ms var(--ease), visibility 0s; }
 .toast b { display: block; margin-bottom: 4px; font-weight: 500; font-size: 18px; color: var(--text); }
+
+
+/* Specimens with a readout */
+.spec-layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 40px clamp(32px, 4vw, 64px); align-items: start; margin-top: 64px; }
+.spec-layout .spec-grid { margin-top: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 16px; }
+button.spec-view { width: 100%; padding: 0; border: 0; cursor: pointer; }
+.spec-view[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent-text), 0 0 0 5px var(--ground); }
+.spec-read { position: sticky; top: calc(var(--head) + 24px); display: grid; gap: 16px; padding: 24px; border-radius: 10px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 8px; background: rgba(127, 140, 137, 0.1); }
+.seg button { min-height: 40px; padding: 0 10px; border: 0; border-radius: 5px; background: transparent; color: var(--text-2); font-size: 14px; cursor: pointer; transition: background-color 160ms ease, color 160ms ease; }
+.seg button[aria-pressed="true"] { background: var(--ground); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+.sr-name { font-size: 26px; line-height: 1.15; letter-spacing: -0.025em; }
+.sr-biopsy { margin-top: -10px; font-size: var(--fs-small); color: var(--muted); }
+.sr-scores { display: grid; gap: 12px; }
+.sr-scores li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 15px; }
+.sr-scores b { font-weight: 500; font-size: 22px; letter-spacing: -0.02em; }
+.sr-scores .track { height: 4px; }
+.sr-scores li[data-tone="urgent"] .fill { background: var(--urgent); }
+.sr-scores li[data-tone="review"] .fill { background: var(--review); }
+.sr-scores li[data-tone="routine"] .fill { background: var(--routine); }
+.sr-verdict { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 22px; letter-spacing: -0.02em; }
+.sr-verdict strong { font-weight: 500; }
+.sr-verdict .shape { width: 10px; height: 10px; margin: 0; border-radius: 50%; }
+.sr-verdict[data-tone="urgent"] strong { color: var(--urgent); } .sr-verdict[data-tone="urgent"] .shape { background: var(--urgent); }
+.sr-verdict[data-tone="review"] strong { color: var(--review); } .sr-verdict[data-tone="review"] .shape { box-shadow: inset 0 0 0 2px var(--review); background: linear-gradient(90deg, var(--review) 50%, transparent 50%); }
+.sr-verdict[data-tone="routine"] strong { color: var(--routine); } .sr-verdict[data-tone="routine"] .shape { box-shadow: inset 0 0 0 2px var(--routine); }
+.sr-patient { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 16px; margin: 0; font-size: 14px; color: var(--text-2); }
+.sr-patient dt { color: var(--muted); }
+.sr-patient dd { margin: 0; }
+.sr-note { margin-top: 2px; }
+@media (max-width: 1080px) { .spec-layout { grid-template-columns: minmax(0, 1fr); } .spec-read { position: static; } }
+@media (max-width: 860px) { .spec-layout .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Body site */
+.sites { padding-top: var(--section); }
+.sites-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px clamp(40px, 6vw, 96px); align-items: center; margin-top: 56px; }
+.sites-figure { display: grid; gap: 20px; justify-items: center; }
+.body { display: none; }
+.body-dots { width: min(100%, 440px); aspect-ratio: 1; cursor: pointer; }
+.body .z { fill: var(--zf, rgba(127, 140, 137, 0.15)); stroke: var(--line-2); stroke-width: 1; cursor: pointer; transition: fill 260ms var(--ease), stroke 160ms ease; }
+.body .z.on { stroke: var(--text); stroke-width: 2; }
+.body text { font-size: 13px; fill: var(--muted); text-anchor: middle; }
+.sites-read { display: grid; justify-items: center; gap: 2px; text-align: center; }
+.sites-read b { font-weight: 500; font-size: clamp(48px, 5vw, 72px); line-height: 1; letter-spacing: -0.04em; color: var(--accent-text); }
+.site-list { display: grid; border-top: 1px solid var(--line-2); }
+.site-list button { display: grid; grid-template-columns: minmax(0, 9em) minmax(0, 1fr) 3.2em; align-items: center; gap: 14px; width: 100%; min-height: 46px; padding: 4px; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--text-2); text-align: left; cursor: pointer; transition: background-color 160ms ease, color 160ms ease; }
+.site-list button[aria-pressed="true"] { color: var(--text); background: rgba(127, 140, 137, 0.1); }
+.site-list .track { grid-column: auto; height: 6px; }
+.site-list .fill { background: var(--urgent); }
+.site-list b { font-weight: 500; text-align: right; }
+.site-list .cut { left: 27.8%; }
+@media (hover: hover) { .site-list button:hover { color: var(--text); } }
+@media (max-width: 900px) { .sites-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Inside the model */
+.inside { padding-top: var(--section); }
+.layer-track { margin-top: 56px; overflow-x: auto; scroll-padding-inline: max(var(--side), calc((100vw - var(--max)) / 2)); scroll-snap-type: x proximity; scrollbar-width: none; cursor: grab; padding-bottom: 8px; }
+.layer-track::-webkit-scrollbar { display: none; }
+.layer-track.is-drag { cursor: grabbing; scroll-snap-type: none; }
+.layer-row { display: flex; gap: 20px; width: max-content; padding-inline: max(var(--side), calc((100vw - var(--max)) / 2)); }
+.layer-row > li { width: clamp(220px, 22vw, 300px); scroll-snap-align: start; display: grid; gap: 12px; align-content: start; }
+.layer-maps { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px; border-radius: 8px; background: var(--display); box-shadow: inset 0 0 0 1px var(--line); }
+.layer-maps canvas { width: 100%; aspect-ratio: 1; border-radius: 3px; image-rendering: pixelated; }
+.layer-maps canvas.soft { image-rendering: auto; }
+.layer-row h3 { font-size: 18px; letter-spacing: -0.015em; }
+.layer-row p { font-size: 14px; color: var(--muted); }
+.layer-row .dims { color: var(--text-2); font-variant-numeric: tabular-nums; }
+.layer-row .final .layer-maps { grid-template-columns: 1fr; }
+.layer-bar { display: flex; align-items: center; gap: 16px; margin-top: 16px; }
+.layer-prog { position: relative; flex: 0 0 160px; height: 2px; border-radius: 1px; background: var(--line-2); overflow: hidden; }
+.layer-prog i { position: absolute; inset: 0; background: var(--accent-text); transform-origin: left; transform: scaleX(var(--p, 0.1)); }
+
+/* How a pilot runs */
+.runs { padding-top: var(--section); }
+.run-steps { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; margin-top: 56px; padding-top: 28px; }
+.run-steps::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--line-2); }
+.run-steps::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent-text); transform-origin: left; transform: scaleX(var(--p, 0)); }
+.run-steps li { display: grid; gap: 8px; align-content: start; color: var(--muted); transition: color 300ms ease; }
+.run-steps li.on { color: var(--text); }
+.run-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: 14px; box-shadow: inset 0 0 0 1px var(--line-2); transition: background-color 300ms ease, color 300ms ease; }
+.run-steps li.on .run-n { background: var(--lime); color: var(--lime-ink); box-shadow: inset 0 0 0 1px var(--btn-ring); }
+.run-steps h3 { font-size: 20px; letter-spacing: -0.015em; color: inherit; }
+.run-steps p { font-size: 15px; color: var(--muted); }
+.run-steps li.on p { color: var(--text-2); }
+@media (max-width: 900px) { .run-steps { grid-template-columns: minmax(0, 1fr); padding-top: 0; padding-left: 28px; } .run-steps::before, .run-steps::after { right: auto; bottom: 0; width: 2px; height: auto; } .run-steps::after { transform: scaleY(var(--p, 0)); transform-origin: top; } }
+.pilot { padding-top: clamp(64px, 7vw, 104px); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -477,7 +619,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
 <div class="intro" id="intro" aria-hidden="true">
   <div class="intro-bg"></div>
   <div class="intro-in">
-    <svg class="intro-mark" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18.5" fill="none" stroke="#EAF0EE" stroke-width="3"/><path d="M10 28.5h28" stroke="#D7F25A" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" fill="#EAF0EE"/></svg>
+    <svg class="intro-mark" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--accent-text)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
     <span class="intro-word">nevio</span>
     <span class="intro-line"></span>
   </div>
@@ -487,7 +629,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
 <header class="site-head" id="site-head">
   <div class="wrap head-in">
     <a class="brand" href="#top" aria-label="Nevio, back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--lime)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--accent-text)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
       <span>nevio</span>
     </a>
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -497,7 +639,9 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
       <a href="#evidence">Evidence</a>
       <a href="#team">Team</a>
       <a href="#faq">FAQ</a>
+      <button class="nav-theme" type="button" data-theme-toggle aria-pressed="false">Light mode</button>
     </nav>
+    <button class="theme-btn" type="button" id="theme-btn" data-theme-toggle aria-pressed="false" aria-label="Light mode"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
     <a class="btn btn-led head-cta" href="#pilot">Request a pilot</a>
   </div>
 </header>
@@ -527,20 +671,34 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
 <section class="specimens" id="specimens" aria-labelledby="spec-h">
   <div class="wrap sec-head">
     <h2 class="h2" id="spec-h">Every spot lands in one of three groups</h2>
-    <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Each photo was confirmed by biopsy, and none was used to train the model.</p>
+    <p class="lead">Melanoma, other skin cancer (basal and squamous cell carcinoma), or benign. Each photo was confirmed by biopsy, and none was used to train the model. Pick one to see what the model makes of it.</p>
   </div>
-  <div class="wrap">
-    <div class="spec-grid" id="spec-grid">
-      <figure class="spec" data-id="3099700"><div class="spec-view"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-      <figure class="spec" data-id="1464567"><div class="spec-view"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-      <figure class="spec" data-id="9178598"><div class="spec-view"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-      <figure class="spec is-case" data-id="5700648"><div class="spec-view"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"></div><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
-      <figure class="spec" data-id="9154271"><div class="spec-view"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-      <figure class="spec" data-id="8821098"><div class="spec-view"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
-      <figure class="spec" data-id="6249262"><div class="spec-view"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></div><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
-      <figure class="spec" data-id="6991057"><div class="spec-view"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></div><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+  <div class="wrap spec-layout">
+    <div>
+      <div class="spec-grid" id="spec-grid">
+      <figure class="spec" data-id="3099700"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this seborrheic keratosis"><img src="img/specimens/ISIC_3099700.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></button><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec" data-id="1464567"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this basal cell carcinoma"><img src="img/specimens/ISIC_1464567.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></button><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="9178598"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this seborrheic keratosis"><img src="img/specimens/ISIC_9178598.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></button><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec is-case" data-id="5700648"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this melanoma in situ"><img src="img/specimens/ISIC_5700648.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of this page's case, a melanoma in situ"></button><figcaption><b>Melanoma</b><span>Melanoma in situ, this page's case</span></figcaption></figure>
+      <figure class="spec" data-id="9154271"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this basal cell carcinoma"><img src="img/specimens/ISIC_9154271.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></button><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="8821098"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this seborrheic keratosis"><img src="img/specimens/ISIC_8821098.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></button><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      <figure class="spec" data-id="6249262"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this basal cell carcinoma"><img src="img/specimens/ISIC_6249262.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a basal cell carcinoma"></button><figcaption><b>Other skin cancer</b><span>Basal cell carcinoma</span></figcaption></figure>
+      <figure class="spec" data-id="6991057"><button class="spec-view" type="button" aria-pressed="false" aria-label="Show the model's scores for this seborrheic keratosis"><img src="img/specimens/ISIC_6991057.webp" width="480" height="480" loading="lazy" alt="Dermoscopic photo of a seborrheic keratosis"></button><figcaption><b>Benign</b><span>Seborrheic keratosis</span></figcaption></figure>
+      </div>
+      <p class="legend"><span class="ramp"><i></i>Where the model's image branch responds most</span><span>Computed by the research model from each photo. Point at a spot to see the photo itself.</span></p>
     </div>
-    <p class="legend"><span class="ramp"><i></i>Where the model's image branch responds most</span><span>Computed by the research model from each photo. Point at a spot to see the photo itself.</span></p>
+    <aside class="spec-read" id="spec-read" aria-labelledby="sr-name">
+      <div class="seg" role="group" aria-label="What the model is given">
+        <button type="button" data-mode="photo" aria-pressed="true">Photo only</button>
+        <button type="button" data-mode="details" aria-pressed="false">With patient details</button>
+      </div>
+      <h3 class="sr-name" id="sr-name">Melanoma in situ</h3>
+      <p class="sr-biopsy" id="sr-biopsy">Biopsy confirmed: melanoma</p>
+      <ul class="sr-scores" id="sr-scores" aria-label="The model's scores for this spot"></ul>
+      <div class="sr-verdict" id="sr-verdict" data-tone="urgent" aria-live="polite"><span class="shape" aria-hidden="true"></span><strong id="sr-word">Refer urgently</strong></div>
+      <dl class="sr-patient" id="sr-patient"></dl>
+      <p class="small sr-note">Real outputs of the research model, run on each photo with and without the patient details recorded in the ISIC Archive.</p>
+    </aside>
   </div>
 </section>
 
@@ -604,6 +762,40 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
   </div>
 </section>
 
+<section class="sites" id="sites" aria-labelledby="sites-h">
+  <div class="wrap sec-head">
+    <h2 class="h2" id="sites-h">Where the spot is changes the score</h2>
+    <p class="lead">The same photo and the same patient (65, female, looks like a mole), with only the body site changed. Every site keeps this spot over the 27.8% cutoff, but the melanoma score moves with it.</p>
+  </div>
+  <div class="wrap sites-grid">
+    <div class="sites-figure">
+      <canvas class="body-dots" id="body-dots" width="440" height="440" aria-hidden="true"></canvas>
+      <svg class="body" viewBox="0 0 440 440" aria-hidden="true">
+          <g class="fig" transform="translate(20 10)">
+            <path class="z" data-site="head/neck" d="M100 14a26 26 0 1 1 0 52a26 26 0 1 1 0-52zM90 64h20v16H90z"/>
+            <path class="z" data-site="anterior torso" d="M66 82h68q8 0 8 8v112q0 8-8 8H66q-8 0-8-8V90q0-8 8-8z"/>
+            <path class="z" data-site="lateral torso" d="M50 92h8v108h-8zM142 92h8v108h-8z"/>
+            <path class="z" data-site="upper extremity" d="M28 86q6-6 14-2l6 4-8 150q-1 8-9 7t-8-9l2-140q0-6 3-10zM172 86q-6-6-14-2l-6 4 8 150q1 8 9 7t8-9l-2-140q0-6-3-10z"/>
+            <path class="z" data-site="palms/soles" d="M30 246a9 13 0 1 0 18 0a9 13 0 1 0-18 0zM152 246a9 13 0 1 0 18 0a9 13 0 1 0-18 0zM56 398a16 8 0 1 0 32 0a16 8 0 1 0-32 0zM112 398a16 8 0 1 0 32 0a16 8 0 1 0-32 0z"/>
+            <path class="z" data-site="oral/genital" d="M84 212h32v22H84z"/>
+            <path class="z" data-site="lower extremity" d="M62 214h20v170q0 8-8 8h-4q-8 0-8-8zM118 214h20v170q0 8-8 8h-4q-8 0-8-8z"/>
+            <text x="100" y="430">Front</text>
+          </g>
+          <g class="fig" transform="translate(220 10)">
+            <path class="z" data-site="head/neck" d="M100 14a26 26 0 1 1 0 52a26 26 0 1 1 0-52zM90 64h20v16H90z"/>
+            <path class="z" data-site="posterior torso" d="M66 82h68q8 0 8 8v136q0 8-8 8H66q-8 0-8-8V90q0-8 8-8z"/>
+            <path class="z" data-site="upper extremity" d="M28 86q6-6 14-2l6 4-8 150q-1 8-9 7t-8-9l2-140q0-6 3-10zM172 86q-6-6-14-2l-6 4 8 150q1 8 9 7t8-9l-2-140q0-6-3-10z"/>
+            <path class="z" data-site="palms/soles" d="M30 246a9 13 0 1 0 18 0a9 13 0 1 0-18 0zM152 246a9 13 0 1 0 18 0a9 13 0 1 0-18 0zM56 398a16 8 0 1 0 32 0a16 8 0 1 0-32 0zM112 398a16 8 0 1 0 32 0a16 8 0 1 0-32 0z"/>
+            <path class="z" data-site="lower extremity" d="M62 236h20l-2 148q0 8-8 8h-4q-8 0-8-8zM118 236h20v148q0 8-8 8h-4q-8 0-8-8z"/>
+            <text x="100" y="430">Back</text>
+          </g>
+        </svg>
+      <p class="sites-read" aria-live="polite"><span id="site-name">Head or neck</span><b><span id="site-score">82</span>%</b><span class="small">melanoma, refer urgently</span></p>
+    </div>
+    <ol class="site-list" id="site-list" aria-label="Melanoma score for this case at each body site"></ol>
+  </div>
+</section>
+
 <section class="how" id="how" aria-labelledby="how-h">
   <div class="how-track" data-scene="how">
     <div class="how-stage">
@@ -627,6 +819,17 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
       </div>
     </div>
   </div>
+</section>
+
+<section class="inside" id="inside" aria-labelledby="inside-h">
+  <div class="wrap sec-head">
+    <h2 class="h2" id="inside-h">What the model sees, layer by layer</h2>
+    <p class="lead">The case photo passing through the image branch. Each square is one of the model's real feature maps: early layers keep edges and the ink marks, deeper layers keep fewer, larger patterns. The last layer's 1,792 maps are what the attention module weighs.</p>
+  </div>
+  <div class="layer-track" id="layer-track" tabindex="0" aria-label="Feature maps from each layer of the image branch, scroll sideways">
+    <ol class="layer-row" id="layer-row"></ol>
+  </div>
+  <div class="wrap layer-bar"><span class="layer-prog" aria-hidden="true"><i id="layer-prog"></i></span><span class="small">Drag or scroll sideways</span></div>
 </section>
 
 <section class="evidence" id="evidence" aria-labelledby="evidence-h">
@@ -708,6 +911,19 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
   </div>
 </section>
 
+<section class="runs" id="runs" aria-labelledby="runs-h">
+  <div class="wrap">
+    <h2 class="h2" id="runs-h">How a pilot runs</h2>
+    <ol class="run-steps" id="run-steps">
+      <li><span class="run-n">1</span><h3>Request it</h3><p>Fill in the form below. No cost and no commitment.</p></li>
+      <li><span class="run-n">2</span><h3>A short call</h3><p>We show Nevio on a real case and answer your questions.</p></li>
+      <li><span class="run-n">3</span><h3>Setup and training</h3><p>In person, with a clip-on dermatoscope your clinic uses during the study.</p></li>
+      <li><span class="run-n">4</span><h3>Use it in visits</h3><p>Clinicians make every decision. Photos stay on the clinic's device.</p></li>
+      <li><span class="run-n">5</span><h3>A summary</h3><p>Nevio's suggestions compared with dermatologists' decisions and biopsy results.</p></li>
+    </ol>
+  </div>
+</section>
+
 <section class="pilot" id="pilot" aria-labelledby="pilot-h">
   <div class="wrap pilot-grid">
     <div class="pilot-head">
@@ -764,7 +980,7 @@ kbd { font: inherit; font-size: 13px; color: var(--text); padding: 1px 6px; bord
     <span class="foot-word" aria-hidden="true">nevio</span>
     <div class="foot-grid">
       <a class="brand" href="#top" aria-label="Nevio, back to top">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--lime)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18.5" fill="none" style="stroke:var(--text)" stroke-width="3"/><path d="M10 28.5h28" style="stroke:var(--accent-text)" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="19.5" r="4" style="fill:var(--text)"/></svg>
         <span>nevio</span>
       </a>
       <div>
@@ -886,7 +1102,11 @@ precision highp float;
 precision mediump float;
 #endif
 uniform vec2 uRes; uniform float uDpr; uniform vec2 uMouse; uniform float uLight; uniform vec2 uBand; uniform float uScan; uniform float uWide;
-uniform vec3 uBloom; uniform vec2 uBand2; uniform float uEdge;
+uniform vec3 uBloom; uniform vec2 uBand2; uniform float uEdge; uniform float uTheme;
+vec3 lutL(float v){
+  vec3 c0=vec3(.45,.75,.71),c1=vec3(.07,.54,.49),c2=vec3(.03,.3,.28),c3=vec3(.66,.37,.01);
+  if(v<.4)return mix(c0,c1,v/.4); if(v<.8)return mix(c1,c2,(v-.4)/.4); return mix(c2,c3,clamp((v-.8)/.2,0.,1.));
+}
 vec3 att(float v){
   vec3 a0=vec3(.043,.11,.2),a1=vec3(.078,.369,.471),a2=vec3(.133,.71,.627),a3=vec3(.49,.839,.416),a4=vec3(.843,.949,.353),a5=vec3(1.,.984,.839);
   if(v<.2)return mix(a0,a1,v/.2); if(v<.42)return mix(a1,a2,(v-.2)/.22); if(v<.62)return mix(a2,a3,(v-.42)/.2);
@@ -916,7 +1136,7 @@ void main(){
   float sp=h1(cell)*h1(cell+17.31);
   float dm=distance(px,uMouse);
   float lit=(1.-smoothstep(0.,230.+uWide*220.,dm))*uLight;
-  vec3 col=mix(vec3(.85,.92,.9),vec3(.184,.878,.776),lit);
+  vec3 col=mix(mix(vec3(.85,.92,.9),vec3(.184,.878,.776),lit),mix(vec3(.05,.12,.11),vec3(.07,.54,.49),lit),uTheme);
   float fib=.5+.5*sin(px.x/38.+sin(px.y/57.)*2.4+sin(px.x/211.+px.y/97.)*3.);
   fib=smoothstep(.62,1.,fib)*(.6+.4*sin(px.y/23.+px.x/301.));
   float a=sp*(.05+.26*lit)+fib*sp*(.035+.2*lit);
@@ -930,7 +1150,7 @@ void main(){
     float vis=max(.2+.8*acq,lit*.95);
     float fade=1.-smoothstep(H-110.,H,yb);
     float ba=clamp(v*1.7,0.,1.)*vis*fade;
-    vec3 bc=lut(v);
+    vec3 bc=mix(lut(v),lutL(v),uTheme);
     pre=bc*ba+pre*(1.-ba);
     float al=ba+a*(1.-ba);
     // attention bloom: where the pointer rests, drawn on the attention ramp, inside the tissue only
@@ -947,11 +1167,11 @@ void main(){
     float bw=step(1./6.,g)*.84;
     vec3 bcol=att(q+.08)*(.86+.28*h1(cell+5.3));
     float ring=step(1./6.,g)*(1.-smoothstep(.0,.07,fract(g*6.)));
-    bcol=mix(bcol,vec3(1.,.984,.839),ring*.55);
+    bcol=mix(bcol,mix(vec3(1.,.984,.839),vec3(.04,.08,.07),uTheme),ring*.55);
     pre=pre*(1.-bw)+bcol*bw; al=max(al,bw);
     float line=(1.-smoothstep(.0,1.6,abs(x-uScan)))*fade;
     float trail=step(x,uScan)*(1.-smoothstep(0.,70.,uScan-x))*.10*fade;
-    vec3 lime=vec3(.843,.949,.353);
+    vec3 lime=mix(vec3(.843,.949,.353),vec3(.25,.35,0.),uTheme);
     pre+=lime*(line*.95+trail); al=clamp(al+line*.95+trail,0.,1.);
     gl_FragColor=vec4(pre,al);
     return;
@@ -963,10 +1183,10 @@ void main(){
     float inside=1.-smoothstep(uEdge-2.,uEdge,x);
     float fade=(1.-smoothstep(H-70.,H,yb));
     float ba=clamp(v*1.7,0.,1.)*max(.55,lit)*inside*fade;
-    pre=lut(v)*ba+pre*(1.-ba);
+    pre=mix(lut(v),lutL(v),uTheme)*ba+pre*(1.-ba);
     float al=ba+a*(1.-ba);
     float line=(1.-smoothstep(.0,1.4,abs(x-uEdge)))*fade;
-    pre+=vec3(.843,.949,.353)*line*.9; al=clamp(al+line*.9,0.,1.);
+    pre+=mix(vec3(.843,.949,.353),vec3(.25,.35,0.),uTheme)*line*.9; al=clamp(al+line*.9,0.,1.);
     gl_FragColor=vec4(pre,al);
     return;
   }
@@ -982,7 +1202,7 @@ void main(){
   ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), ctx.STATIC_DRAW);
   const loc = ctx.getAttribLocation(prog, 'p'); ctx.enableVertexAttribArray(loc); ctx.vertexAttribPointer(loc, 2, ctx.FLOAT, false, 0, 0);
   const u = n => ctx.getUniformLocation(prog, n);
-  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), band: u('uBand'), scan: u('uScan'), wide: u('uWide'), bloom: u('uBloom'), band2: u('uBand2'), edge: u('uEdge') };
+  const U = { res: u('uRes'), dpr: u('uDpr'), mouse: u('uMouse'), light: u('uLight'), band: u('uBand'), scan: u('uScan'), wide: u('uWide'), bloom: u('uBloom'), band2: u('uBand2'), edge: u('uEdge'), theme: u('uTheme') };
   let dpr = 1, w = 0, h = 0;
   function size() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5); w = window.innerWidth; h = window.innerHeight;
@@ -997,6 +1217,7 @@ void main(){
     ctx.uniform2f(U.mouse, s.mx, s.my); ctx.uniform1f(U.light, s.light);
     ctx.uniform2f(U.band, br.top, br.bottom); ctx.uniform1f(U.scan, s.sx); ctx.uniform1f(U.wide, s.wide);
     ctx.uniform3f(U.bloom, s.bx, br.top + s.by, s.bs);
+    ctx.uniform1f(U.theme, document.documentElement.dataset.theme === 'light' ? 1 : 0);
     const b2 = band2.getBoundingClientRect();
     ctx.uniform2f(U.band2, b2.top, b2.bottom); ctx.uniform1f(U.edge, b2.left + b2.width * 0.62);
     ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, 4);
@@ -1017,6 +1238,7 @@ function scanFrame(now) {
   if (busy) requestAnimationFrame(scanFrame); else { s.drawing = false; s.last = 0; s.sweep = false; }
 }
 function wake() { if (!scanState.drawing) { scanState.drawing = true; requestAnimationFrame(scanFrame); } }
+window.addEventListener('nevio-theme', () => wake());
 const restScan = () => window.innerWidth * (window.innerWidth < 760 ? 0.82 : 0.64);
 let restTimer = 0;
 function bloomAt(x, y) { const s = scanState; s.tbx = x; s.tby = y; s.tbs = 1; if (s.bs < 0.05) { s.bx = x; s.by = y; } wake(); }
@@ -1302,6 +1524,155 @@ window.addEventListener('scroll', () => { if (!ticking) { ticking = true; reques
 window.addEventListener('resize', onScroll);
 onScroll();
 
+const SPECIMENS = {"5700648":{"photo":[0.0644,0.1817,0.7539],"details":[0.8167,0.1653,0.018],"pt":"Refer for review","dt":"Refer urgently","patient":{"age":65,"sex":"female","site":"head/neck","melanocytic":"yes"}},"3099700":{"photo":[0.0647,0.8077,0.1275],"details":[0.0228,0.9214,0.0558],"pt":"Routine follow-up","dt":"Routine follow-up","patient":{"age":30,"sex":"female","site":"anterior torso","diameterMm":8,"melanocytic":"unsure"}},"1464567":{"photo":[0.031,0.0846,0.8844],"details":[0.0424,0.2425,0.7151],"pt":"Refer for review","dt":"Refer for review","patient":{"age":60,"sex":"female","site":"upper extremity","melanocytic":"unsure"}},"9178598":{"photo":[0.0445,0.7312,0.2243],"details":[0.0388,0.8431,0.1181],"pt":"Routine follow-up","dt":"Routine follow-up","patient":{"age":60,"sex":"male","site":"lateral torso","diameterMm":3,"melanocytic":"unsure"}},"9154271":{"photo":[0.0226,0.015,0.9624],"details":[0.0143,0.0514,0.9343],"pt":"Refer for review","dt":"Refer for review","patient":{"age":70,"sex":"male","site":"upper extremity","melanocytic":"no"}},"8821098":{"photo":[0.1151,0.5704,0.3145],"details":[0.133,0.6908,0.1762],"pt":"Routine follow-up","dt":"Routine follow-up","patient":{"age":60,"sex":"female","site":"anterior torso","diameterMm":5.4,"melanocytic":"unsure"}},"6249262":{"photo":[0.0209,0.0402,0.939],"details":[0.0126,0.1921,0.7953],"pt":"Refer for review","dt":"Refer for review","patient":{"age":70,"sex":"male","site":"upper extremity","melanocytic":"no"}},"6991057":{"photo":[0.0531,0.5308,0.4161],"details":[0.0357,0.7769,0.1874],"pt":"Routine follow-up","dt":"Routine follow-up","patient":{"age":50,"sex":"female","site":"lower extremity","diameterMm":3,"melanocytic":"unsure"}}};
+const SITE_RUNS = {"none":{"p":[0.719,0.2663,0.0147],"t":"Refer urgently"},"anterior torso":{"p":[0.5709,0.4106,0.0185],"t":"Refer urgently"},"head/neck":{"p":[0.8167,0.1653,0.018],"t":"Refer urgently"},"lateral torso":{"p":[0.5671,0.4156,0.0173],"t":"Refer urgently"},"lower extremity":{"p":[0.7147,0.2674,0.0179],"t":"Refer urgently"},"oral/genital":{"p":[0.6792,0.3067,0.0141],"t":"Refer urgently"},"palms/soles":{"p":[0.8673,0.1222,0.0105],"t":"Refer urgently"},"posterior torso":{"p":[0.5562,0.4276,0.0162],"t":"Refer urgently"},"upper extremity":{"p":[0.7441,0.2362,0.0196],"t":"Refer urgently"}};
+const LAYERS = {"stem":{"C":48,"H":190,"W":190,"channels":[32,24,27,40]},"b2":{"C":32,"H":95,"W":95,"channels":[2,19,13,10]},"b3":{"C":56,"H":48,"W":48,"channels":[6,44,34,3]},"b4":{"C":112,"H":24,"W":24,"channels":[71,5,25,66]},"b5":{"C":160,"H":24,"W":24,"channels":[133,76,12,49]},"b6":{"C":272,"H":12,"W":12,"channels":[233,201,127,119]},"top":{"C":1792,"H":12,"W":12,"channels":[3,912,1403,1675]}};
+
+// ---- theme: dark by default, light as lab paper; remembered on this device ----
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+function applyTheme(light) {
+  if (light) document.documentElement.dataset.theme = 'light'; else delete document.documentElement.dataset.theme;
+  $$('[data-theme-toggle]').forEach(b => { b.setAttribute('aria-pressed', String(light)); if (b.classList.contains('nav-theme')) b.textContent = light ? 'Dark mode' : 'Light mode'; });
+  themeMeta.setAttribute('content', light ? '#EDF1EF' : '#05080A');
+  window.dispatchEvent(new Event('nevio-theme'));
+}
+applyTheme(document.documentElement.dataset.theme === 'light');
+$$('[data-theme-toggle]').forEach(b => b.addEventListener('click', () => {
+  const light = document.documentElement.dataset.theme !== 'light';
+  try { localStorage.setItem('nevio-theme', light ? 'light' : 'dark'); } catch (err) { /* private mode */ }
+  applyTheme(light);
+}));
+
+// ---- specimens: pick one to read the model's real scores, photo only or with the ISIC record's details ----
+const SITE_WORDS = { 'head/neck': 'Head or neck', 'anterior torso': 'Chest or abdomen', 'posterior torso': 'Back', 'lateral torso': 'Side of torso',
+  'upper extremity': 'Arm', 'lower extremity': 'Leg', 'palms/soles': 'Palm or sole', 'oral/genital': 'Mouth or genitals', none: 'Not given' };
+const TONE = { 'Refer urgently': 'urgent', 'Refer for review': 'review', 'Routine follow-up': 'routine' };
+const CLASS_NAMES = ['Melanoma', 'Benign', 'Other skin cancer'];
+let specPick = '5700648', specMode = 'photo';
+const srScores = $('#sr-scores');
+srScores.innerHTML = CLASS_NAMES.map(n => `<li><span>${n}</span><b><span>0</span>%</b><span class="track" aria-hidden="true"><span class="fill" style="--v:0"></span></span></li>`).join('');
+function readSpec() {
+  const fig = $(`.spec[data-id="${specPick}"]`), r = SPECIMENS[specPick], probs = specMode === 'photo' ? r.photo : r.details, word = specMode === 'photo' ? r.pt : r.dt;
+  $$('.spec .spec-view').forEach(v => v.setAttribute('aria-pressed', String(v.closest('.spec') === fig)));
+  $('#sr-name').textContent = fig.querySelector('figcaption span').textContent.replace(", this page's case", '');
+  $('#sr-biopsy').textContent = 'Biopsy confirmed: ' + fig.querySelector('figcaption b').textContent.toLowerCase();
+  const lead = probs[0] >= 0.278 ? 0 : probs[2] >= probs[1] ? 2 : 1;
+  [...srScores.children].forEach((li, i) => {
+    tween(li.querySelector('b span'), Math.round(probs[i] * 100), 500);
+    li.querySelector('.fill').style.setProperty('--v', probs[i]);
+    if (i === lead) li.dataset.tone = TONE[word]; else delete li.dataset.tone;
+  });
+  $('#sr-verdict').dataset.tone = TONE[word]; $('#sr-word').textContent = word;
+  const pt = r.patient, rows = specMode === 'photo' ? [['Details', 'None given']] : [
+    ['Age', pt.age], ['Sex', pt.sex], ['Body site', SITE_WORDS[pt.site] || 'Not given'],
+    ...(pt.diameterMm ? [['Size', pt.diameterMm + ' mm']] : []), ['Looks like a mole', pt.melanocytic === 'yes' ? 'Yes' : pt.melanocytic === 'no' ? 'No' : 'Unsure']];
+  $('#sr-patient').innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+}
+readSpec();
+$$('.spec .spec-view').forEach(v => v.addEventListener('click', () => { specPick = v.closest('.spec').dataset.id; readSpec(); }));
+$$('.seg button').forEach(bt => bt.addEventListener('click', () => {
+  specMode = bt.dataset.mode; $$('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === bt))); readSpec();
+}));
+
+// ---- body site: the case's melanoma score at each site (65, female, looks like a mole) ----
+const siteList = $('#site-list'), siteOrder = Object.keys(SITE_RUNS).sort((x, y) => SITE_RUNS[y].p[0] - SITE_RUNS[x].p[0]);
+siteList.innerHTML = siteOrder.map(k => `<li><button type="button" data-site="${k}" aria-pressed="false"><span>${SITE_WORDS[k]}</span><span class="track" aria-hidden="true"><span class="fill" style="--v:${SITE_RUNS[k].p[0]}"></span><span class="cut"></span></span><b>${Math.round(SITE_RUNS[k].p[0] * 100)}%</b></button></li>`).join('');
+// The figure is drawn as dots: each dot belongs to one body site and takes that site's score on the attention ramp.
+const bodyCv = $('#body-dots'), zonePaths = $$('.body .z'), SITE_KEYS = [...new Set(zonePaths.map(z => z.dataset.site))];
+let bodyDots = [], bodyOn = 'head/neck';
+(() => {
+  const N = 440, off = document.createElement('canvas'); off.width = off.height = N;
+  const o = off.getContext('2d', { willReadFrequently: true });
+  zonePaths.forEach(z => {
+    const idx = SITE_KEYS.indexOf(z.dataset.site) + 1, g = z.closest('g'), m = /translate\(([\d.]+) ([\d.]+)\)/.exec(g.getAttribute('transform'));
+    o.setTransform(1, 0, 0, 1, +m[1], +m[2]); o.fillStyle = `rgb(${idx},0,0)`; o.fill(new Path2D(z.getAttribute('d')));
+  });
+  const d = o.getImageData(0, 0, N, N).data, P = 7;
+  for (let y = P / 2; y < N; y += P) for (let x = P / 2; x < N; x += P) {
+    const id = d[(Math.floor(y) * N + Math.floor(x)) * 4];
+    if (id) bodyDots.push({ x, y, site: SITE_KEYS[id - 1] });
+  }
+})();
+function drawBody() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2), N = 440, g = bodyCv.getContext('2d');
+  if (bodyCv.width !== N * dpr) { bodyCv.width = bodyCv.height = N * dpr; }
+  g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, N, N);
+  for (const dot of bodyDots) {
+    const run = SITE_RUNS[dot.site], c = ramp(clamp((run.p[0] - 0.5) / 0.4, 0, 1) * 0.8 + 0.18), on = dot.site === bodyOn;
+    g.globalAlpha = on ? 1 : (document.documentElement.dataset.theme === 'light' ? 0.85 : 0.55);
+    g.fillStyle = `rgb(${c.map(Math.round).join(',')})`;
+    g.beginPath(); g.arc(dot.x, dot.y, on ? 2.9 : 2.3, 0, Math.PI * 2); g.fill();
+  }
+  g.globalAlpha = 1;
+}
+const siteAt = e => {
+  const r = bodyCv.getBoundingClientRect(), x = (e.clientX - r.left) * 440 / r.width, y = (e.clientY - r.top) * 440 / r.height;
+  let best = null, bd = 12;
+  for (const dot of bodyDots) { const dd = Math.hypot(dot.x - x, dot.y - y); if (dd < bd) { bd = dd; best = dot.site; } }
+  return best;
+};
+bodyCv.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const k = siteAt(e); if (k && k !== bodyOn) pickSite(k); });
+bodyCv.addEventListener('click', e => { const k = siteAt(e); if (k) pickSite(k); });
+window.addEventListener('nevio-theme', () => drawBody());
+function pickSite(k) {
+  const run = SITE_RUNS[k];
+  $$('#site-list button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.site === k)));
+  bodyOn = k; drawBody();
+  $('#site-name').textContent = SITE_WORDS[k];
+  tween($('#site-score'), Math.round(run.p[0] * 100), 420);
+}
+pickSite('head/neck');
+$$('#site-list button').forEach(b => { b.addEventListener('click', () => pickSite(b.dataset.site)); b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') pickSite(b.dataset.site); }); });
+
+
+// ---- inside the model: real feature maps for the case photo, colored on the attention ramp ----
+const LAYER_TEXT = {
+  stem: ['The first layer', 'Edges, color and the ink marks, close to the photo.'],
+  b2: ['Block 2', 'Fine texture across the skin.'],
+  b3: ['Block 3', 'Small structures: the marks, pores and hairs.'],
+  b4: ['Block 4', 'Patterns a few millimetres across.'],
+  b5: ['Block 5', 'Larger patches of the spot.'],
+  b6: ['Block 6', 'Coarse regions of the photo.'],
+  top: ['The last layer', 'What the attention module weighs before the patient details join.'],
+};
+const layerRow = $('#layer-row');
+layerRow.innerHTML = Object.keys(LAYERS).map(k => { const L = LAYERS[k];
+  return `<li><div class="layer-maps" data-layer="${k}">${L.channels.map(c => `<canvas width="${L.W}" height="${L.W}" title="Map ${c + 1} of ${L.C}"></canvas>`).join('')}</div><h3>${LAYER_TEXT[k][0]}</h3><p><span class="dims">${L.C.toLocaleString('en-US')} maps, ${L.W} × ${L.H}</span><br>${LAYER_TEXT[k][1]}</p></li>`; }).join('') +
+  `<li class="final"><div class="layer-maps"><canvas width="240" height="240" class="soft" id="layer-final"></canvas></div><h3>After attention</h3><p><span class="dims">12 × 12</span><br>The map shown on the case above, from the photo alone.</p></li>`;
+for (const box of $$('.layer-maps[data-layer]')) {
+  const key = box.dataset.layer, img = new Image();
+  img.onload = () => {
+    const S = LAYERS[key].W, off = document.createElement('canvas'); off.width = S * 4; off.height = S;
+    const o = off.getContext('2d', { willReadFrequently: true }); o.drawImage(img, 0, 0);
+    box.querySelectorAll('canvas').forEach((cv, i) => {
+      const d = o.getImageData(i * S, 0, S, S), out = cv.getContext('2d').createImageData(S, S);
+      for (let k = 0; k < S * S; k++) { const c = ramp(d.data[k * 4] / 255); out.data[k * 4] = c[0]; out.data[k * 4 + 1] = c[1]; out.data[k * 4 + 2] = c[2]; out.data[k * 4 + 3] = 255; }
+      cv.getContext('2d').putImageData(out, 0, 0);
+    });
+  };
+  img.src = `img/model/layer-${key}.png`;
+}
+(() => { const cv = $('#layer-final'), N = 240, f = mapSampler('5700648'), g = cv.getContext('2d'), out = g.createImageData(N, N);
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const c = ramp(f(x / N, y / N)), k = (y * N + x) * 4; out.data[k] = c[0]; out.data[k + 1] = c[1]; out.data[k + 2] = c[2]; out.data[k + 3] = 255; }
+  g.putImageData(out, 0, 0); })();
+const layerTrack = $('#layer-track'), layerProg = $('#layer-prog');
+const syncLayer = () => layerProg.style.setProperty('--p', (0.1 + 0.9 * layerTrack.scrollLeft / Math.max(1, layerTrack.scrollWidth - layerTrack.clientWidth)).toFixed(3));
+layerTrack.addEventListener('scroll', syncLayer, { passive: true }); syncLayer();
+let drag = null;
+layerTrack.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, l: layerTrack.scrollLeft }; layerTrack.classList.add('is-drag'); });
+window.addEventListener('pointermove', e => { if (drag) layerTrack.scrollLeft = drag.l - (e.clientX - drag.x); });
+window.addEventListener('pointerup', () => { drag = null; layerTrack.classList.remove('is-drag'); });
+layerTrack.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); layerTrack.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 320, behavior: reduce.matches ? 'auto' : 'smooth' }); } });
+
+// ---- how a pilot runs: the line fills and steps light as the section scrolls up ----
+const runSteps = $('#run-steps'), runItems = $$('#run-steps li');
+function syncRuns() {
+  const r = runSteps.getBoundingClientRect(), vh = window.innerHeight, p = clamp((vh * 0.85 - r.top) / (vh * 0.6), 0, 1);
+  runSteps.style.setProperty('--p', p.toFixed(3));
+  runItems.forEach((li, i) => li.classList.toggle('on', p >= (i + 0.5) / runItems.length || reduce.matches));
+}
+window.addEventListener('scroll', syncRuns, { passive: true }); syncRuns();
+
 // ---- counters and icon arrays fill when they come into view ----
 for (const a of $$('[data-array]')) {
   const total = +a.dataset.total, hit = +a.dataset.hit;
@@ -1348,7 +1719,9 @@ if ('IntersectionObserver' in window) {
     box.append(cv); box.classList.add('is-ascii');
     draw(true);
   }
+  window.addEventListener('nevio-theme', () => { if (cov) draw(true); });
   function draw(settle) {
+    const cs = getComputedStyle(document.documentElement), HOT = cs.getPropertyValue('--ascii-hot').trim(), COOL = cs.getPropertyValue('--ascii').trim();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     ctx.font = `500 ${FS}px "Host Grotesk", sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     const R = CW > 6 ? 140 : 80;
@@ -1361,7 +1734,7 @@ if ('IntersectionObserver' in window) {
       else if (c > 0.8) ch = NUMS[i % NUMS.length];
       else if (c >= 0.12) ch = CHARS[Math.min(9, 1 + Math.floor(c * 8))];
       else ch = '.';
-      ctx.fillStyle = near > 0.06 ? `rgba(215, 242, 90, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(47, 224, 198, ${c > 0.8 ? 0.78 : 0.5})`;
+      ctx.fillStyle = near > 0.06 ? `rgba(${HOT}, ${(0.4 + 0.6 * near).toFixed(2)})` : `rgba(${COOL}, ${c > 0.8 ? 0.78 : 0.5})`;
       ctx.fillText(ch, cx, cy);
     }
   }

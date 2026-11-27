@@ -482,6 +482,27 @@ The case photo sits in a circular clip inside a ring of 120 ticks. As the pinned
 - **Statement:** the privacy headline's words come into focus one by one with scroll (16% opacity and 10 px blur to clear).
 - **Reduced motion:** all transitions and animations drop to zero; every scene shows its final, readable state.
 
+### Light mode (lab paper)
+A second theme, chosen with the header toggle and remembered on the device; dark stays the default.
+- **Ground** #EDF1EF (cool, slightly green paper, never cream), **raised** #FFFFFF, hairlines in ink at 10% and 20%.
+- **Text** ink #0A1412, secondary #36443F, muted #56635F (5.6:1).
+- **Lime** stays the button fill, with a 1 px ink ring so it holds its edge on paper. Anything lime did as text or a line (figures, focus, link hover, the scan line) moves to deep olive #3F5A00 or ink.
+- **Scan** prints as dark teal speckle with a dark amber surface; the attention ramp is unchanged.
+- **Displays stay dark:** specimen tiles, the case lens and the layer maps keep the #05080A well, like screens laid on paper.
+- **Triage** darkens to hold AA on paper: urgent #C0291E, review #8F5E00, routine #0B7A57.
+
+### Specimen readout
+A sticky panel beside the specimen grid. A two-way segmented control (Photo only, With patient details), the diagnosis, three score rows with 4 px tracks, the suggestion with its tone shape, and the patient details recorded in the ISIC Archive. Picking a tile gives it a 2 px accent ring. Every number is a real model output.
+
+### Body-site figure
+Front and back silhouettes drawn as a 7 px dot matrix (the icon arrays' language). Each dot takes its site's real melanoma score on the attention ramp; the selected site's dots grow and go to full opacity. A ranked list of the nine sites (with the cutoff tick on each bar) mirrors it for keyboard users.
+
+### Layer strip
+A sideways, drag-scrollable row of the image branch's real feature maps for the case photo: four maps per layer on a dark well, colored on the attention ramp, with the layer's real map count and size, ending with the attention-weighted map. A thin accent bar tracks how far along the row you are.
+
+### Pilot steps
+Five numbered steps in a row (stacked on phones) under a hairline that fills with the accent as the section scrolls up; reached steps turn ink or white and their number fills lime.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -492,7 +513,8 @@ The case photo sits in a circular clip inside a ring of 120 ticks. As the pinned
 - **Do** label any drawn scan that is not data as an illustration, and say plainly when a layer is computed by the research model.
 - **Do** crop and scale each model map exactly like the photo under it, normalized per photo, and recompute the maps if the model changes.
 - **Do** set everything in Host Grotesk at 400 and 500 (600 only for the wordmark), sentence case, tabular figures, tightening tracking as size grows.
-- **Do** keep the scan still until the pointer lights it, and redraw only on pointer, scroll and resize.
+- **Do** keep the scan still until the pointer lights it, and redraw only on pointer, scroll, resize and a theme change.
+- **Do** give every new color a light-mode value; in light mode lime is only a fill.
 - **Do** give every motion a reason (acquire, develop, rescore, settle) and a reduced-motion state that shows the final frame.
 - **Do** keep pressable targets at least 44 px tall on touch layouts, and keep muted text at or above 4.5:1 on the surface it sits on.
 
