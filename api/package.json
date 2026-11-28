@@ -1,0 +1,16 @@
+{
+  "name": "nevio-api",
+  "private": true,
+  "description": "Signup API for the Nevio website: a Cloudflare Worker with a D1 database.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
+    "migrate:local": "wrangler d1 migrations apply nevio-signups --local",
+    "migrate:remote": "wrangler d1 migrations apply nevio-signups --remote",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.169.0"
+  }
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-WQQTqIua/ZRfRM1JSQWhqTDnLIMDft+kY3FimzNFAbs=' 'sha256-yWHa9JHQ9vaxfFLV8jtoXgUT/8FdA66FHFG+YAq9mwY='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://formsubmit.co; form-action 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-WQQTqIua/ZRfRM1JSQWhqTDnLIMDft+kY3FimzNFAbs=' 'sha256-xeQffgsdZxkJNCEhDB9Hn4+AyWyRonwJmK/P9geJL2s='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://formsubmit.co; form-action 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nevio | Know which skin spots need a dermatologist first</title>
@@ -483,14 +483,21 @@ details[open]::details-content { block-size: auto; }
 .field-f.full { grid-column: 1 / -1; }
 .field-f label { font-weight: 500; font-size: 15px; }
 .opt { font-weight: 400; color: var(--muted); }
-.field-f input, .field-f select, .field-f textarea { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 16px; transition: box-shadow 150ms ease, background-color 150ms ease; }
-.field-f input::placeholder, .field-f textarea::placeholder { color: var(--muted); }
+.field-f input:not([type="checkbox"]), .field-f select, .field-f textarea { width: 100%; min-height: 50px; padding: 0 14px; border: 0; border-radius: var(--radius); background: rgba(226, 240, 236, 0.04); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 16px; transition: box-shadow 150ms ease, background-color 150ms ease; }
+.field-f input:not([type="checkbox"])::placeholder, .field-f textarea::placeholder { color: var(--muted); }
 .field-f select { appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A5B2B0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
 .field-f select option { background: var(--option-bg); color: var(--text); }
 .field-f textarea { min-height: 120px; padding: 12px 14px; resize: vertical; line-height: 1.5; }
-@media (hover: hover) { .field-f input:hover, .field-f select:hover, .field-f textarea:hover { box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.26); } }
-.field-f input:focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--focus); background: rgba(226, 240, 236, 0.06); }
-.field-f.bad input, .field-f.bad select { box-shadow: inset 0 0 0 1.5px var(--urgent); }
+@media (hover: hover) { .field-f input:not([type="checkbox"]):hover, .field-f select:hover, .field-f textarea:hover { box-shadow: inset 0 0 0 1px rgba(226, 240, 236, 0.26); } }
+.field-f input:not([type="checkbox"]):focus-visible, .field-f select:focus-visible, .field-f textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; box-shadow: inset 0 0 0 1px var(--focus); background: rgba(226, 240, 236, 0.06); }
+.field-f.bad input:not([type="checkbox"]), .field-f.bad select { box-shadow: inset 0 0 0 1.5px var(--urgent); }
+.field-f .check { display: flex; align-items: flex-start; gap: 12px; min-height: 40px; font-weight: 400; color: var(--text-2); cursor: pointer; }
+.check input { flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--lime); cursor: pointer; }
+html[data-theme="light"] .check input { accent-color: #3F5A00; }
+.check a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; display: inline-block; padding: 10px 0; margin: -10px 0; }
+.check input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.field-f.bad #f-consent { outline: 1.5px solid var(--urgent); outline-offset: 1px; }
+.consent { gap: 6px; }
 .err { display: none; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--urgent); }
 .err svg { flex: none; }
 .field-f.bad .err { display: flex; }
@@ -956,10 +963,16 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
         <div class="field-f"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" spellcheck="false" pattern="[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[^@\s.]{2,}"><span class="err" id="e-email"></span></div>
         <div class="field-f"><label for="f-loc">City and state</label><input id="f-loc" name="location" autocomplete="address-level2" required maxlength="120"><span class="err" id="e-loc"></span></div>
         <div class="field-f full"><label for="f-msg">Anything we should know <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" maxlength="2000" aria-describedby="h-msg"></textarea><span class="help" id="h-msg">Please don't include any patient information.</span></div>
+        <div class="field-f full consent">
+          <label class="check" for="f-consent"><input type="checkbox" id="f-consent" name="consent_contact" required><span>Nevio may keep these details and email me about the pilot. <a href="privacy.html" target="_blank" rel="noopener">Privacy notice</a></span></label>
+          <span class="err" id="e-consent"></span>
+          <label class="check" for="f-updates"><input type="checkbox" id="f-updates" name="consent_updates"><span>Also send me occasional updates about Nevio <span class="opt">(optional)</span></span></label>
+        </div>
+        <div class="field-f full" id="ts-field" hidden><div id="ts-box"></div><span class="err" id="e-ts"></span></div>
         <div class="hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="nv_trap" tabindex="-1" autocomplete="off"></div>
         <div class="form-foot">
           <button class="btn btn-led" type="submit" id="f-submit"><span class="spinner" aria-hidden="true"></span><span id="f-submit-label">Send pilot request</span></button>
-          <p class="help">We reply by email to set up a short call. FormSubmit, an email form service, delivers the form to our inbox.</p>
+          <p class="help">We reply by email to set up a short call.</p>
           <noscript><p class="help">Sending this form needs JavaScript. Turn it on in your browser to send a request.</p></noscript>
         </div>
         <div class="msg msg-ok" id="s-ok" role="status" tabindex="-1" hidden>
@@ -1004,6 +1017,7 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
       </div>
       <div>
         <p>Questions? Use the <a href="#pilot">pilot request form</a>.</p>
+        <p><a href="privacy.html">Privacy notice</a></p>
         <p>&copy; 2026 Nevio. Pennsylvania, USA.</p>
         <p>Type <kbd>scan</kbd> or <kbd>abcde</kbd> anywhere on the page.</p>
       </div>
@@ -1021,6 +1035,13 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/jasonxiao421@gmail.com";
 // CONTACT_EMAIL: shown only if a request can't be sent, so people can email it instead.
 const CONTACT_EMAIL = "";
+// SIGNUP_API: the Nevio signup API (api/ in this repo, a Cloudflare Worker with a D1 database), e.g.
+// "https://nevio-api.<account>.workers.dev/v1/signup". Requests are stored there first; if it can't be
+// reached, the page falls back to FORM_ENDPOINT, then to the copy box. Add its origin to connect-src.
+const SIGNUP_API = "";
+// TURNSTILE_SITEKEY: Cloudflare Turnstile site key. When set, the form shows Cloudflare's check that a
+// person is sending it. Also add https://challenges.cloudflare.com to script-src and frame-src.
+const TURNSTILE_SITEKEY = "";
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -1806,6 +1827,7 @@ const fields = [
   ['f-org', 'e-org', 'Enter your clinic or organization.'],
   ['f-email', 'e-email', 'Enter a work email, like name@clinic.org.'],
   ['f-loc', 'e-loc', 'Enter your city and state.'],
+  ['f-consent', 'e-consent', 'Tick this so we can keep your details and reply.'],
 ];
 const errIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
 function check(id, eid, msg, trim = true) {
@@ -1831,13 +1853,62 @@ function collect() {
   const f = new FormData(form);
   const line = (k, n) => String(f.get(k) || '').replace(/[\u0000-\u001F\u007F-\u009F\u2028\u2029]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
   const text = (k, n) => String(f.get(k) || '').replace(/\r\n?/g, '\n').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, '').trim().slice(0, n);
-  return { name: line('name', 120), role: line('role', 60), organization: line('organization', 160), email: line('email', 160), location: line('location', 120), message: text('message', 2000) };
+  return { name: line('name', 120), role: line('role', 60), organization: line('organization', 160), email: line('email', 160), location: line('location', 120), message: text('message', 2000),
+    consent_contact: $('#f-consent').checked, consent_updates: $('#f-updates').checked };
 }
 function asText(d) {
-  return `Nevio pilot request\n\nName: ${d.name}\nRole: ${d.role}\nClinic or organization: ${d.organization}\nEmail: ${d.email}\nCity and state: ${d.location}\n\n${d.message || ''}`.trim();
+  return `Nevio pilot request\n\nName: ${d.name}\nRole: ${d.role}\nClinic or organization: ${d.organization}\nEmail: ${d.email}\nCity and state: ${d.location}\nUpdates: ${d.consent_updates ? 'yes' : 'no'}\n\n${d.message || ''}`.trim();
 }
-// Returns 'ok', 'slow' (no answer in time; FormSubmit often delivers anyway) or 'fail'.
+// Cloudflare's check, loaded only once someone starts on the form (and only if a site key is set).
+let tsWidget = null;
+function loadTurnstile() {
+  if (!TURNSTILE_SITEKEY || loadTurnstile.done) return;
+  loadTurnstile.done = true;
+  $('#ts-field').hidden = false;
+  window.nevioTurnstile = () => {
+    tsWidget = window.turnstile.render('#ts-box', { sitekey: TURNSTILE_SITEKEY, action: 'pilot', theme: document.documentElement.dataset.theme === 'light' ? 'light' : 'dark' });
+  };
+  const sc = document.createElement('script');
+  sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=nevioTurnstile';
+  sc.async = true;
+  document.head.append(sc);
+}
+form.addEventListener('focusin', loadTurnstile, { once: true });
+const tsToken = () => (tsWidget !== null && window.turnstile ? window.turnstile.getResponse(tsWidget) || '' : undefined);
+const tsReset = () => { if (tsWidget !== null && window.turnstile) window.turnstile.reset(tsWidget); };
+
+// Returns 'ok', 'verify' (Cloudflare's check failed), 'slow' (no answer in time) or 'fail'.
 async function send(d) {
+  if (SIGNUP_API) {
+    const r = await sendApi(d);
+    if (r === 'ok' || r === 'verify') return r;
+    if (r === 'refused') return 'fail';
+    // the API could not be reached: fall back to the email service
+  }
+  return sendEmail(d);
+}
+// The signup API: 'ok', 'verify', 'refused' (it answered no) or 'down' (no answer).
+async function sendApi(d) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 15000);
+  try {
+    const r = await fetch(SIGNUP_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...d, turnstile: tsToken() }),
+      credentials: 'omit',
+      signal: ctl.signal,
+    });
+    if (r.ok) return 'ok';
+    let body = {};
+    try { body = await r.json(); } catch (err) { body = {}; }
+    if (r.status === 400 && body.error === 'verification') return 'verify';
+    return r.status >= 500 ? 'down' : 'refused';
+  } catch (err) {
+    return 'down';
+  } finally { clearTimeout(timer); }
+}
+async function sendEmail(d) {
   if (!FORM_ENDPOINT) return 'fail';
   const ctl = new AbortController();
   let timedOut = false;
@@ -1882,6 +1953,10 @@ form.addEventListener('submit', async e => {
   busy = true; btn.disabled = true; btn.classList.add('is-busy'); btnLabel.textContent = 'Sending';
   const sent = await send(d);
   busy = false; btn.disabled = false; btn.classList.remove('is-busy'); btnLabel.textContent = 'Send pilot request';
+  tsReset();
+  $('#ts-field').classList.toggle('bad', sent === 'verify');
+  $('#e-ts').innerHTML = sent === 'verify' ? errIcon + '<span>Cloudflare could not confirm this was sent by a person. Finish the check above, then send again.</span>' : '';
+  if (sent === 'verify') return;
   if (sent === 'ok') {
     $('#s-ok-text').innerHTML = '';
     const strong = document.createElement('strong'); strong.textContent = 'Request sent. ';

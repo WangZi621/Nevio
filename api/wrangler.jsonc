@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nevio-api",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nevio-signups",
+      // Replace with the id printed by `npx wrangler d1 create nevio-signups` (see api/README.md).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    // Sites allowed to send signups (comma separated, exact origins, no trailing slash).
+    "ALLOWED_ORIGINS": "https://wangzi621.github.io",
+    // Signups older than this are deleted every night. Keep in step with privacy.html.
+    "RETENTION_DAYS": "730",
+    // The privacy notice version people agree to. Change it when privacy.html changes.
+    "POLICY_VERSION": "2026-11-28",
+    "RATE_LIMIT_PER_HOUR": "5",
+    // Cloudflare Access for the team's admin view (see api/README.md). Empty = admin view off.
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": ""
+  },
+  // Secrets, set with `npx wrangler secret put NAME` and never committed:
+  //   IP_SALT            random string used to hash network addresses for rate limits (required)
+  //   TURNSTILE_SECRET   Cloudflare Turnstile secret key (turns on bot checks)
+  //   RESEND_API_KEY     Resend key for new-signup emails to the team (optional)
+  //   NOTIFY_EMAIL       where new-signup emails go (optional)
+  //   NOTIFY_FROM        sender, e.g. "Nevio <signups@your-domain>" (optional)
+  "triggers": { "crons": ["17 4 * * *"] }
+}

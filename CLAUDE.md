@@ -20,6 +20,8 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 - `404.html` is the not-found page (absolute `/Nevio/` paths, no script). `SECURITY.md` and `.well-known/security.txt` say how to report a security problem; renew the security.txt `Expires` date before it passes (it is set to Nov 28, 2027). `_headers` holds real security headers for a host that reads it (Cloudflare Pages, Netlify); GitHub Pages ignores it.
 - `img/specimens/*.webp` are 480 px crops of the app's eight biopsy-confirmed ISIC samples (CC BY: MSK and Dr. Cristian Navarrete et al.; credits in the footer).
 - One typeface, Host Grotesk (variable, SIL OFL), self-hosted in `assets/fonts/` (latin and latin-ext subsets). No Google Fonts request.
+- `privacy.html` is the privacy notice the form's consent box links to (static, no script). It must describe exactly what the form and `api/` do.
+- `api/` is the signup backend: a Cloudflare Worker with a D1 database, its tests, and a setup guide (`api/README.md`). It is the only part with a package manager (`api/package.json`, wrangler); the site itself stays dependency-free. Never commit `api/.dev.vars`, `api/node_modules` or `api/.wrangler`.
 - `PRODUCT.md` holds product truth for design work; `.impeccable/surfaces/index-html.md` holds the page's direction contract. Read both before redesigning.
 
 Keep it static and dependency-free unless Jason asks otherwise. It has to load fast on a clinic computer and a phone.
@@ -55,13 +57,17 @@ All results come from one held-out split of 9,080 biopsy-confirmed ISIC images (
 
 ## Pilot form
 
-The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page script (FormSubmit). Keep that setting and the fallback behaviour (if sending fails, the visitor gets a copyable message). FormSubmit needs a one-time activation from the receiving inbox; after that the endpoint should use FormSubmit's random alias instead of an address. Don't change the endpoint without Jason's say-so.
+Signups are stored in a database. The page sends each request to `SIGNUP_API` first (the Worker in `api/`, which validates it again and stores it in Cloudflare D1); if that can't be reached it falls back to `FORM_ENDPOINT` (FormSubmit, email), then to the copyable message. Both settings sit near the top of the page script. Set or clear the API, and Turnstile, only with `node api/configure-page.mjs` (it keeps the CSP's `connect-src`, `frame-src` and script hashes in step). FormSubmit needs a one-time activation from the receiving inbox; after that the endpoint should use FormSubmit's random alias instead of an address, or be emptied once the API emails the team. Don't change the endpoint without Jason's say-so.
+
+The form asks for consent: a required box (keep these details and email me about the pilot, linking `privacy.html`) and an optional box for updates. Both are stored with the request, with the privacy notice version (`POLICY_VERSION` in `api/wrangler.jsonc`). If `privacy.html` changes, change its version line and `POLICY_VERSION` together. Retention in the notice (two years) is enforced by the Worker's nightly purge (`RETENTION_DAYS`).
+
+No patient information, ever: the form says so, the API has no field for it, and Cloudflare offers HIPAA business associate agreements only on enterprise plans. Don't add fields that invite health details.
 
 Form guards to keep: input reaches the page only as text (`textContent`, `.value`, text nodes), never through `innerHTML`; `collect()` strips line breaks and control characters from one-line fields and caps every field; a hidden trap field (`nv_trap`) or a send within 2 seconds of the page opening shows a fake success and sends nothing; the form is `method="post"` and its button hides without JavaScript, so details never land in a URL.
 
 ## Security
 
-There are no accounts, passwords or patient data on this site; the attack surface is the page's own scripts and the pilot form.
+Visitors have no accounts or passwords, and there is no patient data. The attack surface is the page's own scripts, the pilot form and the signup API in `api/`. The team signs in to see signups through Cloudflare Access (one-time codes by email), and the Worker verifies the Access token itself (`api/README.md`).
 
 - Each page carries a Content-Security-Policy meta tag. In `index.html`, `script-src` lists the SHA-256 of each inline `<script>`. **If you change any inline script, recompute the hashes or every script on the page stops running.** From the repo root:
   `python3 -c "import re,hashlib,base64;s=open('index.html').read();print(' '.join(\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\" for m in re.findall(r'<script>(.*?)</script>',s,re.S)))"`
@@ -99,3 +105,4 @@ On Nov 26, 2026, after rejecting several directions as vibecoded or generic, Jas
 - Check every in-page `#anchor` resolves, the mobile menu opens and closes, the toggle switches both ways, and the form shows its success and fallback states.
 - Look at it at 375 px and at a desktop width before calling it done. Add `?intro=off` to skip the intro in screenshots.
 - Check the browser console shows no Content-Security-Policy violations, and that the form sends nothing when submitted within 2 seconds of load or with the trap field filled.
+- If you touch `api/`, run its tests (unit, admin and Turnstile tests need nothing; the integration tests need `wrangler dev`, see `api/README.md`): `cd api && npm test`.
