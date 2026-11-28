@@ -1,0 +1,7 @@
+# Security contact for the Nevio website (RFC 9116).
+# Please report security problems privately through GitHub, not in a public issue.
+Contact: https://github.com/WangZi621/Nevio/security/advisories/new
+Policy: https://github.com/WangZi621/Nevio/blob/main/SECURITY.md
+Preferred-Languages: en
+Canonical: https://wangzi621.github.io/Nevio/.well-known/security.txt
+Expires: 2027-11-28T00:00:00.000Z

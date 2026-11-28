@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-WQQTqIua/ZRfRM1JSQWhqTDnLIMDft+kY3FimzNFAbs=' 'sha256-RarYgMo3CHt3tZVRiyeTaycfT+Y6Hw+vX+BgfJqhjSc='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://formsubmit.co; form-action 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nevio | Know which skin spots need a dermatologist first</title>
 <meta name="description" content="Nevio reads a dermoscopic photo together with the patient's details and suggests how soon to refer: refer urgently, refer for review, or routine follow-up. It runs on the clinic's own device. Research stage, not FDA-cleared. Free research pilots in southeastern Pennsylvania from 2027.">
@@ -17,7 +19,7 @@
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/host-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script>try{var t=localStorage.getItem('nevio-theme');if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
+<script>if(window.top!==window.self){document.documentElement.style.display='none';try{window.top.location.replace(window.location.href)}catch(e){}}try{var t=localStorage.getItem('nevio-theme');if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('entered')},4500);</script>
 <style>
 @font-face { font-family: "Host Grotesk"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("assets/fonts/host-grotesk-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -481,6 +483,7 @@ details[open]::details-content { block-size: auto; }
 .err svg { flex: none; }
 .field-f.bad .err { display: flex; }
 .help { font-size: var(--fs-small); color: var(--muted); }
+html:not(.js) #f-submit { display: none; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
 .btn[disabled] { cursor: progress; background: var(--disabled); color: var(--text-2); }
@@ -931,7 +934,7 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
     </div>
 
     <div class="form-card">
-      <form id="pilot-form" class="form-grid" novalidate>
+      <form id="pilot-form" class="form-grid" method="post" novalidate>
         <div class="field-f"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required maxlength="120"><span class="err" id="e-name"></span></div>
         <div class="field-f"><label for="f-role">Role</label>
           <select id="f-role" name="role" required>
@@ -941,10 +944,11 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
         <div class="field-f"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" spellcheck="false"><span class="err" id="e-email"></span></div>
         <div class="field-f"><label for="f-loc">City and state</label><input id="f-loc" name="location" autocomplete="address-level2" required maxlength="120"><span class="err" id="e-loc"></span></div>
         <div class="field-f full"><label for="f-msg">Anything we should know <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" maxlength="2000" aria-describedby="h-msg"></textarea><span class="help" id="h-msg">Please don't include any patient information.</span></div>
-        <div class="hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
+        <div class="hp" aria-hidden="true"><label for="f-web">Leave this empty</label><input id="f-web" name="nv_trap" tabindex="-1" autocomplete="off"></div>
         <div class="form-foot">
           <button class="btn btn-led" type="submit" id="f-submit"><span class="spinner" aria-hidden="true"></span><span id="f-submit-label">Send pilot request</span></button>
-          <p class="help">We reply by email to set up a short call.</p>
+          <p class="help">We reply by email to set up a short call. FormSubmit, an email form service, delivers the form to our inbox.</p>
+          <noscript><p class="help">Sending this form needs JavaScript. Turn it on in your browser to send a request.</p></noscript>
         </div>
         <div class="msg msg-ok" id="s-ok" role="status" tabindex="-1" hidden>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
@@ -1001,6 +1005,7 @@ html[data-theme="light"] .fig-view .outline { stroke: var(--text); stroke-width:
 // ---- Site settings ----
 // FORM_ENDPOINT: where pilot requests are sent, e.g. "https://formsubmit.co/ajax/<address or alias>"
 // or a Formspree URL like "https://formspree.io/f/xxxxxxx". Empty = show the copy fallback.
+// If the service's host changes, change connect-src in the Content-Security-Policy at the top too.
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/jasonxiao421@gmail.com";
 // CONTACT_EMAIL: shown only if a request can't be sent, so people can email it instead.
 const CONTACT_EMAIL = "";
@@ -1808,8 +1813,9 @@ for (const [id, eid, msg] of fields) {
 }
 function collect() {
   const f = new FormData(form);
-  const v = k => String(f.get(k) || '').trim().slice(0, 2000);
-  return { name: v('name'), role: v('role'), organization: v('organization'), email: v('email'), location: v('location'), message: v('message') };
+  const line = (k, n) => String(f.get(k) || '').replace(/[\u0000-\u001F\u007F-\u009F\u2028\u2029]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
+  const text = (k, n) => String(f.get(k) || '').replace(/\r\n?/g, '\n').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, '').trim().slice(0, n);
+  return { name: line('name', 120), role: line('role', 60), organization: line('organization', 160), email: line('email', 160), location: line('location', 120), message: text('message', 2000) };
 }
 function asText(d) {
   return `Nevio pilot request\n\nName: ${d.name}\nRole: ${d.role}\nClinic or organization: ${d.organization}\nEmail: ${d.email}\nCity and state: ${d.location}\n\n${d.message || ''}`.trim();
@@ -1855,7 +1861,7 @@ form.addEventListener('submit', async e => {
   let first = null;
   for (const [id, eid, msg] of fields) { if (!check(id, eid, msg) && !first) first = document.getElementById(id); }
   if (first) { first.focus(); return; }
-  if ($('#f-web').value) { $('#s-ok-text').textContent = 'Request sent.'; reveal(okBox); return; } // bot trap
+  if ($('#f-web').value || performance.now() < 2000) { $('#s-ok-text').textContent = 'Request sent.'; reveal(okBox); return; } // bot traps
   const d = collect();
   busy = true; btn.disabled = true; btn.classList.add('is-busy'); btnLabel.textContent = 'Sending';
   const sent = await send(d);

@@ -16,7 +16,8 @@ Who the site is for, in order: competition judges (Conrad and Diamond Challenge,
 - One static `index.html` (HTML, CSS and vanilla JS inline). No build step, no framework, no package manager.
 - Images in `img/`. `og.jpg` is the 1200 x 630 share image (a render of the hero; retake it if the hero changes). `mark.svg` is the logo mark and favicon.
 - `img/app-*.webp` are real screenshots of the research app (github.com/WangZi621/SkinCancer-AI, `docs/`), run locally at 390 px wide on sample ISIC_5700648 and cropped so the app's current Stryde name never shows. Retake them the same way if the app changes or is renamed.
-- `.nojekyll` so Pages serves files as they are.
+- `.nojekyll` so Pages serves files as they are (including `.well-known/`).
+- `404.html` is the not-found page (absolute `/Nevio/` paths, no script). `SECURITY.md` and `.well-known/security.txt` say how to report a security problem; renew the security.txt `Expires` date before it passes (it is set to Nov 28, 2027). `_headers` holds real security headers for a host that reads it (Cloudflare Pages, Netlify); GitHub Pages ignores it.
 - `img/specimens/*.webp` are 480 px crops of the app's eight biopsy-confirmed ISIC samples (CC BY: MSK and Dr. Cristian Navarrete et al.; credits in the footer).
 - One typeface, Host Grotesk (variable, SIL OFL), self-hosted in `assets/fonts/` (latin and latin-ext subsets). No Google Fonts request.
 - `PRODUCT.md` holds product truth for design work; `.impeccable/surfaces/index-html.md` holds the page's direction contract. Read both before redesigning.
@@ -56,6 +57,20 @@ All results come from one held-out split of 9,080 biopsy-confirmed ISIC images (
 
 The form posts JSON to the `FORM_ENDPOINT` setting near the top of the page script (FormSubmit). Keep that setting and the fallback behaviour (if sending fails, the visitor gets a copyable message). FormSubmit needs a one-time activation from the receiving inbox; after that the endpoint should use FormSubmit's random alias instead of an address. Don't change the endpoint without Jason's say-so.
 
+Form guards to keep: input reaches the page only as text (`textContent`, `.value`, text nodes), never through `innerHTML`; `collect()` strips line breaks and control characters from one-line fields and caps every field; a hidden trap field (`nv_trap`) or a send within 2 seconds of the page opening shows a fake success and sends nothing; the form is `method="post"` and its button hides without JavaScript, so details never land in a URL.
+
+## Security
+
+There are no accounts, passwords or patient data on this site; the attack surface is the page's own scripts and the pilot form.
+
+- Each page carries a Content-Security-Policy meta tag. In `index.html`, `script-src` lists the SHA-256 of each inline `<script>`. **If you change any inline script, recompute the hashes or every script on the page stops running.** From the repo root:
+  `python3 -c "import re,hashlib,base64;s=open('index.html').read();print(' '.join(\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\" for m in re.findall(r'<script>(.*?)</script>',s,re.S)))"`
+  and put the output in place of the old hashes. Then load the page and check the console shows no "Refused to execute" errors.
+- No third-party scripts, styles, fonts, analytics or embeds. If one is ever needed, it has to be added to the CSP on purpose (and pinned with `integrity`). If the form service changes, change `connect-src` too.
+- `innerHTML` only ever takes constants written in the page script. Anything a visitor types, or anything from the URL or storage, goes in as text.
+- The head script hides the page and breaks out if it is framed by another site (GitHub Pages can't send `frame-ancestors`). Keep it.
+- No inline event handlers (`onclick=`) or `javascript:` links; the CSP blocks them.
+
 ## Design brief (short version)
 
 The full design system is the private Google Doc "Nevio design system" in the hub's 4 Website folder; it predates the current look, so where it differs on palette, type or motion, the notes below win until Jason updates it. The doc still holds for voice, facts and components.
@@ -83,3 +98,4 @@ On Nov 26, 2026, after rejecting several directions as vibecoded or generic, Jas
 - github.io is the live site; changes appear a minute or two after a push to `main`.
 - Check every in-page `#anchor` resolves, the mobile menu opens and closes, the toggle switches both ways, and the form shows its success and fallback states.
 - Look at it at 375 px and at a desktop width before calling it done. Add `?intro=off` to skip the intro in screenshots.
+- Check the browser console shows no Content-Security-Policy violations, and that the form sends nothing when submitted within 2 seconds of load or with the trap field filled.
